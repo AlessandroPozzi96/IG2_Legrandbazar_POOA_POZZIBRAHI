@@ -12,7 +12,7 @@ public class PanneauBienvenue extends JPanel
         bienvenue = new JLabel("<html><h1>Bienvenue ! </h1></html>");
         this.setLayout(new BorderLayout());
         bienvenue.setHorizontalAlignment(0);
-        this.setBackground(Color.GRAY);
+        this.setBackground(Color.RED);
         this.add(bienvenue);
     }
 }

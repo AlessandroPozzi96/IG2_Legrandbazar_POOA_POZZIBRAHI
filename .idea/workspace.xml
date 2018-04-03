@@ -4,7 +4,6 @@
     <list default="true" id="d296b7d5-da19-49cb-93e1-929a877a6950" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/src/main/java/viewPackage/FenetrePrincipale.java" afterPath="$PROJECT_DIR$/src/main/java/viewPackage/FenetrePrincipale.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/viewPackage/PanneauBienvenue.java" afterPath="$PROJECT_DIR$/src/main/java/viewPackage/PanneauBienvenue.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -60,10 +59,12 @@
       <file leaf-file-name="FenetrePrincipale.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/viewPackage/FenetrePrincipale.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="441">
-              <caret line="33" column="26" lean-forward="false" selection-start-line="33" selection-start-column="26" selection-end-line="33" selection-end-column="26" />
+            <state relative-caret-position="126">
+              <caret line="61" column="49" lean-forward="false" selection-start-line="61" selection-start-column="49" selection-end-line="61" selection-end-column="49" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#2334#2335#0" expanded="true" />
+                <element signature="e#2372#2373#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -414,7 +415,7 @@
       <option name="presentableId" value="Default" />
       <updated>1522662797666</updated>
       <workItem from="1522662799479" duration="1975000" />
-      <workItem from="1522672476166" duration="5388000" />
+      <workItem from="1522672476166" duration="6357000" />
     </task>
     <task id="LOCAL-00001" summary="Ajout de la fenetre principale + test pour voir si le push marche bien.">
       <created>1522682734930</created>
@@ -437,11 +438,18 @@
       <option name="project" value="LOCAL" />
       <updated>1522745366123</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Ajout des différents menus">
+      <created>1522746422846</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1522746422846</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="7363000" />
+    <option name="totallyTimeSpent" value="8332000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="952" y="0" width="976" height="1038" extended-state="0" />
@@ -482,7 +490,8 @@
     <MESSAGE value="Ajout de la fenetre principale + test pour voir si le push marche bien." />
     <MESSAGE value="Création des classes bidon dans les différents packages pour qu'ils soient mis en ligne et qu'il n'y ait pas de doublon de package." />
     <MESSAGE value="Ajout du panneau de bienvenue" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ajout du panneau de bienvenue" />
+    <MESSAGE value="Ajout des différents menus" />
+    <option name="LAST_COMMIT_MESSAGE" value="Ajout des différents menus" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -592,10 +601,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/viewPackage/FenetrePrincipale.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="441">
-          <caret line="33" column="26" lean-forward="false" selection-start-line="33" selection-start-column="26" selection-end-line="33" selection-end-column="26" />
+        <state relative-caret-position="126">
+          <caret line="61" column="49" lean-forward="false" selection-start-line="61" selection-start-column="49" selection-end-line="61" selection-end-column="49" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#2334#2335#0" expanded="true" />
+            <element signature="e#2372#2373#0" expanded="true" />
           </folding>
         </state>
       </provider>

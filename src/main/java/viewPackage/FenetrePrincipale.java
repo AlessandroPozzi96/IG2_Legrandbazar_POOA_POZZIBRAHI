@@ -2,14 +2,18 @@ package viewPackage;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class FenetrePrincipale extends JFrame
 {
     private Container frameContainer;
     private PanneauBienvenue panneauBienvenue;
     private JMenuBar menuBar;
-    private JMenu application, quitter, crud, recherches, tacheMetier;
-    private JMenuItem insertionOrdre, modifierOrdre, supprimerOrdre, listerOrdres;
+    private JMenu application, crud, recherches, tacheMetier;
+    private JMenuItem quitter, insertionOrdre, modifierOrdre, supprimerOrdre, listerOrdres;
 
     public FenetrePrincipale()
     {
@@ -27,9 +31,6 @@ public class FenetrePrincipale extends JFrame
         application = new JMenu("Application");
         menuBar.add(application);
 
-        quitter = new JMenu("Quitter");
-        menuBar.add(quitter);
-
         crud = new JMenu("CRUD");
         menuBar.add(crud);
 
@@ -39,7 +40,48 @@ public class FenetrePrincipale extends JFrame
         tacheMetier = new JMenu("Tâche métier ");
         menuBar.add(tacheMetier);
 
+        //On ajoute les différents items lié aux menus
+        quitter = new JMenuItem("Quitter");
+        application.add(quitter);
+
+        insertionOrdre = new JMenuItem("Insertion d'un ordre");
+        modifierOrdre = new JMenuItem("Modification d'un ordre");
+        supprimerOrdre = new JMenuItem("Suppression d'un ordre");
+        listerOrdres = new JMenuItem("Listing des ordres");
+        crud.add(insertionOrdre);
+        crud.addSeparator();
+        crud.add(modifierOrdre);
+        crud.addSeparator();
+        crud.add(supprimerOrdre);
+        crud.addSeparator();
+        crud.add(listerOrdres);
+
+        //On ajoute les différents écouteurs
+        this.addWindowListener(new ClosingListener());
+        ButtonsListener buttonsListener = new ButtonsListener();
+        quitter.addActionListener(buttonsListener);
+
         //On rends visible la fenetre
         this.setVisible(true);
+    }
+
+    private class ClosingListener extends WindowAdapter
+    {
+        @Override
+        public void windowClosing(WindowEvent e) {
+            System.exit(0);
+        }
+    }
+
+    private class ButtonsListener implements ActionListener
+    {
+        public void actionPerformed(ActionEvent e)
+        {
+            if (e.getSource() == quitter)
+            {
+                //A changer dés qu'on aura accès à la DB !
+                System.exit(0);
+            }
+        }
     }
 }

@@ -2,18 +2,25 @@ package viewPackage;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 public class PanneauInsertion extends JPanel {
     private JPanel panneauFormulaire, panneauBoutons;
     private JLabel nomLabel, dateLabel, numeroSequencielLabel, quantitePrevueLabel, quantiteProduiteLabel, dateVenteLabel, datePreparationLabel, remarqueLabel, estUrgentLabel, codeBarreLabel, matriculeCuiLabel, matriculeResLabel;
-    private JTextField nomText, dateText, numeroSequentielText, quantitePrevueText, quantiteProduiteText, dateVenteText, datePreparationText, remarqueText, estUrgentText, codeBarreText, matriculeCuiText, matriculeResText;
+    private JTextField nomText, dateText, numeroSequentielText, quantitePrevueText, quantiteProduiteText, dateVenteText, datePreparationText, remarqueText, codeBarreText, matriculeCuiText, matriculeResText;
     private JButton validation, retour, reinitialiser;
     private PanneauBienvenue panneauBienvenue;
+    private JRadioButton urgent, pasUrgent;
+    private ButtonGroup buttonGroup;
 
     public PanneauInsertion()
     {
         //Création des panneaux et de leurs layouts
         this.setLayout(new BorderLayout());
+        this.setBackground(Color.CYAN);
         panneauFormulaire = new JPanel();
         panneauFormulaire.setLayout(new GridLayout(12, 2, 3, 3));
         panneauBoutons = new JPanel();
@@ -36,6 +43,7 @@ public class PanneauInsertion extends JPanel {
         dateText = new JTextField();
         panneauFormulaire.add(dateText);
 
+        //Récupérer le numéro du dernier ordre introduit puis l'incrémenter
         numeroSequencielLabel = new JLabel("Numéro séquentiel :");
         numeroSequencielLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         numeroSequencielLabel.setToolTipText("Numéro séquentiel auto incrémenté");
@@ -76,12 +84,16 @@ public class PanneauInsertion extends JPanel {
         remarqueText = new JTextField();
         panneauFormulaire.add(remarqueText);
 
-        estUrgentLabel = new JLabel("Est urgent ?");
-        estUrgentLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        estUrgentLabel.setToolTipText("True si préparation urgente");
-        panneauFormulaire.add(estUrgentLabel);
-        estUrgentText = new JTextField();
-        panneauFormulaire.add(estUrgentText);
+        urgent = new JRadioButton("Est urgent", false);
+        urgent.setHorizontalAlignment(SwingConstants.LEFT);
+        panneauFormulaire.add(urgent);
+        pasUrgent = new JRadioButton("N'est pas urgent", true);
+        pasUrgent.setHorizontalAlignment(SwingConstants.RIGHT);
+        panneauFormulaire.add(pasUrgent);
+
+        buttonGroup = new ButtonGroup();
+        buttonGroup.add(urgent);
+        buttonGroup.add(pasUrgent);
 
         codeBarreLabel = new JLabel("Code barre :");
         codeBarreLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -103,5 +115,48 @@ public class PanneauInsertion extends JPanel {
         panneauFormulaire.add(matriculeResLabel);
         matriculeResText = new JTextField();
         panneauFormulaire.add(matriculeResText);
+
+        //Ajout des boutons au panneauBoutons
+        retour = new JButton("Retour");
+        panneauBoutons.add(retour);
+        validation = new JButton("Validation");
+        panneauBoutons.add(validation);
+        reinitialiser = new JButton("Réinitialiser");
+        panneauBoutons.add(reinitialiser);
+
+        //On ajoute les action aux listeners
+        ButtonsListener buttonsListener = new ButtonsListener();
+        TextsListener textsListener = new TextsListener();
+        ItemListener itemListener = new ItemsListener();
+        retour.addActionListener(buttonsListener);
+    }
+
+    private class TextsListener implements ActionListener
+    {
+        public void actionPerformed(ActionEvent e) {
+
+        }
+    }
+
+    //On créé 2 classes qui implémente de ActionListener afin d'aérer le code
+    private class ButtonsListener implements ActionListener
+    {
+        public void actionPerformed(ActionEvent e) {
+            if (e.getSource() == retour)
+            {
+                PanneauInsertion.this.removeAll();
+                PanneauInsertion.this.panneauBienvenue = new PanneauBienvenue();
+                PanneauInsertion.this.add(panneauBienvenue);
+                PanneauInsertion.this.repaint();
+                PanneauInsertion.this.validate();
+            }
+        }
+    }
+
+    private class ItemsListener implements ItemListener
+    {
+        public void itemStateChanged(ItemEvent e) {
+
+        }
     }
 }

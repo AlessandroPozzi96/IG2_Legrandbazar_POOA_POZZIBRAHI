@@ -2,10 +2,7 @@ package viewPackage;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 
 public class FenetrePrincipale extends JFrame
 {
@@ -19,7 +16,7 @@ public class FenetrePrincipale extends JFrame
     public FenetrePrincipale()
     {
         super("Welcome");
-        setBounds(400, 30, 700, 750);
+        setBounds(400, 30, 600, 750);
         //On ajoute le panneauBienvenu
         frameContainer = this.getContentPane();
         frameContainer.setLayout(new BorderLayout());
@@ -30,19 +27,24 @@ public class FenetrePrincipale extends JFrame
         menuBar = new JMenuBar();
         setJMenuBar(menuBar);
         application = new JMenu("Application");
+        application.setMnemonic('A');
         menuBar.add(application);
 
         crud = new JMenu("CRUD");
+        crud.setMnemonic('C');
         menuBar.add(crud);
 
         recherches = new JMenu("Recherches");
+        recherches.setMnemonic('R');
         menuBar.add(recherches);
 
         tacheMetier = new JMenu("Tâche métier ");
+        tacheMetier.setMnemonic('M');
         menuBar.add(tacheMetier);
 
         //On ajoute les différents items lié aux menus
         quitter = new JMenuItem("Quitter");
+        quitter.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_MASK));
         application.add(quitter);
 
         insertionOrdre = new JMenuItem("Insertion d'un ordre");

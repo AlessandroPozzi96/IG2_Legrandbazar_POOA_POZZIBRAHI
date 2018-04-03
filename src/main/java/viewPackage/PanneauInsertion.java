@@ -20,10 +20,11 @@ public class PanneauInsertion extends JPanel {
     {
         //Création des panneaux et de leurs layouts
         this.setLayout(new BorderLayout());
-        this.setBackground(Color.CYAN);
         panneauFormulaire = new JPanel();
         panneauFormulaire.setLayout(new GridLayout(12, 2, 3, 3));
+        /*panneauFormulaire.setBackground(Color.RED);*/
         panneauBoutons = new JPanel();
+        /*panneauBoutons.setBackground(Color.RED);*/
         panneauBoutons.setLayout(new FlowLayout());
         this.add(panneauFormulaire, BorderLayout.CENTER);
         this.add(panneauBoutons, BorderLayout.SOUTH);
@@ -49,6 +50,7 @@ public class PanneauInsertion extends JPanel {
         numeroSequencielLabel.setToolTipText("Numéro séquentiel auto incrémenté");
         panneauFormulaire.add(numeroSequencielLabel);
         numeroSequentielText = new JTextField();
+        numeroSequentielText.setEnabled(false);
         panneauFormulaire.add(numeroSequentielText);
 
         quantitePrevueLabel = new JLabel("Quantité prévue :");
@@ -86,9 +88,11 @@ public class PanneauInsertion extends JPanel {
 
         urgent = new JRadioButton("Est urgent", false);
         urgent.setHorizontalAlignment(SwingConstants.LEFT);
+        /*urgent.setBackground(Color.RED);*/
         panneauFormulaire.add(urgent);
         pasUrgent = new JRadioButton("N'est pas urgent", true);
         pasUrgent.setHorizontalAlignment(SwingConstants.RIGHT);
+        /*pasUrgent.setBackground(Color.RED);*/
         panneauFormulaire.add(pasUrgent);
 
         buttonGroup = new ButtonGroup();
@@ -129,6 +133,7 @@ public class PanneauInsertion extends JPanel {
         TextsListener textsListener = new TextsListener();
         ItemListener itemListener = new ItemsListener();
         retour.addActionListener(buttonsListener);
+        validation.addActionListener(buttonsListener);
     }
 
     private class TextsListener implements ActionListener
@@ -149,6 +154,21 @@ public class PanneauInsertion extends JPanel {
                 PanneauInsertion.this.add(panneauBienvenue);
                 PanneauInsertion.this.repaint();
                 PanneauInsertion.this.validate();
+            }
+            else
+            {
+                if (e.getSource() == validation)
+                {
+                    if (nomText.getText().length() == 0)
+                    {
+                        //JOptionPane.showMessageDialog(null, "Message d'erreur", "Erruer", JOptionPane.PLAIN_MESSAGE);
+                        nomText.setBackground(Color.RED);
+                    }
+                    else
+                    {
+                        nomText.setBackground(Color.WHITE);
+                    }
+                }
             }
         }
     }

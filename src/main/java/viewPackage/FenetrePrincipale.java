@@ -11,6 +11,7 @@ public class FenetrePrincipale extends JFrame
 {
     private Container frameContainer;
     private PanneauBienvenue panneauBienvenue;
+    private PanneauInsertion panneauInsertion;
     private JMenuBar menuBar;
     private JMenu application, crud, recherches, tacheMetier;
     private JMenuItem quitter, insertionOrdre, modifierOrdre, supprimerOrdre, listerOrdres, recherche1, recherche2, recherche3;
@@ -60,6 +61,7 @@ public class FenetrePrincipale extends JFrame
         this.addWindowListener(new ClosingListener());
         ButtonsListener buttonsListener = new ButtonsListener();
         quitter.addActionListener(buttonsListener);
+        insertionOrdre.addActionListener(buttonsListener);
 
         //On rends visible la fenetre
         this.setVisible(true);
@@ -81,6 +83,17 @@ public class FenetrePrincipale extends JFrame
             {
                 //A changer dés qu'on aura accès à la DB !
                 System.exit(0);
+            }
+            else
+            {
+                if (e.getSource() == insertionOrdre)
+                {
+                    frameContainer.removeAll();
+                    panneauInsertion = new PanneauInsertion();
+                    frameContainer.add(panneauInsertion);
+                    frameContainer.repaint();
+                    frameContainer.validate();
+                }
             }
         }
     }

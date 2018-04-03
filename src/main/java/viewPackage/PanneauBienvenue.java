@@ -9,7 +9,8 @@ public class PanneauBienvenue extends JPanel
 
     public PanneauBienvenue ()
     {
-        bienvenue = new JLabel("<html><h1>Bienvenue ! </h1></html>");
+        bienvenue = new JLabel("Bienvenue !");
+        bienvenue.setFont(new Font("Helvetica", Font.PLAIN, 100));
         this.setLayout(new BorderLayout());
         bienvenue.setHorizontalAlignment(0);
         this.setBackground(Color.RED);

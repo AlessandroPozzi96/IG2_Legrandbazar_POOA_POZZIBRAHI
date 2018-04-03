@@ -13,7 +13,7 @@ public class FenetrePrincipale extends JFrame
     private PanneauBienvenue panneauBienvenue;
     private JMenuBar menuBar;
     private JMenu application, crud, recherches, tacheMetier;
-    private JMenuItem quitter, insertionOrdre, modifierOrdre, supprimerOrdre, listerOrdres;
+    private JMenuItem quitter, insertionOrdre, modifierOrdre, supprimerOrdre, listerOrdres, recherche1, recherche2, recherche3;
 
     public FenetrePrincipale()
     {

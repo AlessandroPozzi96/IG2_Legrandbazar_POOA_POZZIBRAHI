@@ -9,8 +9,8 @@
         <module name="IG2_Legrandbazar_POOA_POZZIBRAHI" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="IG2_Legrandbazar_POOA_POZZIBRAHI" target="1.5" />
+    <bytecodeTargetLevel target="9">
+      <module name="IG2_Legrandbazar_POOA_POZZIBRAHI" target="9" />
     </bytecodeTargetLevel>
   </component>
 </project>

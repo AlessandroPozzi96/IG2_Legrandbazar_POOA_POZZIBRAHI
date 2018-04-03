@@ -15,7 +15,7 @@ public class FenetrePrincipale extends JFrame
 
     public FenetrePrincipale()
     {
-        super("Welcome");
+        super("Le grand bazar");
         setBounds(400, 30, 600, 750);
         //On ajoute le panneauBienvenu
         frameContainer = this.getContentPane();

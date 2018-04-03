@@ -134,6 +134,7 @@ public class PanneauInsertion extends JPanel {
         ItemListener itemListener = new ItemsListener();
         retour.addActionListener(buttonsListener);
         validation.addActionListener(buttonsListener);
+        reinitialiser.addActionListener(buttonsListener);
     }
 
     private class TextsListener implements ActionListener
@@ -159,7 +160,7 @@ public class PanneauInsertion extends JPanel {
             {
                 if (e.getSource() == validation)
                 {
-                    if (nomText.getText().length() == 0)
+                    if (nomText.getText().isEmpty())
                     {
                         //JOptionPane.showMessageDialog(null, "Message d'erreur", "Erruer", JOptionPane.PLAIN_MESSAGE);
                         nomText.setBackground(Color.RED);
@@ -167,6 +168,24 @@ public class PanneauInsertion extends JPanel {
                     else
                     {
                         nomText.setBackground(Color.WHITE);
+                    }
+                }
+                else
+                {
+                    if (e.getSource() == reinitialiser)
+                    {
+                        dateText.setText("");
+                        numeroSequentielText.setText("");
+                        quantitePrevueText.setText("");
+                        quantiteProduiteText.setText("");
+                        dateVenteText.setText("");
+                        datePreparationText.setText("");
+                        remarqueText.setText("");
+                        buttonGroup.clearSelection();
+                        nomText.setText("");
+                        codeBarreText.setText("");
+                        matriculeCuiText.setText("");
+                        matriculeResText.setText("");
                     }
                 }
             }

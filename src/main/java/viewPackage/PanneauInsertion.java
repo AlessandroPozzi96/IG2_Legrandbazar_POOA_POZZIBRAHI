@@ -162,7 +162,7 @@ public class PanneauInsertion extends JPanel {
                 {
                     if (nomText.getText().isEmpty())
                     {
-                        //JOptionPane.showMessageDialog(null, "Message d'erreur", "Erruer", JOptionPane.PLAIN_MESSAGE);
+                        //JOptionPane.showMessageDialog(null, "Message d'erreur", "Erreur", JOptionPane.PLAIN_MESSAGE);
                         nomText.setBackground(Color.RED);
                     }
                     else

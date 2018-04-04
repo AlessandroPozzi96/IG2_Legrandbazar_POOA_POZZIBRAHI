@@ -9,6 +9,7 @@ public class FenetrePrincipale extends JFrame
     private Container frameContainer;
     private PanneauBienvenue panneauBienvenue;
     private PanneauInsertion panneauInsertion;
+    private PanneauModification panneauModification;
     private JMenuBar menuBar;
     private JMenu application, crud, recherches, tacheMetier;
     private JMenuItem quitter, insertionOrdre, modifierOrdre, supprimerOrdre, listerOrdres, recherche1, recherche2, recherche3;
@@ -67,6 +68,9 @@ public class FenetrePrincipale extends JFrame
         ButtonsListener buttonsListener = new ButtonsListener();
         quitter.addActionListener(buttonsListener);
         insertionOrdre.addActionListener(buttonsListener);
+        modifierOrdre.addActionListener(buttonsListener);
+        supprimerOrdre.addActionListener(buttonsListener);
+        listerOrdres.addActionListener(buttonsListener);
 
         //On rends visible la fenetre
         this.setVisible(true);
@@ -98,6 +102,17 @@ public class FenetrePrincipale extends JFrame
                     frameContainer.add(panneauInsertion);
                     frameContainer.repaint();
                     frameContainer.validate();
+                }
+                else
+                {
+                    if (e.getSource() == modifierOrdre)
+                    {
+                        frameContainer.removeAll();
+                        panneauModification = new PanneauModification();
+                        frameContainer.add(panneauModification);
+                        frameContainer.repaint();
+                        frameContainer.validate();
+                    }
                 }
             }
         }

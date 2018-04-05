@@ -20,6 +20,7 @@ public class PanneauInsertion extends JPanel {
     private JRadioButton urgent, pasUrgent;
     private ButtonGroup buttonGroup;
     private FonctionEcouteurs fonctionEcouteurs;
+    private PanneauSpinnerDate spinnerDate;
 
     public PanneauInsertion()
     {
@@ -46,8 +47,10 @@ public class PanneauInsertion extends JPanel {
         dateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         dateLabel.setToolTipText("Entrez la date de la création de l'ordre");
         panneauFormulaire.add(dateLabel);
-        dateText = new JTextField();
-        panneauFormulaire.add(dateText);
+/*        dateText = new JTextField();
+        panneauFormulaire.add(dateText);*/
+        spinnerDate = new PanneauSpinnerDate();
+        panneauFormulaire.add(spinnerDate);
 
 
         //Récupérer le numéro du dernier ordre introduit puis l'incrémenter

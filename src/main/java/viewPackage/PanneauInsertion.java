@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -13,7 +15,6 @@ public class PanneauInsertion extends JPanel {
     private JPanel panneauFormulaire, panneauBoutons;
     private JLabel nomLabel, dateLabel, numeroSequencielLabel, quantitePrevueLabel, quantiteProduiteLabel, dateVenteLabel, datePreparationLabel, remarqueLabel, estUrgentLabel, codeBarreLabel, matriculeCuiLabel, matriculeResLabel;
     private JTextField nomText, dateText, numeroSequentielText, quantitePrevueText, quantiteProduiteText, dateVenteText, datePreparationText, remarqueText, codeBarreText, matriculeCuiText, matriculeResText;
-    private JSpinner spinnerDate, spinnerDateVente, spinnerDatePrep;
     private JButton validation, retour, reinitialiser;
     private PanneauBienvenue panneauBienvenue;
     private JRadioButton urgent, pasUrgent;
@@ -47,6 +48,7 @@ public class PanneauInsertion extends JPanel {
         panneauFormulaire.add(dateLabel);
         dateText = new JTextField();
         panneauFormulaire.add(dateText);
+
 
         //Récupérer le numéro du dernier ordre introduit puis l'incrémenter
         numeroSequencielLabel = new JLabel("Numéro séquentiel :");

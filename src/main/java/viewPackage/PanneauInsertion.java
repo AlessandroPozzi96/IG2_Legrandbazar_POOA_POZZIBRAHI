@@ -14,13 +14,13 @@ import java.util.GregorianCalendar;
 public class PanneauInsertion extends JPanel {
     private JPanel panneauFormulaire, panneauBoutons;
     private JLabel nomLabel, dateLabel, numeroSequencielLabel, quantitePrevueLabel, quantiteProduiteLabel, dateVenteLabel, datePreparationLabel, remarqueLabel, estUrgentLabel, codeBarreLabel, matriculeCuiLabel, matriculeResLabel;
-    private JTextField nomText, dateText, numeroSequentielText, quantitePrevueText, quantiteProduiteText, dateVenteText, datePreparationText, remarqueText, codeBarreText, matriculeCuiText, matriculeResText;
+    private JTextField nomText, numeroSequentielText, quantitePrevueText, quantiteProduiteText, remarqueText, codeBarreText, matriculeCuiText, matriculeResText;
     private JButton validation, retour, reinitialiser;
     private PanneauBienvenue panneauBienvenue;
     private JRadioButton urgent, pasUrgent;
     private ButtonGroup buttonGroup;
     private FonctionEcouteurs fonctionEcouteurs;
-    private PanneauSpinnerDate spinnerDate;
+    private PanneauSpinnerDate spinnerDate, spinnerDateVente, spinnerDatePrep;
 
     public PanneauInsertion()
     {
@@ -47,8 +47,6 @@ public class PanneauInsertion extends JPanel {
         dateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         dateLabel.setToolTipText("Entrez la date de la création de l'ordre");
         panneauFormulaire.add(dateLabel);
-/*        dateText = new JTextField();
-        panneauFormulaire.add(dateText);*/
         spinnerDate = new PanneauSpinnerDate();
         panneauFormulaire.add(spinnerDate);
 
@@ -80,14 +78,14 @@ public class PanneauInsertion extends JPanel {
         dateVenteLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         dateVenteLabel.setToolTipText("Date de mise en vente");
         panneauFormulaire.add(dateVenteLabel);
-        dateVenteText = new JTextField();
-        panneauFormulaire.add(dateVenteText);
+        spinnerDateVente = new PanneauSpinnerDate();
+        panneauFormulaire.add(spinnerDateVente);
 
         datePreparationLabel = new JLabel("Date de préparation :");
         datePreparationLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         panneauFormulaire.add(datePreparationLabel);
-        datePreparationText = new JTextField();
-        panneauFormulaire.add(datePreparationText);
+        spinnerDatePrep = new PanneauSpinnerDate();
+        panneauFormulaire.add(spinnerDatePrep);
 
         remarqueLabel = new JLabel("Remarque : ");
         remarqueLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -175,12 +173,12 @@ public class PanneauInsertion extends JPanel {
                 {
                     if (e.getSource() == reinitialiser)
                     {
-                        dateText.setText("");
+                        spinnerDate.reinitialiserChamps();
+                        spinnerDateVente.reinitialiserChamps();
+                        spinnerDatePrep.reinitialiserChamps();
                         numeroSequentielText.setText("");
                         quantitePrevueText.setText("");
                         quantiteProduiteText.setText("");
-                        dateVenteText.setText("");
-                        datePreparationText.setText("");
                         remarqueText.setText("");
                         buttonGroup.clearSelection();
                         nomText.setText("");

@@ -18,6 +18,7 @@ public class PanneauModification extends JPanel {
     private ButtonGroup buttonGroup;
     //Variables qui va simuler un accès à la base de données
     private String[] ordresDB = {"---Veuillez choisir un ordre---", "040420181", "040420182", "050420183", "040420184"};
+    private FonctionEcouteurs fonctionEcouteurs;
 
     public PanneauModification()
     {
@@ -160,12 +161,12 @@ public class PanneauModification extends JPanel {
                     if (e.getSource() == reinitialiser)
                     {
                         ordresList.clearSelection();
+                        buttonGroup.clearSelection();
                         quantitePrevueText.setText("");
                         quantiteProduiteText.setText("");
                         dateVenteText.setText("");
                         datePreparationText.setText("");
                         remarqueText.setText("");
-                        buttonGroup.clearSelection();
                         nomText.setText("");
                         codeBarreText.setText("");
                         matriculeCuiText.setText("");

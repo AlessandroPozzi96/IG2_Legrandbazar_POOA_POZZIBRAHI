@@ -6,15 +6,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class PanneauInsertion extends JPanel {
     private JPanel panneauFormulaire, panneauBoutons;
     private JLabel nomLabel, dateLabel, numeroSequencielLabel, quantitePrevueLabel, quantiteProduiteLabel, dateVenteLabel, datePreparationLabel, remarqueLabel, estUrgentLabel, codeBarreLabel, matriculeCuiLabel, matriculeResLabel;
     private JTextField nomText, dateText, numeroSequentielText, quantitePrevueText, quantiteProduiteText, dateVenteText, datePreparationText, remarqueText, codeBarreText, matriculeCuiText, matriculeResText;
+    private JSpinner spinnerDate, spinnerDateVente, spinnerDatePrep;
     private JButton validation, retour, reinitialiser;
     private PanneauBienvenue panneauBienvenue;
     private JRadioButton urgent, pasUrgent;
     private ButtonGroup buttonGroup;
+    private FonctionEcouteurs fonctionEcouteurs;
 
     public PanneauInsertion()
     {
@@ -154,7 +158,7 @@ public class PanneauInsertion extends JPanel {
                 {
                     if (nomText.getText().isEmpty())
                     {
-                        //JOptionPane.showMessageDialog(null, "Message d'erreur", "Erreur", JOptionPane.PLAIN_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Nom invalide !", "Erreur", JOptionPane.PLAIN_MESSAGE);
                         nomText.setBackground(Color.RED);
                     }
                     else

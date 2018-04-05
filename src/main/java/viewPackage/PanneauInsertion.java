@@ -129,23 +129,15 @@ public class PanneauInsertion extends JPanel {
         panneauBoutons.add(reinitialiser);
 
         //On ajoute les action aux listeners
-        ButtonsListener buttonsListener = new ButtonsListener();
-        TextsListener textsListener = new TextsListener();
+        ButtonsAndTextsListener buttonsAndTextsListener = new ButtonsAndTextsListener();
         ItemListener itemListener = new ItemsListener();
-        retour.addActionListener(buttonsListener);
-        validation.addActionListener(buttonsListener);
-        reinitialiser.addActionListener(buttonsListener);
+        retour.addActionListener(buttonsAndTextsListener);
+        validation.addActionListener(buttonsAndTextsListener);
+        reinitialiser.addActionListener(buttonsAndTextsListener);
     }
 
-    private class TextsListener implements ActionListener
-    {
-        public void actionPerformed(ActionEvent e) {
 
-        }
-    }
-
-    //On créé 2 classes qui implémente de ActionListener afin d'aérer le code
-    private class ButtonsListener implements ActionListener
+    private class ButtonsAndTextsListener implements ActionListener
     {
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == retour)

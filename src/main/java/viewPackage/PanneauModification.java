@@ -1,11 +1,15 @@
 package viewPackage;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class PanneauModification extends JPanel {
     private JPanel panneauModifications, panneauBoutons;
-    private JList<String> ordresBox;
+    private JList<String> ordresList;
     private JLabel numeroIdentifiant, nomLabel, dateLabel, quantitePrevueLabel, quantiteProduiteLabel, dateVenteLabel, datePreparationLabel, remarqueLabel, estUrgentLabel, codeBarreLabel, matriculeCuiLabel, matriculeResLabel;
     private JTextField nomText, quantitePrevueText, quantiteProduiteText, dateVenteText, datePreparationText, remarqueText, codeBarreText, matriculeCuiText, matriculeResText;
     private JButton validation, retour, reinitialiser;
@@ -31,10 +35,11 @@ public class PanneauModification extends JPanel {
         numeroIdentifiant.setHorizontalAlignment(SwingConstants.RIGHT);
         numeroIdentifiant.setToolTipText("Choississez le numéro de l'ordre (Combinaison de la date et d'un numéro séquentiel)");
         panneauModifications.add(numeroIdentifiant);
-        ordresBox = new JList<>(ordresDB);
-        ordresBox.setSelectedIndex(0);
-        ordresBox.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        panneauModifications.add(new JScrollPane(ordresBox));
+        ordresList = new JList<>(ordresDB);
+        ordresList.setSelectedIndex(0);
+        ordresList.setVisibleRowCount(1);
+        ordresList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        panneauModifications.add(new JScrollPane(ordresList));
 
         nomLabel = new JLabel("Nom :");
         nomLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -117,5 +122,67 @@ public class PanneauModification extends JPanel {
         panneauBoutons.add(validation);
         reinitialiser = new JButton("Réinitialiser");
         panneauBoutons.add(reinitialiser);
+
+        //Ajout des écouteurs aux boutons
+        ButtonsAndTextsListener buttonsAndTextsListener = new ButtonsAndTextsListener();
+        retour.addActionListener(buttonsAndTextsListener);
+        validation.addActionListener(buttonsAndTextsListener);
+        reinitialiser.addActionListener(buttonsAndTextsListener);
     }
+
+    private class ButtonsAndTextsListener implements ActionListener
+    {
+        public void actionPerformed(ActionEvent e) {
+            if (e.getSource() == retour)
+            {
+                PanneauModification.this.removeAll();
+                PanneauModification.this.panneauBienvenue = new PanneauBienvenue();
+                PanneauModification.this.add(panneauBienvenue);
+                PanneauModification.this.repaint();
+                PanneauModification.this.validate();
+            }
+            else
+            {
+                if (e.getSource() == validation)
+                {
+                    if (nomText.getText().isEmpty())
+                    {
+                        //JOptionPane.showMessageDialog(null, "Message d'erreur", "Erreur", JOptionPane.PLAIN_MESSAGE);
+                        nomText.setBackground(Color.RED);
+                    }
+                    else
+                    {
+                        nomText.setBackground(Color.WHITE);
+                    }
+                }
+                else
+                {
+                    if (e.getSource() == reinitialiser)
+                    {
+                        ordresList.clearSelection();
+                        quantitePrevueText.setText("");
+                        quantiteProduiteText.setText("");
+                        dateVenteText.setText("");
+                        datePreparationText.setText("");
+                        remarqueText.setText("");
+                        buttonGroup.clearSelection();
+                        nomText.setText("");
+                        codeBarreText.setText("");
+                        matriculeCuiText.setText("");
+                        matriculeResText.setText("");
+                    }
+                }
+            }
+        }
+    }
+
+    //Ecouteurs de la liste
+    private class ListListener implements ListSelectionListener
+    {
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+
+        }
+    }
+
 }

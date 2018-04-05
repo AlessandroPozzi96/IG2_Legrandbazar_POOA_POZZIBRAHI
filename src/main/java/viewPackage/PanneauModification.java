@@ -11,14 +11,15 @@ public class PanneauModification extends JPanel {
     private JPanel panneauModifications, panneauBoutons;
     private JList<String> ordresList;
     private JLabel numeroIdentifiant, nomLabel, dateLabel, quantitePrevueLabel, quantiteProduiteLabel, dateVenteLabel, datePreparationLabel, remarqueLabel, estUrgentLabel, codeBarreLabel, matriculeCuiLabel, matriculeResLabel;
-    private JTextField nomText, quantitePrevueText, quantiteProduiteText, dateVenteText, datePreparationText, remarqueText, codeBarreText, matriculeCuiText, matriculeResText;
+    private JTextField nomText, quantitePrevueText, quantiteProduiteText, remarqueText, codeBarreText, matriculeCuiText, matriculeResText;
     private JButton validation, retour, reinitialiser;
     private PanneauBienvenue panneauBienvenue;
     private JRadioButton urgent, pasUrgent;
     private ButtonGroup buttonGroup;
-    //Variables qui va simuler un accès à la base de données
+    //Tableau qui simule un accès à la base de données
     private String[] ordresDB = {"---Veuillez choisir un ordre---", "040420181", "040420182", "050420183", "040420184"};
     private FonctionEcouteurs fonctionEcouteurs;
+    private PanneauSpinnerDate spinnerDateVente, spinnerDatePrep;
 
     public PanneauModification()
     {
@@ -67,14 +68,14 @@ public class PanneauModification extends JPanel {
         dateVenteLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         dateVenteLabel.setToolTipText("Date de mise en vente");
         panneauModifications.add(dateVenteLabel);
-        dateVenteText = new JTextField();
-        panneauModifications.add(dateVenteText);
+        spinnerDateVente = new PanneauSpinnerDate();
+        panneauModifications.add(spinnerDateVente);
 
         datePreparationLabel = new JLabel("Date de préparation :");
         datePreparationLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         panneauModifications.add(datePreparationLabel);
-        datePreparationText = new JTextField();
-        panneauModifications.add(datePreparationText);
+        spinnerDatePrep = new PanneauSpinnerDate();
+        panneauModifications.add(spinnerDatePrep);
 
         remarqueLabel = new JLabel("Remarque : ");
         remarqueLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -160,12 +161,12 @@ public class PanneauModification extends JPanel {
                 {
                     if (e.getSource() == reinitialiser)
                     {
+                        spinnerDatePrep.reinitialiserChamps();
+                        spinnerDateVente.reinitialiserChamps();
                         ordresList.clearSelection();
                         buttonGroup.clearSelection();
                         quantitePrevueText.setText("");
                         quantiteProduiteText.setText("");
-                        dateVenteText.setText("");
-                        datePreparationText.setText("");
                         remarqueText.setText("");
                         nomText.setText("");
                         codeBarreText.setText("");

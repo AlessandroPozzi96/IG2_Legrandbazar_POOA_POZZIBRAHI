@@ -69,14 +69,14 @@ public class PanneauInsertion extends JPanel {
 
         quantiteProduiteLabel = new JLabel("Quantité produite : ");
         quantiteProduiteLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        quantiteProduiteLabel.setToolTipText("Quantité effectivement produite");
+        quantiteProduiteLabel.setToolTipText("[FACULTATIF] Quantité effectivement produite");
         panneauFormulaire.add(quantiteProduiteLabel);
         quantiteProduiteText = new JTextField();
         panneauFormulaire.add(quantiteProduiteText);
 
         dateVenteLabel = new JLabel("Date vente : ");
         dateVenteLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        dateVenteLabel.setToolTipText("Date de mise en vente");
+        dateVenteLabel.setToolTipText("[FACULTATIF] Date de mise en vente");
         panneauFormulaire.add(dateVenteLabel);
         spinnerDateVente = new PanneauSpinnerDate();
         panneauFormulaire.add(spinnerDateVente);
@@ -89,6 +89,7 @@ public class PanneauInsertion extends JPanel {
 
         remarqueLabel = new JLabel("Remarque : ");
         remarqueLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        remarqueLabel.setToolTipText("[FACULTATIF] Indiquez une remarque");
         panneauFormulaire.add(remarqueLabel);
         remarqueText = new JTextField();
         panneauFormulaire.add(remarqueText);
@@ -143,6 +144,9 @@ public class PanneauInsertion extends JPanel {
         reinitialiser.addActionListener(buttonsAndTextsListener);
     }
 
+    public JTextField getNomText() {
+        return nomText;
+    }
 
     private class ButtonsAndTextsListener implements ActionListener
     {
@@ -161,7 +165,7 @@ public class PanneauInsertion extends JPanel {
                 {
                     if (nomText.getText().isEmpty())
                     {
-                        JOptionPane.showMessageDialog(null, "Nom invalide !", "Erreur", JOptionPane.PLAIN_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Nom invalide !", "Erreur", JOptionPane.ERROR_MESSAGE);
                         nomText.setBackground(Color.RED);
                     }
                     else

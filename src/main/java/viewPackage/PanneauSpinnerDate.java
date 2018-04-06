@@ -13,12 +13,13 @@ public class PanneauSpinnerDate extends JPanel
     private String[] monthStrings = {"Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre", "Octobre", "Novembre", "Décembre"};
     private SpinnerListModel monthModel;
     private SpinnerNumberModel yearsModel, daysModel;
+    private SpinnerDateModel spinnerDateModel;
     private JLabel jour, mois, annee;
     private Calendar calendar = new GregorianCalendar();
 
     public PanneauSpinnerDate() {
-        this.setLayout(new FlowLayout());
-        calendar.setTime(new Date());
+        this.setLayout(new BorderLayout());
+/*        calendar.setTime(new Date());
         //Ajout des labels/spinners
         jour = new JLabel("JJ :");
         jour.setHorizontalAlignment(SwingConstants.LEFT);
@@ -47,7 +48,12 @@ public class PanneauSpinnerDate extends JPanel
         value = calendar.get(Calendar.YEAR);
         yearsModel = new SpinnerNumberModel(value, min, max, step);
         spinnerAnnees = new JSpinner(yearsModel);
-        this.add(spinnerAnnees);
+        this.add(spinnerAnnees);*/
+
+        //Version avec un modelDate
+        spinnerDateModel = new SpinnerDateModel();
+        spinnerMois = new JSpinner(spinnerDateModel);
+        this.add(spinnerMois, BorderLayout.WEST);
     }
 
     public void reinitialiserChamps ()

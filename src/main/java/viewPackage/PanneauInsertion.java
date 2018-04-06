@@ -169,8 +169,25 @@ public class PanneauInsertion extends JPanel {
                         nomText.setBackground(Color.RED);
                     }
                     else
+                        {
+                            nomText.setBackground(Color.WHITE);
+                        }
+/*                    Integer quantitePrevue = null;
+                    try
                     {
-                        nomText.setBackground(Color.WHITE);
+                        Integer.valueOf(quantitePrevueText.getText());
+                    }
+                    catch (Exception error)
+                    {
+                    }*/
+                    if (quantitePrevueText.getText().isEmpty())
+                    {
+                        JOptionPane.showMessageDialog(null, "Quantité prévue invalide !", "Erreur", JOptionPane.ERROR_MESSAGE);
+                        quantitePrevueText.setBackground(Color.RED);
+                    }
+                    else
+                    {
+                        quantitePrevueText.setBackground(Color.WHITE);
                     }
                 }
                 else

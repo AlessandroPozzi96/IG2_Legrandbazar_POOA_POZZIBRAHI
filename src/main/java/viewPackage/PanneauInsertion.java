@@ -13,8 +13,9 @@ import java.util.GregorianCalendar;
 
 public class PanneauInsertion extends JPanel {
     private JPanel panneauFormulaire, panneauBoutons;
-    private JLabel nomLabel, dateLabel, numeroSequencielLabel, quantitePrevueLabel, quantiteProduiteLabel, dateVenteLabel, datePreparationLabel, remarqueLabel, estUrgentLabel, codeBarreLabel, matriculeCuiLabel, matriculeResLabel;
+    private JLabel recetteLabel, dateLabel, numeroSequencielLabel, quantitePrevueLabel, quantiteProduiteLabel, dateVenteLabel, datePreparationLabel, remarqueLabel, estUrgentLabel, codeBarreLabel, matriculeCuiLabel, matriculeResLabel;
     private JTextField nomText, numeroSequentielText, quantitePrevueText, quantiteProduiteText, remarqueText, codeBarreText, matriculeCuiText, matriculeResText;
+    private JComboBox codeBarreCombo, matriculeCuiCombo, matriculeResCombo, recetteCombo;
     private JButton validation, retour, reinitialiser;
     private PanneauBienvenue panneauBienvenue;
     private JRadioButton urgent, pasUrgent;
@@ -27,7 +28,7 @@ public class PanneauInsertion extends JPanel {
         //Création des panneaux et de leurs layouts
         this.setLayout(new BorderLayout());
         panneauFormulaire = new JPanel();
-        panneauFormulaire.setLayout(new GridLayout(12, 2, 3, 3));
+        panneauFormulaire.setLayout(new GridLayout(13, 2, 3, 3));
         /*panneauFormulaire.setBackground(Color.RED);*/
         panneauBoutons = new JPanel();
         /*panneauBoutons.setBackground(Color.RED);*/
@@ -35,13 +36,15 @@ public class PanneauInsertion extends JPanel {
         this.add(panneauFormulaire, BorderLayout.CENTER);
         this.add(panneauBoutons, BorderLayout.SOUTH);
 
-        //Création des labels dans la grille (12 lignes)
-        nomLabel = new JLabel("Nom :");
-        nomLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        nomLabel.setToolTipText("Nom de la recette");
-        panneauFormulaire.add(nomLabel);
-        nomText = new JTextField();
-        panneauFormulaire.add(nomText);
+        //Création des labels dans la grille (13 lignes)
+        recetteLabel = new JLabel("Recette :");
+        recetteLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        recetteLabel.setToolTipText("Nom de la recette");
+        panneauFormulaire.add(recetteLabel);
+        recetteCombo = new JComboBox();    // REMPLIR LA COMBOBOX AVEC LA BD
+        panneauFormulaire.add(recetteCombo);
+        /*nomText = new JTextField();
+        panneauFormulaire.add(nomText);*/
 
         dateLabel = new JLabel("Date :");
         dateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -74,6 +77,7 @@ public class PanneauInsertion extends JPanel {
         quantiteProduiteText = new JTextField();
         panneauFormulaire.add(quantiteProduiteText);
 
+        // Faire un truc avec code Barre et date Vente (grisé quand pas relié a un code barre = null et non grisé quand relié a un code barre)
         dateVenteLabel = new JLabel("Date vente : ");
         dateVenteLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         dateVenteLabel.setToolTipText("[FACULTATIF] Date de mise en vente");
@@ -95,11 +99,11 @@ public class PanneauInsertion extends JPanel {
         panneauFormulaire.add(remarqueText);
 
         urgent = new JRadioButton("Est urgent", false);
-        urgent.setHorizontalAlignment(SwingConstants.LEFT);
+        urgent.setHorizontalAlignment(SwingConstants.RIGHT);
         /*urgent.setBackground(Color.RED);*/
         panneauFormulaire.add(urgent);
         pasUrgent = new JRadioButton("N'est pas urgent", true);
-        pasUrgent.setHorizontalAlignment(SwingConstants.RIGHT);
+        pasUrgent.setHorizontalAlignment(SwingConstants.LEFT);
         /*pasUrgent.setBackground(Color.RED);*/
         panneauFormulaire.add(pasUrgent);
 
@@ -111,22 +115,29 @@ public class PanneauInsertion extends JPanel {
         codeBarreLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         codeBarreLabel.setToolTipText("Référence vers le type d'article quand il sera mis en vente");
         panneauFormulaire.add(codeBarreLabel);
-        codeBarreText = new JTextField();
-        panneauFormulaire.add(codeBarreText);
+        codeBarreCombo = new JComboBox();  // COMBOBOX A REMPLIR AVEC LA BD --> peu etre mieux de mettre le libellé que le matricule
+        panneauFormulaire.add(codeBarreCombo);
+        /*codeBarreText = new JTextField();
+        panneauFormulaire.add(codeBarreText);*/
 
         matriculeCuiLabel = new JLabel("Matricule cuisinier :");
         matriculeCuiLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         matriculeCuiLabel.setToolTipText("Référence vers le cuisinier à qui la préparation a été attribué");
         panneauFormulaire.add(matriculeCuiLabel);
-        matriculeCuiText = new JTextField();
-        panneauFormulaire.add(matriculeCuiText);
+        matriculeCuiCombo = new JComboBox();   // COMBOBOX a remplir avec la BD
+        panneauFormulaire.add(matriculeCuiCombo);
+        /*matriculeCuiText = new JTextField();
+        panneauFormulaire.add(matriculeCuiText);*/
 
         matriculeResLabel = new JLabel("Matricule responsable :");
         matriculeResLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         matriculeResLabel.setToolTipText("Référence vers la responsable des ventes qui a créé l'ordre");
         panneauFormulaire.add(matriculeResLabel);
-        matriculeResText = new JTextField();
-        panneauFormulaire.add(matriculeResText);
+        matriculeResCombo = new JComboBox(); // COMBOBOX a remplir avec la BD
+        panneauFormulaire.add(matriculeResCombo);
+        /*matriculeResText = new JTextField();
+        panneauFormulaire.add(matriculeResText);*/
+
 
         //Ajout des boutons au panneauBoutons
         retour = new JButton("Retour");

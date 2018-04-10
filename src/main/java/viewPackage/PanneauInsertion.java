@@ -1,11 +1,14 @@
 package viewPackage;
 
+import dataAccessPackage.DBAccess;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -25,10 +28,28 @@ public class PanneauInsertion extends JPanel {
 
     public PanneauInsertion()
     {
+        // TEST DB
+        DBAccess dBAccess = new DBAccess();
+        Connection connection = dBAccess.getConnection();
+        String sql = "SELECT * FROM dbgrandbazar.ordrepreparation where QuantitePrevue=4;";
+        ResultSet data;
+        String nomRecetteOrdre="";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            data = statement.executeQuery();
+            while (data.next()){
+                nomRecetteOrdre = data.getString("Nom");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        System.out.println(nomRecetteOrdre);
+        // FIN TEST DB
+
         //Création des panneaux et de leurs layouts
         this.setLayout(new BorderLayout());
         panneauFormulaire = new JPanel();
-        panneauFormulaire.setLayout(new GridLayout(13, 2, 3, 3));
+        panneauFormulaire.setLayout(new GridLayout(12, 2, 3, 3));
         /*panneauFormulaire.setBackground(Color.RED);*/
         panneauBoutons = new JPanel();
         /*panneauBoutons.setBackground(Color.RED);*/
@@ -36,7 +57,7 @@ public class PanneauInsertion extends JPanel {
         this.add(panneauFormulaire, BorderLayout.CENTER);
         this.add(panneauBoutons, BorderLayout.SOUTH);
 
-        //Création des labels dans la grille (13 lignes)
+        //Création des labels dans la grille (12 lignes)
         recetteLabel = new JLabel("Recette :");
         recetteLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         recetteLabel.setToolTipText("Nom de la recette");

@@ -9,6 +9,7 @@ public class FenetrePrincipale extends JFrame
     private Container frameContainer;
     private PanneauBienvenue panneauBienvenue;
     private PanneauInsertion panneauInsertion;
+    private PanneauListing panneauListing;
     private PanneauModification panneauModification;
     private JMenuBar menuBar;
     private JMenu application, ordre, recherches, tacheMetier;
@@ -111,6 +112,16 @@ public class FenetrePrincipale extends JFrame
                         frameContainer.add(panneauModification);
                         frameContainer.repaint();
                         frameContainer.validate();
+                    }
+                    else
+                    {
+                        if (e.getSource() == listerOrdres){
+                            frameContainer.removeAll();
+                            panneauListing = new PanneauListing();
+                            frameContainer.add(panneauListing);
+                            frameContainer.repaint();
+                            frameContainer.validate();
+                        }
                     }
                 }
             }

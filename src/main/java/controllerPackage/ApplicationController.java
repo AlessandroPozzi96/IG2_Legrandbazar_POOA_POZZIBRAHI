@@ -2,6 +2,7 @@ package controllerPackage;
 
 import businessPackage.OrdreManager;
 import exceptionPackage.AddOrdreException;
+import exceptionPackage.AllOrdresException;
 import modelPackage.OrdrePreparation;
 
 import java.util.ArrayList;
@@ -24,8 +25,7 @@ public class ApplicationController
         manager.addOrdre(ordrePreparation);
     }
 
-    public ArrayList<OrdrePreparation> getAllOrdres ()
-    {
+    public ArrayList<OrdrePreparation> getAllOrdres () throws AllOrdresException {
         return manager.getAllOrdres();
     }
 }

@@ -3,6 +3,7 @@ package businessPackage;
 import dataAccessPackage.DBAccess;
 import dataAccessPackage.DataAccess;
 import exceptionPackage.AddOrdreException;
+import exceptionPackage.AllOrdresException;
 import modelPackage.OrdrePreparation;
 
 import java.util.ArrayList;
@@ -24,8 +25,7 @@ public class OrdreManager
         dao.addOrdre(ordrePreparation);
     }
 
-    public ArrayList<OrdrePreparation> getAllOrdres ()
-    {
+    public ArrayList<OrdrePreparation> getAllOrdres () throws AllOrdresException {
         return dao.getAllOrdres();
     }
 }

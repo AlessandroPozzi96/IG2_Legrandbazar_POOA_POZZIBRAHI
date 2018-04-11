@@ -195,26 +195,17 @@ public class PanneauInsertion extends JPanel
             {
                 if (e.getSource() == validation)
                 {
-                    if (nomText.getText().isEmpty())
-                    {
-                        JOptionPane.showMessageDialog(null, "Nom invalide !", "Erreur", JOptionPane.ERROR_MESSAGE);
-                        nomText.setBackground(Color.RED);
-                    }
-                    else
-                        {
-                            nomText.setBackground(Color.WHITE);
-                        }
-/*                    Integer quantitePrevue = null;
+                    Integer quantitePrevue = null;
                     try
                     {
-                        Integer.valueOf(quantitePrevueText.getText());
+                        quantitePrevue = Integer.valueOf(quantitePrevueText.getText());
                     }
                     catch (Exception error)
                     {
-                    }*/
-                    if (quantitePrevueText.getText().isEmpty())
+                    }
+                    if (quantitePrevueText.getText().isEmpty() || quantitePrevue == null)
                     {
-                        JOptionPane.showMessageDialog(null, "Quantité prévue invalide !", "Erreur", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Quantité prévue incorrecte !", "Erreur", JOptionPane.ERROR_MESSAGE);
                         quantitePrevueText.setBackground(Color.RED);
                     }
                     else

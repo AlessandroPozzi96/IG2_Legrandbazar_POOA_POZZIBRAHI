@@ -1,5 +1,6 @@
 package dataAccessPackage;
 
+import exceptionPackage.AddOrdreException;
 import modelPackage.OrdrePreparation;
 
 import java.sql.*;
@@ -8,14 +9,16 @@ import java.util.ArrayList;
 
 public class DBAccess implements DataAccess
 {
-    public void addOrdre (OrdrePreparation ordrePreparation)
+    public void addOrdre (OrdrePreparation ordrePreparation) throws AddOrdreException
     {
-
+        if (SingletonConnection.getInstance() == null)
+            throw  new AddOrdreException("Erreur connexion !");
     }
 
     public ArrayList<OrdrePreparation> getAllOrdres ()
     {
-        return new ArrayList<>();
+        ArrayList<OrdrePreparation> ordres = new ArrayList<>();
+        return ordres;
     }
 }
 

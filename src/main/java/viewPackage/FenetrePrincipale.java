@@ -11,7 +11,7 @@ public class FenetrePrincipale extends JFrame
     private PanneauInsertion panneauInsertion;
     private PanneauModification panneauModification;
     private JMenuBar menuBar;
-    private JMenu application, crud, recherches, tacheMetier;
+    private JMenu application, ordre, recherches, tacheMetier;
     private JMenuItem quitter, insertionOrdre, modifierOrdre, supprimerOrdre, listerOrdres, recherche1, recherche2, recherche3;
 
     public FenetrePrincipale()
@@ -33,9 +33,9 @@ public class FenetrePrincipale extends JFrame
         application.setMnemonic('A');
         menuBar.add(application);
 
-        crud = new JMenu("CRUD");
-        crud.setMnemonic('C');
-        menuBar.add(crud);
+        ordre = new JMenu("Ordre");
+        ordre.setMnemonic('O');
+        menuBar.add(ordre);
 
         recherches = new JMenu("Recherches");
         recherches.setMnemonic('R');
@@ -47,20 +47,20 @@ public class FenetrePrincipale extends JFrame
 
         //On ajoute les différents items lié aux menus
         quitter = new JMenuItem("Quitter");
-        quitter.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_MASK));
+        quitter.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, InputEvent.CTRL_MASK));
         application.add(quitter);
 
         insertionOrdre = new JMenuItem("Insertion d'un ordre");
         modifierOrdre = new JMenuItem("Modification d'un ordre");
         supprimerOrdre = new JMenuItem("Suppression d'un ordre");
         listerOrdres = new JMenuItem("Listing des ordres");
-        crud.add(insertionOrdre);
-        crud.addSeparator();
-        crud.add(modifierOrdre);
-        crud.addSeparator();
-        crud.add(supprimerOrdre);
-        crud.addSeparator();
-        crud.add(listerOrdres);
+        ordre.add(insertionOrdre);
+        ordre.addSeparator();
+        ordre.add(modifierOrdre);
+        ordre.addSeparator();
+        ordre.add(supprimerOrdre);
+        ordre.addSeparator();
+        ordre.add(listerOrdres);
 
         //On ajoute les différents écouteurs
         this.addWindowListener(new ClosingListener());

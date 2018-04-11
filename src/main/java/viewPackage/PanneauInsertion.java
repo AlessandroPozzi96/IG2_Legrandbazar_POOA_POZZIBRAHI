@@ -1,5 +1,6 @@
 package viewPackage;
 
+import controllerPackage.ApplicationController;
 import dataAccessPackage.DBAccess;
 
 import javax.swing.*;
@@ -22,6 +23,7 @@ public class PanneauInsertion extends JPanel
     private ButtonGroup buttonGroup;
     private FonctionEcouteurs fonctionEcouteurs;
     private PanneauSpinnerDate spinnerDate, spinnerDateVente, spinnerDatePrep;
+    private ApplicationController controller;
 
     public PanneauInsertion()
     {

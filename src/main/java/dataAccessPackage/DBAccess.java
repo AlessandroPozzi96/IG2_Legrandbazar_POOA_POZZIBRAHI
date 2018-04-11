@@ -3,6 +3,7 @@ package dataAccessPackage;
 import modelPackage.OrdrePreparation;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 
 public class DBAccess implements DataAccess
@@ -10,6 +11,11 @@ public class DBAccess implements DataAccess
     public void addOrdre (OrdrePreparation ordrePreparation)
     {
 
+    }
+
+    public ArrayList<OrdrePreparation> getAllOrdres ()
+    {
+        return new ArrayList<>();
     }
 }
 

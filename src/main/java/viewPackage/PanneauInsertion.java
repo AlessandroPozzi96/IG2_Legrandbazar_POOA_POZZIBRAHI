@@ -26,7 +26,7 @@ public class PanneauInsertion extends JPanel
     public PanneauInsertion()
     {
         // TEST DB
-        DBAccess dBAccess = new DBAccess();
+/*        DBAccess dBAccess = new DBAccess();
         Connection connection = dBAccess.getConnection();
         String sql = "SELECT * FROM dbgrandbazar.ordrepreparation where QuantitePrevue=4;";
         ResultSet data;
@@ -37,10 +37,11 @@ public class PanneauInsertion extends JPanel
             while (data.next()){
                 nomRecetteOrdre = data.getString("Nom");
             }
+            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println(nomRecetteOrdre);
+        System.out.println(nomRecetteOrdre);*/
         // FIN TEST DB
 
         //Création des panneaux et de leurs layouts

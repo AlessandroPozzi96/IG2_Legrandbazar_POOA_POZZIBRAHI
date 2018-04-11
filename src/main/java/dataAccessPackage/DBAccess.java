@@ -1,25 +1,32 @@
 package dataAccessPackage;
 
+import modelPackage.OrdrePreparation;
 
-import java.util.*;
 import java.sql.*;
 
 
-public class DBAccess {
+public class DBAccess implements DataAccess
+{
+    public void addOrdre (OrdrePreparation ordrePreparation)
+    {
 
-private Connection connection;
+    }
+}
+
+/*private Connection connection;
 
     {
-        try {
+        try
+        {
             //Seb → 159357
             //Aless → Pa456lOt
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbgrandbazar?useSSL=false","root","Pa456lOt");
-        } catch (SQLException e) {
+        } catch (Exception e)
+        {
             e.printStackTrace();
         }
     }
 
     public Connection getConnection() {
         return connection;
-    }
-}
+    }*/

@@ -24,7 +24,72 @@ public class DBAccess implements DataAccess
         {
             String sql = "insert into ordrepreparation (Date, NumeroSequentiel, QuantitePrevue, QuantiteProduite, DateVente, DatePreparation, Remarque, estUrgent, Nom, CodeBarre, Matricule_Cui, Matricule_Res) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             statement = connection.prepareStatement(sql);
+            java.sql.Date sqlDate = new java.sql.Date(ordrePreparation.getDate().getTimeInMillis());
+            statement.setDate(1, sqlDate);
+            statement.setInt(2, ordrePreparation.getNumeroSequentiel());
+            statement.setInt(3, ordrePreparation.getQuantitePrevue());
 
+            if (ordrePreparation.getQuantiteProduite() != null)
+            {
+                statement.setInt(4, ordrePreparation.getQuantiteProduite());
+            }
+            else
+            {
+                statement.setNull(4, Types.INTEGER);
+            }
+
+            if (ordrePreparation.getDateVente() != null)
+            {
+                sqlDate.setTime(ordrePreparation.getDateVente().getTimeInMillis());
+                statement.setDate(5, sqlDate);
+            }
+            else
+            {
+                statement.setNull(5, Types.TIMESTAMP);
+            }
+
+            if (ordrePreparation.getDatePreparation() != null)
+            {
+                sqlDate.setTime(ordrePreparation.getDatePreparation().getTimeInMillis());
+                statement.setDate(6, sqlDate);
+            }
+            else
+            {
+                statement.setNull(6, Types.TIMESTAMP);
+            }
+
+            if (ordrePreparation.getRemarque() != null)
+            {
+                statement.setString(7, ordrePreparation.getRemarque());
+            }
+            else
+            {
+                statement.setNull(7, Types.VARCHAR);
+            }
+
+            statement.setBoolean(8, ordrePreparation.getEstUrgent());
+            statement.setString(9, ordrePreparation.getNom());
+
+            if (ordrePreparation.getCodeBarre() != null)
+            {
+                statement.setInt(10, ordrePreparation.getCodeBarre());
+            }
+            else
+            {
+                statement.setNull(10, Types.INTEGER);
+            }
+
+            if (ordrePreparation.getMatricule_Cui() != null)
+            {
+                statement.setInt(11, ordrePreparation.getMatricule_Cui());
+            }
+            else
+            {
+                statement.setNull(11, Types.INTEGER);
+            }
+
+            statement.setInt(12, ordrePreparation.getMatricule_Res());
+            statement.executeUpdate();
         }
         catch (SQLException e)
         {

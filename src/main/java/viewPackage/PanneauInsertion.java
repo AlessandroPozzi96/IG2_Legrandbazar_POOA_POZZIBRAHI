@@ -184,23 +184,51 @@ public class PanneauInsertion extends JPanel
             {
                 if (e.getSource() == validation)
                 {
-                    Integer quantitePrevue = null;
+                    Integer quantitePrevue = -1;
                     try
                     {
                         quantitePrevue = Integer.valueOf(quantitePrevueText.getText());
                     }
                     catch (Exception error)
                     {
+                        quantitePrevue = null;
+                    }
+                    finally
+                    {
+                        if (quantitePrevueText.getText().isEmpty() || quantitePrevue == null || quantitePrevue <= 0)
+                        {
+                            JOptionPane.showMessageDialog(null, "Quantité prévue incorrecte !", "Erreur", JOptionPane.ERROR_MESSAGE);
+                            quantitePrevueText.setBackground(Color.RED);
+                        }
+                        else
+                        {
+                            quantitePrevueText.setBackground(Color.WHITE);
+                        }
+                    }
 
-                    }
-                    if (quantitePrevueText.getText().isEmpty() || quantitePrevue == null)
+                    if (!quantiteProduiteText.getText().isEmpty())
                     {
-                        JOptionPane.showMessageDialog(null, "Quantité prévue incorrecte !", "Erreur", JOptionPane.ERROR_MESSAGE);
-                        quantitePrevueText.setBackground(Color.RED);
-                    }
-                    else
-                    {
-                        quantitePrevueText.setBackground(Color.WHITE);
+                        Integer quantiteProduite = -1;
+                        try
+                        {
+                            quantiteProduite = Integer.valueOf(quantiteProduiteText.getText());
+                        }
+                        catch (Exception error)
+                        {
+                            quantiteProduite = null;
+                        }
+                        finally
+                        {
+                            if (quantiteProduite == null || quantiteProduite <= 0)
+                            {
+                                JOptionPane.showMessageDialog(null, "Quantité produite incorrecte !", "Erreur", JOptionPane.ERROR_MESSAGE);
+                                quantiteProduiteText.setBackground(Color.RED);
+                            }
+                            else
+                            {
+                                quantiteProduiteText.setBackground(Color.WHITE);
+                            }
+                        }
                     }
                 }
                 else

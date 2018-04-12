@@ -96,6 +96,7 @@ public class PanneauInsertion extends JPanel
 
         datePreparationLabel = new JLabel("Date de préparation :");
         datePreparationLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        datePreparationLabel.setToolTipText("[FACULTATIF] Date lors de la préparation");
         panneauFormulaire.add(datePreparationLabel);
         spinnerDatePrep = new PanneauSpinnerDate();
         panneauFormulaire.add(spinnerDatePrep);

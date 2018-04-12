@@ -13,11 +13,23 @@ public class DBAccess implements DataAccess
 {
     private OrdrePreparation ordrePreparation;
     private Connection connection;
+    private PreparedStatement statement;
 
     public void addOrdre (OrdrePreparation ordrePreparation) throws AddOrdreException
     {
-        if (SingletonConnection.getInstance() == null)
+        if ((connection = SingletonConnection.getInstance()) == null)
             throw  new AddOrdreException("Erreur connexion !");
+
+        try
+        {
+            String sql = "insert into ordrepreparation (Date, NumeroSequentiel, QuantitePrevue, QuantiteProduite, DateVente, DatePreparation, Remarque, estUrgent, Nom, CodeBarre, Matricule_Cui, Matricule_Res) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            statement = connection.prepareStatement(sql);
+
+        }
+        catch (SQLException e)
+        {
+            throw new AddOrdreException("SQL erreur !");
+        }
     }
 
     public ArrayList<OrdrePreparation> getAllOrdres () throws AllOrdresException
@@ -31,7 +43,7 @@ public class DBAccess implements DataAccess
 
         try {
             String sql = "SELECT * FROM dbgrandbazar.ordrepreparation";
-            PreparedStatement statement = connection.prepareStatement(sql);
+            statement = connection.prepareStatement(sql);
             ResultSet data = statement.executeQuery(); // contient les lignes de résultat de la requête
             ResultSetMetaData meta = data.getMetaData(); // Contient les meta données (nb colonnes, ...)
             int quantiteProduite, matricule_Cui;

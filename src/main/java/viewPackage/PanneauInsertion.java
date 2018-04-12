@@ -13,41 +13,22 @@ public class PanneauInsertion extends JPanel
 {
     private JPanel panneauFormulaire, panneauBoutons;
     private JLabel recetteLabel, dateLabel, numeroSequencielLabel, quantitePrevueLabel, quantiteProduiteLabel, dateVenteLabel, datePreparationLabel, remarqueLabel, estUrgentLabel, codeBarreLabel, matriculeCuiLabel, matriculeResLabel;
-    private JTextField nomText, numeroSequentielText, quantitePrevueText, quantiteProduiteText, remarqueText, codeBarreText, matriculeCuiText, matriculeResText;
+    private JTextField numeroSequentielText, quantitePrevueText, quantiteProduiteText, remarqueText;
     private JComboBox codeBarreCombo, matriculeCuiCombo, matriculeResCombo, recetteCombo;
     private JButton validation, retour, reinitialiser;
     private PanneauBienvenue panneauBienvenue;
-    private JRadioButton urgent, pasUrgent;
-    private ButtonGroup buttonGroup;
+    private JRadioButton urgent, pasUrgent, ouiDateVente, nonDateVente, ouiDatePrep, nonDatePrep;
+    private ButtonGroup buttonGroup, buttonGroupDateVente, buttonGroupDatePrep;
     private FonctionEcouteurs fonctionEcouteurs;
     private PanneauSpinnerDate spinnerDate, spinnerDateVente, spinnerDatePrep;
     private ApplicationController controller;
 
     public PanneauInsertion()
     {
-        // TEST DB
-/*        DBAccess dBAccess = new DBAccess();
-        Connection connection = dBAccess.getConnection();
-        String sql = "SELECT * FROM dbgrandbazar.ordrepreparation where QuantitePrevue=4;";
-        ResultSet data;
-        String nomRecetteOrdre="";
-        try {
-            PreparedStatement statement = connection.prepareStatement(sql);
-            data = statement.executeQuery();
-            while (data.next()){
-                nomRecetteOrdre = data.getString("Nom");
-            }
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        System.out.println(nomRecetteOrdre);*/
-        // FIN TEST DB
-
         //Création des panneaux et de leurs layouts
         this.setLayout(new BorderLayout());
         panneauFormulaire = new JPanel();
-        panneauFormulaire.setLayout(new GridLayout(12, 2, 3, 3));
+        panneauFormulaire.setLayout(new GridLayout(14, 2, 3, 3));
         /*panneauFormulaire.setBackground(Color.RED);*/
         panneauBoutons = new JPanel();
         /*panneauBoutons.setBackground(Color.RED);*/
@@ -62,8 +43,6 @@ public class PanneauInsertion extends JPanel
         panneauFormulaire.add(recetteLabel);
         recetteCombo = new JComboBox();    // REMPLIR LA COMBOBOX AVEC LA BD
         panneauFormulaire.add(recetteCombo);
-        /*nomText = new JTextField();
-        panneauFormulaire.add(nomText);*/
 
         dateLabel = new JLabel("Date :");
         dateLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -104,11 +83,33 @@ public class PanneauInsertion extends JPanel
         spinnerDateVente = new PanneauSpinnerDate();
         panneauFormulaire.add(spinnerDateVente);
 
+        ouiDateVente = new JRadioButton("Enregistrer la date de vente", false);
+        ouiDateVente.setHorizontalAlignment(SwingConstants.LEFT);
+        panneauFormulaire.add(ouiDateVente);
+        nonDateVente = new JRadioButton("Ne pas enregistrer la date de vente", true);
+        nonDateVente.setHorizontalAlignment(SwingConstants.RIGHT);
+        panneauFormulaire.add(nonDateVente);
+
+        buttonGroupDateVente = new ButtonGroup();
+        buttonGroupDateVente.add(ouiDateVente);
+        buttonGroupDateVente.add(nonDateVente);
+
         datePreparationLabel = new JLabel("Date de préparation :");
         datePreparationLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         panneauFormulaire.add(datePreparationLabel);
         spinnerDatePrep = new PanneauSpinnerDate();
         panneauFormulaire.add(spinnerDatePrep);
+
+        ouiDatePrep = new JRadioButton("Enregistrer la date de préparation", false);
+        ouiDatePrep.setHorizontalAlignment(SwingConstants.LEFT);
+        panneauFormulaire.add(ouiDatePrep);
+        nonDatePrep = new JRadioButton("Ne pas enregistrer la date de préparation", true);
+        nonDatePrep.setHorizontalAlignment(SwingConstants.RIGHT);
+        panneauFormulaire.add(nonDatePrep);
+
+        buttonGroupDatePrep = new ButtonGroup();
+        buttonGroupDatePrep.add(ouiDatePrep);
+        buttonGroupDatePrep.add(nonDatePrep);
 
         remarqueLabel = new JLabel("Remarque : ");
         remarqueLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -136,8 +137,6 @@ public class PanneauInsertion extends JPanel
         panneauFormulaire.add(codeBarreLabel);
         codeBarreCombo = new JComboBox();  // COMBOBOX A REMPLIR AVEC LA BD --> peu etre mieux de mettre le libellé que le matricule
         panneauFormulaire.add(codeBarreCombo);
-        /*codeBarreText = new JTextField();
-        panneauFormulaire.add(codeBarreText);*/
 
         matriculeCuiLabel = new JLabel("Matricule cuisinier :");
         matriculeCuiLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -145,8 +144,6 @@ public class PanneauInsertion extends JPanel
         panneauFormulaire.add(matriculeCuiLabel);
         matriculeCuiCombo = new JComboBox();   // COMBOBOX a remplir avec la BD
         panneauFormulaire.add(matriculeCuiCombo);
-        /*matriculeCuiText = new JTextField();
-        panneauFormulaire.add(matriculeCuiText);*/
 
         matriculeResLabel = new JLabel("Matricule responsable :");
         matriculeResLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -154,8 +151,6 @@ public class PanneauInsertion extends JPanel
         panneauFormulaire.add(matriculeResLabel);
         matriculeResCombo = new JComboBox(); // COMBOBOX a remplir avec la BD
         panneauFormulaire.add(matriculeResCombo);
-        /*matriculeResText = new JTextField();
-        panneauFormulaire.add(matriculeResText);*/
 
 
         //Ajout des boutons au panneauBoutons
@@ -172,10 +167,6 @@ public class PanneauInsertion extends JPanel
         retour.addActionListener(buttonsAndTextsListener);
         validation.addActionListener(buttonsAndTextsListener);
         reinitialiser.addActionListener(buttonsAndTextsListener);
-    }
-
-    public JTextField getNomText() {
-        return nomText;
     }
 
     private class ButtonsAndTextsListener implements ActionListener
@@ -200,6 +191,7 @@ public class PanneauInsertion extends JPanel
                     }
                     catch (Exception error)
                     {
+
                     }
                     if (quantitePrevueText.getText().isEmpty() || quantitePrevue == null)
                     {
@@ -222,11 +214,6 @@ public class PanneauInsertion extends JPanel
                         quantitePrevueText.setText("");
                         quantiteProduiteText.setText("");
                         remarqueText.setText("");
-                        buttonGroup.clearSelection();
-                        nomText.setText("");
-                        codeBarreText.setText("");
-                        matriculeCuiText.setText("");
-                        matriculeResText.setText("");
                     }
                 }
             }
@@ -240,3 +227,22 @@ public class PanneauInsertion extends JPanel
         }
     }
 }
+
+// TEST DB
+/*        DBAccess dBAccess = new DBAccess();
+        Connection connection = dBAccess.getConnection();
+        String sql = "SELECT * FROM dbgrandbazar.ordrepreparation where QuantitePrevue=4;";
+        ResultSet data;
+        String nomRecetteOrdre="";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            data = statement.executeQuery();
+            while (data.next()){
+                nomRecetteOrdre = data.getString("Nom");
+            }
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        System.out.println(nomRecetteOrdre);*/
+// FIN TEST DB

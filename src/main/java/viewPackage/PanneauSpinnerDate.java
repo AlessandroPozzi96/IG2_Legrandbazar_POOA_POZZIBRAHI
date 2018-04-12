@@ -19,7 +19,7 @@ public class PanneauSpinnerDate extends JPanel
 
     public PanneauSpinnerDate() {
         this.setLayout(new BorderLayout());
-/*        calendar.setTime(new Date());
+        /*
         //Ajout des labels/spinners
         jour = new JLabel("JJ :");
         jour.setHorizontalAlignment(SwingConstants.LEFT);
@@ -58,9 +58,11 @@ public class PanneauSpinnerDate extends JPanel
 
     public void reinitialiserChamps ()
     {
-        spinnerJours.setValue(calendar.get(Calendar.DAY_OF_MONTH));
+        /*spinnerJours.setValue(calendar.get(Calendar.DAY_OF_MONTH));
         spinnerMois.setValue(monthStrings[0]);
-        spinnerAnnees.setValue(calendar.get(Calendar.YEAR));
+        spinnerAnnees.setValue(calendar.get(Calendar.YEAR));*/
+        calendar.setTime(new Date());
+        spinnerDate.setValue(calendar.getTime());
     }
 
     public JSpinner getSpinnerDate() {

@@ -16,7 +16,7 @@ public class PanneauListing extends JPanel {
     PanneauListing(){
 
         setController(new ApplicationController());
-        //this.setLayout(new BorderLayout());
+        this.setLayout(new BorderLayout());
 
         try{
             ordrePreparations = controller.getAllOrdres();

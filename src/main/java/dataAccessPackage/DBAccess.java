@@ -124,7 +124,7 @@ public class DBAccess implements DataAccess
                 GregorianCalendar calendar = new GregorianCalendar();
                 sqlDate = data.getDate("Date");
                 calendar.setTime(sqlDate);
-                ordrePreparation.setDate(null); // --->>>>>>  DATE A NULL
+                ordrePreparation.setDate(calendar); // --->>>>>>  DATE A NULL
                 // NumeroSequentiel
                 ordrePreparation.setNumeroSequentiel(data.getInt("NumeroSequentiel"));
                 // QuantitePrevue

@@ -5,6 +5,7 @@ import modelPackage.OrdrePreparation;
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class AllOrdresPreparationModel extends AbstractTableModel {
 
@@ -35,7 +36,7 @@ public class AllOrdresPreparationModel extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         OrdrePreparation ordrePreparation = contents.get(rowIndex);
         switch (columnIndex){
-            case 0 : return ordrePreparation.getDate();
+            case 0 : return ordrePreparation.getDate().getTime();
             case 1 : return ordrePreparation.getNumeroSequentiel();
             case 2 : return ordrePreparation.getQuantitePrevue();
             case 3 : {

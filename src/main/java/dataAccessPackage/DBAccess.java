@@ -2,6 +2,7 @@ package dataAccessPackage;
 
 import exceptionPackage.AddOrdreException;
 import exceptionPackage.AllOrdresException;
+import exceptionPackage.AllRecetteNomException;
 import modelPackage.OrdrePreparation;
 
 import java.sql.*;
@@ -174,22 +175,31 @@ public class DBAccess implements DataAccess
 
         return ordres;
     }
-}
 
-/*private Connection connection;
+    @Override
+    public ArrayList<String> getAllRecetteNom() throws AllRecetteNomException {
 
-    {
-        try
-        {
-            //Seb → 159357
-            //Aless → Pa456lOt
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbgrandbazar?useSSL=false","root","Pa456lOt");
-        } catch (Exception e)
-        {
-            e.printStackTrace();
+        ArrayList<String> allRecetteNom = new ArrayList<>();
+
+        if ((connection = SingletonConnection.getInstance()) == null)
+            throw  new AllRecetteNomException("Erreur connexion !");
+
+
+        try {
+            String sql = "SELECT Nom FROM dbgrandbazar.recette"; // Je sais pas si il faut faire le truc avec les ? mais ca me semble inutile
+            statement = connection.prepareStatement(sql);
+            ResultSet data = statement.executeQuery(); // contient les lignes de résultat de la requête
+
+            while(data.next()) {
+                allRecetteNom.add(data.getString("Nom"));
+            }
+
+        } catch (SQLException e) {
+            throw new AllRecetteNomException(e.getMessage());
         }
+
+        return allRecetteNom;
     }
 
-    public Connection getConnection() {
-        return connection;
-    }*/
+
+}

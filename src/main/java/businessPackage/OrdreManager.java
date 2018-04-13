@@ -4,6 +4,7 @@ import dataAccessPackage.DBAccess;
 import dataAccessPackage.DataAccess;
 import exceptionPackage.AddOrdreException;
 import exceptionPackage.AllOrdresException;
+import exceptionPackage.AllRecetteNomException;
 import modelPackage.OrdrePreparation;
 
 import java.util.ArrayList;
@@ -27,5 +28,9 @@ public class OrdreManager
 
     public ArrayList<OrdrePreparation> getAllOrdres () throws AllOrdresException {
         return dao.getAllOrdres();
+    }
+
+    public ArrayList<String> getAllRecetteNom () throws AllRecetteNomException {
+        return dao.getAllRecetteNom();
     }
 }

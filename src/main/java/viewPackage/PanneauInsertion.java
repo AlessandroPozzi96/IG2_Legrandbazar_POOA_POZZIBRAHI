@@ -1,6 +1,7 @@
 package viewPackage;
 
 import controllerPackage.ApplicationController;
+import exceptionPackage.AllRecetteNomException;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
 
 public class PanneauInsertion extends JPanel
 {
@@ -15,6 +17,7 @@ public class PanneauInsertion extends JPanel
     private JLabel recetteLabel, dateLabel, numeroSequencielLabel, quantitePrevueLabel, quantiteProduiteLabel, dateVenteLabel, datePreparationLabel, remarqueLabel, estUrgentLabel, codeBarreLabel, matriculeCuiLabel, matriculeResLabel;
     private JTextField numeroSequentielText, quantitePrevueText, quantiteProduiteText, remarqueText;
     private JComboBox codeBarreCombo, matriculeCuiCombo, matriculeResCombo, recetteCombo;
+    private ArrayList<String> recettes;
     private JButton validation, retour, reinitialiser;
     private PanneauBienvenue panneauBienvenue;
     private JRadioButton urgent, pasUrgent, ouiDateVente, nonDateVente, ouiDatePrep, nonDatePrep;
@@ -23,8 +26,8 @@ public class PanneauInsertion extends JPanel
     private PanneauSpinnerDate spinnerDate, spinnerDateVente, spinnerDatePrep;
     private ApplicationController controller;
 
-    public PanneauInsertion()
-    {
+    public PanneauInsertion() {
+        controller = new ApplicationController();
         //Création des panneaux et de leurs layouts
         this.setLayout(new BorderLayout());
         panneauFormulaire = new JPanel();
@@ -41,7 +44,18 @@ public class PanneauInsertion extends JPanel
         recetteLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         recetteLabel.setToolTipText("Nom de la recette");
         panneauFormulaire.add(recetteLabel);
-        recetteCombo = new JComboBox();    // REMPLIR LA COMBOBOX AVEC LA BD
+
+        recettes = new ArrayList<String>();
+        try {
+            recettes = controller.getAllRecetteNom();
+        } catch (AllRecetteNomException e) {
+            System.out.println("Erreur Recupération des noms de recette");  // Changer en autre que println (Afficher une erreur dans la JCOMBOBOX par ex
+        }
+        recetteCombo = new JComboBox();
+        for(String recetteNom : recettes){
+            recetteCombo.addItem(recetteNom);
+            System.out.println(recetteNom);
+        }
         panneauFormulaire.add(recetteCombo);
 
         dateLabel = new JLabel("Date :");

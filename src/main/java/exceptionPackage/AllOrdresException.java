@@ -10,6 +10,6 @@ public class AllOrdresException extends Exception {
 
     public String getMessage()
     {
-        return "L'erreur suivante s'est produite en voulant ajouter un ordre : " + messageErreur;
+        return "L'erreur suivante s'est produite en voulant faire le listing des ordres : " + messageErreur;
     }
 }

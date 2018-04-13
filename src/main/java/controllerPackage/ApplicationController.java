@@ -3,6 +3,7 @@ package controllerPackage;
 import businessPackage.OrdreManager;
 import exceptionPackage.AddOrdreException;
 import exceptionPackage.AllOrdresException;
+import exceptionPackage.AllRecetteNomException;
 import modelPackage.OrdrePreparation;
 
 import java.util.ArrayList;
@@ -27,5 +28,9 @@ public class ApplicationController
 
     public ArrayList<OrdrePreparation> getAllOrdres () throws AllOrdresException {
         return manager.getAllOrdres();
+    }
+
+    public ArrayList<String> getAllRecetteNom () throws AllRecetteNomException {
+        return manager.getAllRecetteNom();
     }
 }

@@ -2,7 +2,7 @@ package dataAccessPackage;
 
 import exceptionPackage.AddOrdreException;
 import exceptionPackage.AllOrdresException;
-import exceptionPackage.AllRecetteNomException;
+import exceptionPackage.GeneralException;
 import modelPackage.OrdrePreparation;
 
 import java.sql.*;
@@ -177,13 +177,12 @@ public class DBAccess implements DataAccess
     }
 
     @Override
-    public ArrayList<String> getAllRecetteNom() throws AllRecetteNomException {
+    public ArrayList<String> getAllRecetteNom() throws GeneralException {
 
         ArrayList<String> allRecetteNom = new ArrayList<>();
 
         if ((connection = SingletonConnection.getInstance()) == null)
-            throw  new AllRecetteNomException("Erreur connexion !");
-
+            throw  new GeneralException("les noms de recettes","Erreur connexion !");
 
         try {
             String sql = "SELECT Nom FROM dbgrandbazar.recette"; // Je sais pas si il faut faire le truc avec les ? mais ca me semble inutile
@@ -193,13 +192,78 @@ public class DBAccess implements DataAccess
             while(data.next()) {
                 allRecetteNom.add(data.getString("Nom"));
             }
-
         } catch (SQLException e) {
-            throw new AllRecetteNomException(e.getMessage());
+            throw new GeneralException("les noms de recettes",e.getMessage());
         }
-
         return allRecetteNom;
     }
+
+    public ArrayList<String> getCodeBarres () throws GeneralException {
+        ArrayList<String> allCodeBarres = new ArrayList<>();
+        String typeArticle;
+        if ((connection = SingletonConnection.getInstance()) == null)
+            throw  new GeneralException("les code barres","Erreur connexion !");
+
+        try {
+            String sql = "Select CodeBarre, libelle from typearticle;"; // Je sais pas si il faut faire le truc avec les ? mais ca me semble inutile
+            statement = connection.prepareStatement(sql);
+            ResultSet data = statement.executeQuery(); // contient les lignes de résultat de la requête
+
+            while(data.next()) {
+                typeArticle = data.getString("codeBarre");
+                typeArticle += " ("+data.getString("Libelle")+")";
+                allCodeBarres.add(typeArticle);
+            }
+        } catch (SQLException e) {
+            throw new GeneralException("les code barres",e.getMessage());
+        }
+        return allCodeBarres;
+    }
+
+    public ArrayList<String> getMatriculesCui () throws GeneralException {
+        ArrayList<String> allMatriculesCui = new ArrayList<>();
+        String cuisinier;
+        if ((connection = SingletonConnection.getInstance()) == null)
+            throw  new GeneralException("les cuisiniers","Erreur connexion !");
+
+        try {
+            String sql = "Select * From cuisinier inner join membredupersonnel on Matricule_Cui = Matricule;"; // Je sais pas si il faut faire le truc avec les ? mais ca me semble inutile
+            statement = connection.prepareStatement(sql);
+            ResultSet data = statement.executeQuery(); // contient les lignes de résultat de la requête
+
+            while(data.next()) {
+                cuisinier = ""+data.getInt("Matricule_Cui");
+                cuisinier += " ("+data.getString("Nom");
+                cuisinier += " "+data.getString("Prenom")+")";
+                allMatriculesCui.add(cuisinier);
+            }
+        } catch (SQLException e) {
+            throw new GeneralException(e.getMessage(),"les cuisiniers");
+        }
+        return allMatriculesCui;
+    }
+
+    public ArrayList<String> getMatriculesRes () throws GeneralException {
+        ArrayList<String> allMatriculeRes = new ArrayList<>();
+        String responsableVente;
+        if ((connection = SingletonConnection.getInstance()) == null)
+            throw  new GeneralException("les responsables des ventes","Erreur connexion !");
+
+        try {
+            String sql = "Select * From responsablevente inner join membredupersonnel on MatriculeRes = Matricule;"; // Je sais pas si il faut faire le truc avec les ? mais ca me semble inutile
+            statement = connection.prepareStatement(sql);
+            ResultSet data = statement.executeQuery(); // contient les lignes de résultat de la requête
+
+            while(data.next()) {
+                responsableVente = ""+data.getInt("MatriculeRes");
+                responsableVente += " ("+data.getString("Nom");
+                responsableVente += " "+data.getString("Prenom")+")";
+                allMatriculeRes.add(responsableVente);
+            }
+        } catch (SQLException e) {
+            throw new GeneralException(e.getMessage(),"les responsables des ventes");
+        }
+        return allMatriculeRes;    }
 
 
 }

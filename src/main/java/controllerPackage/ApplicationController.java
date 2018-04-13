@@ -3,7 +3,7 @@ package controllerPackage;
 import businessPackage.OrdreManager;
 import exceptionPackage.AddOrdreException;
 import exceptionPackage.AllOrdresException;
-import exceptionPackage.AllRecetteNomException;
+import exceptionPackage.GeneralException;
 import modelPackage.OrdrePreparation;
 
 import java.util.ArrayList;
@@ -30,7 +30,21 @@ public class ApplicationController
         return manager.getAllOrdres();
     }
 
-    public ArrayList<String> getAllRecetteNom () throws AllRecetteNomException {
+    public ArrayList<String> getAllRecetteNom () throws GeneralException {
         return manager.getAllRecetteNom();
     }
+
+    public ArrayList<String> getCodeBarres () throws GeneralException {
+        return manager.getCodeBarres();
+    }
+
+    public ArrayList<String> getMatriculesCui () throws GeneralException {
+        return manager.getMatriculesCui();
+    }
+
+    public ArrayList<String> getMatriculesRes () throws GeneralException {
+        return manager.getMatriculesRes();
+    }
+
+
 }

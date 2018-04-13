@@ -1,7 +1,7 @@
 package viewPackage;
 
 import controllerPackage.ApplicationController;
-import exceptionPackage.AllRecetteNomException;
+import exceptionPackage.GeneralException;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +17,7 @@ public class PanneauInsertion extends JPanel
     private JLabel recetteLabel, dateLabel, numeroSequencielLabel, quantitePrevueLabel, quantiteProduiteLabel, dateVenteLabel, datePreparationLabel, remarqueLabel, estUrgentLabel, codeBarreLabel, matriculeCuiLabel, matriculeResLabel;
     private JTextField numeroSequentielText, quantitePrevueText, quantiteProduiteText, remarqueText;
     private JComboBox codeBarreCombo, matriculeCuiCombo, matriculeResCombo, recetteCombo;
-    private ArrayList<String> recettes;
+    private ArrayList<String> recettes, codeBarres, matriculesCui, matriculesRes;
     private JButton validation, retour, reinitialiser;
     private PanneauBienvenue panneauBienvenue;
     private JRadioButton urgent, pasUrgent, ouiDateVente, nonDateVente, ouiDatePrep, nonDatePrep;
@@ -48,13 +48,12 @@ public class PanneauInsertion extends JPanel
         recettes = new ArrayList<String>();
         try {
             recettes = controller.getAllRecetteNom();
-        } catch (AllRecetteNomException e) {
+        } catch (GeneralException e) {
             System.out.println("Erreur Recupération des noms de recette");  // Changer en autre que println (Afficher une erreur dans la JCOMBOBOX par ex
         }
         recetteCombo = new JComboBox();
         for(String recetteNom : recettes){
             recetteCombo.addItem(recetteNom);
-            System.out.println(recetteNom);
         }
         panneauFormulaire.add(recetteCombo);
 
@@ -150,21 +149,52 @@ public class PanneauInsertion extends JPanel
         codeBarreLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         codeBarreLabel.setToolTipText("Référence vers le type d'article quand il sera mis en vente");
         panneauFormulaire.add(codeBarreLabel);
-        codeBarreCombo = new JComboBox();  // COMBOBOX A REMPLIR AVEC LA BD --> peu etre mieux de mettre le libellé que le matricule
+
+        codeBarres = new ArrayList<String>();
+        try {
+            codeBarres = controller.getCodeBarres();
+        } catch (GeneralException e) {
+            e.printStackTrace();
+        }
+        codeBarreCombo = new JComboBox();
+        for(String codeBarre : codeBarres){
+            codeBarreCombo.addItem(codeBarre);
+        }
         panneauFormulaire.add(codeBarreCombo);
 
         matriculeCuiLabel = new JLabel("Matricule cuisinier :");
         matriculeCuiLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         matriculeCuiLabel.setToolTipText("Référence vers le cuisinier à qui la préparation a été attribué");
         panneauFormulaire.add(matriculeCuiLabel);
-        matriculeCuiCombo = new JComboBox();   // COMBOBOX a remplir avec la BD
+
+        matriculesCui = new ArrayList<String>();
+        try {
+            matriculesCui = controller.getMatriculesCui();
+        } catch (GeneralException e) {
+            e.printStackTrace();
+        }
+        matriculeCuiCombo = new JComboBox();
+        for(String matriculeCui : matriculesCui){
+            matriculeCuiCombo.addItem(matriculeCui);
+        }
         panneauFormulaire.add(matriculeCuiCombo);
+
 
         matriculeResLabel = new JLabel("Matricule responsable :");
         matriculeResLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         matriculeResLabel.setToolTipText("Référence vers la responsable des ventes qui a créé l'ordre");
         panneauFormulaire.add(matriculeResLabel);
-        matriculeResCombo = new JComboBox(); // COMBOBOX a remplir avec la BD
+
+        matriculesRes = new ArrayList<String>();
+        try {
+            matriculesRes = controller.getMatriculesRes();
+        } catch (GeneralException e) {
+            e.printStackTrace();
+        }
+        matriculeResCombo = new JComboBox();
+        for(String matriculeRes : matriculesRes){
+            matriculeResCombo.addItem(matriculeRes);
+        }
         panneauFormulaire.add(matriculeResCombo);
 
 

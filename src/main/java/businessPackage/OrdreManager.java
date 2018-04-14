@@ -5,6 +5,7 @@ import dataAccessPackage.DataAccess;
 import exceptionPackage.AddOrdreException;
 import exceptionPackage.AllOrdresException;
 import exceptionPackage.GeneralException;
+import exceptionPackage.ModelException;
 import modelPackage.OrdrePreparation;
 
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class OrdreManager
         dao.addOrdre(ordrePreparation);
     }
 
-    public ArrayList<OrdrePreparation> getAllOrdres () throws AllOrdresException {
+    public ArrayList<OrdrePreparation> getAllOrdres () throws AllOrdresException, ModelException {
         return dao.getAllOrdres();
     }
 
@@ -44,5 +45,10 @@ public class OrdreManager
 
     public ArrayList<String> getMatriculesRes () throws GeneralException {
         return dao.getMatriculesRes();
+    }
+
+    public Integer getNumeroSequentiel () throws GeneralException
+    {
+        return dao.getNumeroSequentiel();
     }
 }

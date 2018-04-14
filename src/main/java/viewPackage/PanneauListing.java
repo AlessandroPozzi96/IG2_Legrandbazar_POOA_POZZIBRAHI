@@ -2,6 +2,7 @@ package viewPackage;
 
 import controllerPackage.ApplicationController;
 import exceptionPackage.AllOrdresException;
+import exceptionPackage.ModelException;
 import modelPackage.OrdrePreparation;
 
 import javax.swing.*;
@@ -21,6 +22,10 @@ public class PanneauListing extends JPanel {
         try{
             ordrePreparations = controller.getAllOrdres();
         }catch (AllOrdresException e){
+
+        }
+        catch (ModelException e)
+        {
 
         }
 

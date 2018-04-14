@@ -16,6 +16,6 @@ public interface DataAccess
     ArrayList<String> getCodeBarres () throws GeneralException;
     ArrayList<String> getMatriculesCui () throws GeneralException;
     ArrayList<String> getMatriculesRes () throws GeneralException;
-
+    Integer getNumeroSequentiel () throws GeneralException;
 
 }

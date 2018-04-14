@@ -4,6 +4,7 @@ import businessPackage.OrdreManager;
 import exceptionPackage.AddOrdreException;
 import exceptionPackage.AllOrdresException;
 import exceptionPackage.GeneralException;
+import exceptionPackage.ModelException;
 import modelPackage.OrdrePreparation;
 
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class ApplicationController
         manager.addOrdre(ordrePreparation);
     }
 
-    public ArrayList<OrdrePreparation> getAllOrdres () throws AllOrdresException {
+    public ArrayList<OrdrePreparation> getAllOrdres () throws AllOrdresException, ModelException {
         return manager.getAllOrdres();
     }
 
@@ -46,5 +47,8 @@ public class ApplicationController
         return manager.getMatriculesRes();
     }
 
-
+    public Integer getNumeroSquentiel() throws GeneralException
+    {
+        return manager.getNumeroSequentiel ();
+    }
 }

@@ -266,5 +266,13 @@ public class DBAccess implements DataAccess
         }
         return allMatriculeRes;    }
 
+        public Integer getNumeroSequentiel () throws GeneralException
+        {
+            ArrayList<Integer> numerosSquentiel = new ArrayList<>();
+            Integer numeroSequentielMax = 0;
+
+
+            return numeroSequentielMax;
+        }
 
 }

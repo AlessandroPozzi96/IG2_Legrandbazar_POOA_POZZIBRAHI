@@ -3,6 +3,7 @@ package dataAccessPackage;
 import exceptionPackage.AddOrdreException;
 import exceptionPackage.AllOrdresException;
 import exceptionPackage.GeneralException;
+import exceptionPackage.ModelException;
 import modelPackage.OrdrePreparation;
 
 import java.sql.*;
@@ -98,7 +99,7 @@ public class DBAccess implements DataAccess
         }
     }
 
-    public ArrayList<OrdrePreparation> getAllOrdres () throws AllOrdresException
+    public ArrayList<OrdrePreparation> getAllOrdres () throws AllOrdresException, ModelException
     {
 
         ArrayList<OrdrePreparation> ordres = new ArrayList<>();

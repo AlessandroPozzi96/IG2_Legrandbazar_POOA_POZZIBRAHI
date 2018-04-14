@@ -1,5 +1,7 @@
 package modelPackage;
 
+import exceptionPackage.ModelException;
+
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -21,11 +23,21 @@ public class OrdrePreparation {
     public OrdrePreparation() {
     }
 
-    public void setCodeBarre(Integer codeBarre) {
+    public void setCodeBarre(Integer codeBarre) throws ModelException
+    {
+        if (this.codeBarre == null || this.codeBarre <= 0)
+        {
+            throw  new ModelException("CodeBarre");
+        }
         this.codeBarre = codeBarre;
     }
 
-    public void setDate(GregorianCalendar date) {
+    public void setDate(GregorianCalendar date) throws ModelException
+    {
+        if (this.date == null)
+        {
+            throw new ModelException("date");
+        }
         this.date = date;
     }
 
@@ -37,31 +49,66 @@ public class OrdrePreparation {
         this.dateVente = dateVente;
     }
 
-    public void setNumeroSequentiel(Integer numeroSequentiel) {
+    public void setNumeroSequentiel(Integer numeroSequentiel) throws ModelException
+    {
+        if (this.numeroSequentiel == null || this.numeroSequentiel <= 0)
+        {
+            throw new ModelException("numeroSequentiel");
+        }
         this.numeroSequentiel = numeroSequentiel;
     }
 
-    public void setEstUrgent(Boolean estUrgent) {
+    public void setEstUrgent(Boolean estUrgent) throws ModelException
+    {
+        if (this.estUrgent == null)
+        {
+            throw new ModelException("estUrgent");
+        }
         this.estUrgent = estUrgent;
     }
 
-    public void setNom(String nom) {
+    public void setNom(String nom) throws ModelException
+    {
+        if (this.nom == null || !this.nom.matches(".*[a-zA-Z].*"))
+        {
+            throw new ModelException("nom");
+        }
         this.nom = nom;
     }
 
-    public void setMatricule_Cui(Integer matricule_Cui) {
+    public void setMatricule_Cui(Integer matricule_Cui) throws ModelException
+    {
+        if (this.matricule_Cui != null && this.matricule_Cui <= 0)
+        {
+            throw new ModelException("matricule_Cui");
+        }
         this.matricule_Cui = matricule_Cui;
     }
 
-    public void setMatricule_Res(Integer matricule_Res) {
+    public void setMatricule_Res(Integer matricule_Res) throws ModelException
+    {
+        if (this.matricule_Res == null || this.matricule_Res <= 0)
+        {
+            throw new ModelException("matricule_Res");
+        }
         this.matricule_Res = matricule_Res;
     }
 
-    public void setQuantitePrevue(Integer quantitePrevue) {
+    public void setQuantitePrevue(Integer quantitePrevue) throws ModelException
+    {
+        if (this.quantitePrevue == null || this.quantitePrevue <= 0)
+        {
+            throw new ModelException("quantitePrevue");
+        }
         this.quantitePrevue = quantitePrevue;
     }
 
-    public void setQuantiteProduite(Integer quantiteProduite) {
+    public void setQuantiteProduite(Integer quantiteProduite) throws ModelException
+    {
+        if (this.quantiteProduite != null && quantiteProduite <= 0)
+        {
+            throw new ModelException("quantiteProduite");
+        }
         this.quantiteProduite = quantiteProduite;
     }
 
@@ -113,7 +160,8 @@ public class OrdrePreparation {
         return matricule_Cui;
     }
 
-    public Integer getMatricule_Res() {
+    public Integer getMatricule_Res()
+    {
         return matricule_Res;
     }
 

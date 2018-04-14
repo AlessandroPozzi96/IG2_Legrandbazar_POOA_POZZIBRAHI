@@ -18,15 +18,15 @@ public class PanneauListing extends JPanel {
 
         setController(new ApplicationController());
         this.setLayout(new BorderLayout());
-
+        ordrePreparations = new ArrayList<>();
         try{
             ordrePreparations = controller.getAllOrdres();
         }catch (AllOrdresException e){
-
+            System.out.println("Erreur AllOrdreException");
         }
         catch (ModelException e)
         {
-
+            System.out.println("Erreur ModelException");
         }
 
         /* TEST

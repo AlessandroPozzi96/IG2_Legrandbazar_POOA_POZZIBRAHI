@@ -25,18 +25,18 @@ public class OrdrePreparation {
 
     public void setCodeBarre(Integer codeBarre) throws ModelException
     {
+        this.codeBarre = codeBarre;
+
         if (this.codeBarre == null || this.codeBarre <= 0)
             throw  new ModelException("CodeBarre");
-        else
-            this.codeBarre = codeBarre;
     }
 
     public void setDate(GregorianCalendar date) throws ModelException
     {
+        this.date = date;
+
         if (this.date == null)
             throw new ModelException("date");
-        else
-            this.date = date;
     }
 
     public void setDatePreparation(GregorianCalendar datePreparation) {
@@ -49,58 +49,58 @@ public class OrdrePreparation {
 
     public void setNumeroSequentiel(Integer numeroSequentiel) throws ModelException
     {
+        this.numeroSequentiel = numeroSequentiel;
+
         if (this.numeroSequentiel == null || this.numeroSequentiel <= 0)
             throw new ModelException("numeroSequentiel");
-        else
-            this.numeroSequentiel = numeroSequentiel;
     }
 
     public void setEstUrgent(Boolean estUrgent) throws ModelException
     {
+        this.estUrgent = estUrgent;
+
         if (this.estUrgent == null)
             throw new ModelException("estUrgent");
-        else
-            this.estUrgent = estUrgent;
     }
 
     public void setNom(String nom) throws ModelException
     {
+        this.nom = nom;
+
         if (this.nom == null || !this.nom.matches(".*[a-zA-Z].*"))
             throw new ModelException("nom");
-        else
-            this.nom = nom;
     }
 
     public void setMatricule_Cui(Integer matricule_Cui) throws ModelException
     {
+        this.matricule_Cui = matricule_Cui;
+
         if (this.matricule_Cui != null && this.matricule_Cui <= 0)
             throw new ModelException("matricule_Cui");
-        else
-            this.matricule_Cui = matricule_Cui;
     }
 
     public void setMatricule_Res(Integer matricule_Res) throws ModelException
     {
+        this.matricule_Res = matricule_Res;
+
         if (this.matricule_Res == null || this.matricule_Res <= 0)
             throw new ModelException("matricule_Res");
-        else
-            this.matricule_Res = matricule_Res;
     }
 
     public void setQuantitePrevue(Integer quantitePrevue) throws ModelException
     {
+        this.quantitePrevue = quantitePrevue;
+
         if (this.quantitePrevue == null || this.quantitePrevue <= 0)
             throw new ModelException("quantitePrevue");
-        else
-            this.quantitePrevue = quantitePrevue;
     }
 
     public void setQuantiteProduite(Integer quantiteProduite) throws ModelException
     {
+        this.quantiteProduite = quantiteProduite;
+
         if (this.quantiteProduite != null && quantiteProduite <= 0)
             throw new ModelException("quantiteProduite");
-        else
-            this.quantiteProduite = quantiteProduite;
     }
 
     public void setRemarque(String remarque) {

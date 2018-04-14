@@ -271,6 +271,29 @@ public class DBAccess implements DataAccess
             ArrayList<Integer> numerosSquentiel = new ArrayList<>();
             Integer numeroSequentielMax = 0;
 
+            if ((connection = SingletonConnection.getInstance()) == null)
+                throw  new GeneralException("les numeros sequentiel","Erreur connexion !");
+
+            try
+            {
+                String sql = "SELECT numeroSequentiel FROM dbgrandbazar.ordrePreparation";
+                statement = connection.prepareStatement(sql);
+                ResultSet data = statement.executeQuery(); // contient les lignes de résultat de la requête
+
+                while(data.next()) {
+                    numerosSquentiel.add(data.getInt("numeroSequentiel"));
+                }
+            } catch (SQLException e) {
+                throw new GeneralException("les numeros sequentiel",e.getMessage());
+            }
+
+            for (Integer numeros : numerosSquentiel)
+            {
+                if (numeros > numeroSequentielMax)
+                {
+                    numeroSequentielMax = numeros;
+                }
+            }
 
             return numeroSequentielMax;
         }

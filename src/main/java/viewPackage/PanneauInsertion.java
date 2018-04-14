@@ -25,6 +25,7 @@ public class PanneauInsertion extends JPanel
     private FonctionEcouteurs fonctionEcouteurs;
     private PanneauSpinnerDate spinnerDate, spinnerDateVente, spinnerDatePrep;
     private ApplicationController controller;
+    private Integer dernierNumeroSequentiel;
 
     public PanneauInsertion() {
         controller = new ApplicationController();
@@ -70,7 +71,16 @@ public class PanneauInsertion extends JPanel
         numeroSequencielLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         numeroSequencielLabel.setToolTipText("Numéro séquentiel auto incrémenté");
         panneauFormulaire.add(numeroSequencielLabel);
+        try
+        {
+            dernierNumeroSequentiel = controller.getNumeroSquentiel() + 1; //On ajoute 1 pour le nouveau ordre qui va être créer
+        }
+        catch (GeneralException e)
+        {
+            System.out.println("Erreur le dernier numéro séquentiel ne peut pas être obtenu");
+        }
         numeroSequentielText = new JTextField();
+        numeroSequentielText.setText(String.valueOf(dernierNumeroSequentiel));
         numeroSequentielText.setEnabled(false);
         panneauFormulaire.add(numeroSequentielText);
 

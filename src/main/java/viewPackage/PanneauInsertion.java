@@ -1,7 +1,10 @@
 package viewPackage;
 
 import controllerPackage.ApplicationController;
+import exceptionPackage.AddOrdreException;
 import exceptionPackage.GeneralException;
+import exceptionPackage.ModelException;
+import modelPackage.OrdrePreparation;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,6 +29,7 @@ public class PanneauInsertion extends JPanel
     private PanneauSpinnerDate spinnerDate, spinnerDateVente, spinnerDatePrep;
     private ApplicationController controller;
     private Integer dernierNumeroSequentiel;
+    private OrdrePreparation ordrePreparation;
 
     public PanneauInsertion() {
         controller = new ApplicationController();
@@ -261,9 +265,9 @@ public class PanneauInsertion extends JPanel
                         }
                     }
 
+                    Integer quantiteProduite = null;
                     if (!quantiteProduiteText.getText().isEmpty())
                     {
-                        Integer quantiteProduite = -1;
                         try
                         {
                             quantiteProduite = Integer.valueOf(quantiteProduiteText.getText());
@@ -285,6 +289,54 @@ public class PanneauInsertion extends JPanel
                             }
                         }
                     }
+                    //Ajout de l'ordre dans la DB
+                    ordrePreparation = new OrdrePreparation();
+                    try
+                    {
+                        ordrePreparation.setDate(spinnerDate.getDate());
+                        ordrePreparation.setNumeroSequentiel(dernierNumeroSequentiel);
+                        ordrePreparation.setQuantitePrevue(quantitePrevue);
+                        ordrePreparation.setQuantiteProduite(quantiteProduite);
+                        if (ouiDateVente.isSelected())
+                        {
+                            ordrePreparation.setDateVente(spinnerDateVente.getDate());
+                        }
+                        else
+                        {
+                            ordrePreparation.setDateVente(null);
+                        }
+                        if (ouiDatePrep.isSelected())
+                        {
+                            ordrePreparation.setDatePreparation(spinnerDatePrep.getDate());
+                        }
+                        else
+                        {
+                            ordrePreparation.setDatePreparation(null);
+                        }
+
+                        ordrePreparation.setRemarque(remarqueText.getText());
+                        ordrePreparation.setEstUrgent(urgent.isSelected());
+                        ordrePreparation.setNom(recettes.get(recetteCombo.getSelectedIndex()));
+                        char cB = codeBarres.get(codeBarreCombo.getSelectedIndex()).charAt(0);
+                        Integer cBN = Character.getNumericValue(cB);
+                        ordrePreparation.setCodeBarre(cBN);
+                        char matriCui = matriculesCui.get(matriculeCuiCombo.getSelectedIndex()).charAt(0);
+                        Integer matriC = Character.getNumericValue(matriCui);
+                        ordrePreparation.setMatricule_Cui(matriC);
+                        char matriRes = matriculesRes.get(matriculeResCombo.getSelectedIndex()).charAt(0);
+                        Integer matriR = Character.getNumericValue(matriRes);
+                        ordrePreparation.setMatricule_Res(matriR);
+
+                        controller.addOrdre(ordrePreparation);
+                    }
+                    catch (ModelException eME)
+                    {
+                        eME.getMessage();
+                    }
+                    catch (AddOrdreException eAO)
+                    {
+                        eAO.getMessage();
+                    }
                 }
                 else
                 {
@@ -305,8 +357,8 @@ public class PanneauInsertion extends JPanel
 
     private class ItemsListener implements ItemListener
     {
-        public void itemStateChanged(ItemEvent e) {
-
+        public void itemStateChanged(ItemEvent e)
+        {
         }
     }
 }

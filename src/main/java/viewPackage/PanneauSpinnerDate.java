@@ -15,10 +15,39 @@ public class PanneauSpinnerDate extends JPanel
     private SpinnerNumberModel yearsModel, daysModel;
     private SpinnerDateModel spinnerDateModel;
     private JLabel jour, mois, annee;
-    private Calendar calendar = new GregorianCalendar();
+    private Calendar calendar = Calendar.getInstance();
 
     public PanneauSpinnerDate() {
         this.setLayout(new BorderLayout());
+        //Version avec un modelDate
+        spinnerDateModel = new SpinnerDateModel();
+        spinnerDateModel.setValue(calendar.getTime());
+        spinnerDate = new JSpinner(spinnerDateModel);
+        this.add(spinnerDate, BorderLayout.WEST);
+    }
+
+    public void reinitialiserChamps ()
+    {
+        spinnerDate.setValue(calendar.getTime());
+    }
+
+    public GregorianCalendar getDate ()
+    {
+        Date date;
+        Calendar cal = new GregorianCalendar();
+        cal.setTime((Date)spinnerDate.getValue());
+        return (GregorianCalendar) cal;
+    }
+
+    public JSpinner getSpinnerDate() {
+        return spinnerDate;
+    }
+
+    public void setSpinnerDate(JSpinner spinnerDate) {
+        this.spinnerDate = spinnerDate;
+    }
+}
+
         /*
         //Ajout des labels/spinners
         jour = new JLabel("JJ :");
@@ -49,27 +78,3 @@ public class PanneauSpinnerDate extends JPanel
         yearsModel = new SpinnerNumberModel(value, min, max, step);
         spinnerAnnees = new JSpinner(yearsModel);
         this.add(spinnerAnnees);*/
-
-        //Version avec un modelDate
-        spinnerDateModel = new SpinnerDateModel();
-        spinnerDate = new JSpinner(spinnerDateModel);
-        this.add(spinnerDate, BorderLayout.WEST);
-    }
-
-    public void reinitialiserChamps ()
-    {
-        /*spinnerJours.setValue(calendar.get(Calendar.DAY_OF_MONTH));
-        spinnerMois.setValue(monthStrings[0]);
-        spinnerAnnees.setValue(calendar.get(Calendar.YEAR));*/
-        calendar.setTime(new Date());
-        spinnerDate.setValue(calendar.getTime());
-    }
-
-    public JSpinner getSpinnerDate() {
-        return spinnerDate;
-    }
-
-    public void setSpinnerDate(JSpinner spinnerDate) {
-        this.spinnerDate = spinnerDate;
-    }
-}

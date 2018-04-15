@@ -345,7 +345,6 @@ public class PanneauInsertion extends JPanel
                         spinnerDate.reinitialiserChamps();
                         spinnerDateVente.reinitialiserChamps();
                         spinnerDatePrep.reinitialiserChamps();
-                        numeroSequentielText.setText("");
                         quantitePrevueText.setText("");
                         quantiteProduiteText.setText("");
                         remarqueText.setText("");

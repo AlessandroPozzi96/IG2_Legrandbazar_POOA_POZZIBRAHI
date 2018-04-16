@@ -47,13 +47,13 @@ public class AllOrdresPreparationModel extends AbstractTableModel {
             }
             case 4 : {
                 if(ordrePreparation.getDateVente() != null){
-                    return ordrePreparation.getDateVente();
+                    return ordrePreparation.getDateVente().getTime();
                 }
                 else return null;
             }
             case 5 : {
                 if(ordrePreparation.getDatePreparation() != null){
-                    return ordrePreparation.getDatePreparation();
+                    return ordrePreparation.getDatePreparation().getTime();
                 }
                 else return null;
             }

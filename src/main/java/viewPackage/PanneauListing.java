@@ -45,6 +45,7 @@ public class PanneauListing extends JPanel {
 
         AllOrdresPreparationModel allOrdresPreparationModel = new AllOrdresPreparationModel(ordrePreparations);
         JTable table = new JTable(allOrdresPreparationModel);
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         JScrollPane scrollPane = new JScrollPane(table);
        this.add(scrollPane);
 

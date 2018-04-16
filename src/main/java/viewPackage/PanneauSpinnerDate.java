@@ -33,7 +33,6 @@ public class PanneauSpinnerDate extends JPanel
 
     public GregorianCalendar getDate ()
     {
-        Date date;
         Calendar cal = new GregorianCalendar();
         cal.setTime((Date)spinnerDate.getValue());
         return (GregorianCalendar) cal;

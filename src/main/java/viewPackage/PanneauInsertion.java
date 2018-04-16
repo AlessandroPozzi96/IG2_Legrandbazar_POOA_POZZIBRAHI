@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class PanneauInsertion extends JPanel
 {
     private JPanel panneauFormulaire, panneauBoutons;
-    private JLabel recetteLabel, dateLabel, numeroSequencielLabel, quantitePrevueLabel, quantiteProduiteLabel, dateVenteLabel, datePreparationLabel, remarqueLabel, estUrgentLabel, codeBarreLabel, matriculeCuiLabel, matriculeResLabel;
+    private JLabel recetteLabel, dateLabel, numeroSequencielLabel, quantitePrevueLabel, quantiteProduiteLabel, dateVenteLabel, datePreparationLabel, remarqueLabel, codeBarreLabel, matriculeCuiLabel, matriculeResLabel;
     private JTextField numeroSequentielText, quantitePrevueText, quantiteProduiteText, remarqueText;
     private JComboBox codeBarreCombo, matriculeCuiCombo, matriculeResCombo, recetteCombo;
     private ArrayList<String> recettes, codeBarres, matriculesCui, matriculesRes;
@@ -31,7 +31,8 @@ public class PanneauInsertion extends JPanel
     private Integer dernierNumeroSequentiel;
     private OrdrePreparation ordrePreparation;
 
-    public PanneauInsertion() {
+    public PanneauInsertion()
+    {
         controller = new ApplicationController();
         //Création des panneaux et de leurs layouts
         this.setLayout(new BorderLayout());
@@ -50,7 +51,7 @@ public class PanneauInsertion extends JPanel
         recetteLabel.setToolTipText("Nom de la recette");
         panneauFormulaire.add(recetteLabel);
 
-        recettes = new ArrayList<String>();
+        recettes = new ArrayList<>();
         try {
             recettes = controller.getAllRecetteNom();
         } catch (GeneralException e) {
@@ -164,7 +165,7 @@ public class PanneauInsertion extends JPanel
         codeBarreLabel.setToolTipText("Référence vers le type d'article quand il sera mis en vente");
         panneauFormulaire.add(codeBarreLabel);
 
-        codeBarres = new ArrayList<String>();
+        codeBarres = new ArrayList<>();
         try {
             codeBarres = controller.getCodeBarres();
         } catch (GeneralException e) {
@@ -181,7 +182,7 @@ public class PanneauInsertion extends JPanel
         matriculeCuiLabel.setToolTipText("Référence vers le cuisinier à qui la préparation a été attribué");
         panneauFormulaire.add(matriculeCuiLabel);
 
-        matriculesCui = new ArrayList<String>();
+        matriculesCui = new ArrayList<>();
         try {
             matriculesCui = controller.getMatriculesCui();
         } catch (GeneralException e) {
@@ -199,7 +200,7 @@ public class PanneauInsertion extends JPanel
         matriculeResLabel.setToolTipText("Référence vers la responsable des ventes qui a créé l'ordre");
         panneauFormulaire.add(matriculeResLabel);
 
-        matriculesRes = new ArrayList<String>();
+        matriculesRes = new ArrayList<>();
         try {
             matriculesRes = controller.getMatriculesRes();
         } catch (GeneralException e) {
@@ -326,8 +327,12 @@ public class PanneauInsertion extends JPanel
                         char matriRes = matriculesRes.get(matriculeResCombo.getSelectedIndex()).charAt(0);
                         Integer matriR = Character.getNumericValue(matriRes);
                         ordrePreparation.setMatricule_Res(matriR);
-
                         controller.addOrdre(ordrePreparation);
+                        //Affichage d'un message de confirmation  de l'insertion + réinitialisation des champs
+                        JOptionPane.showMessageDialog(null, "Confirmation de l'insertion de l'ordre !", "Information", JOptionPane.INFORMATION_MESSAGE);
+                        PanneauInsertion.this.removeAll();
+                        PanneauInsertion.this.add(new PanneauInsertion());
+                        PanneauInsertion.this.validate();
                     }
                     catch (ModelException eME)
                     {
@@ -342,16 +347,21 @@ public class PanneauInsertion extends JPanel
                 {
                     if (e.getSource() == reinitialiser)
                     {
-                        spinnerDate.reinitialiserChamps();
-                        spinnerDateVente.reinitialiserChamps();
-                        spinnerDatePrep.reinitialiserChamps();
-                        quantitePrevueText.setText("");
-                        quantiteProduiteText.setText("");
-                        remarqueText.setText("");
+                        reinitialiser();
                     }
                 }
             }
         }
+    }
+
+    public void reinitialiser ()
+    {
+        spinnerDate.reinitialiserChamps();
+        spinnerDateVente.reinitialiserChamps();
+        spinnerDatePrep.reinitialiserChamps();
+        quantitePrevueText.setText("");
+        quantiteProduiteText.setText("");
+        remarqueText.setText("");
     }
 
     private class ItemsListener implements ItemListener

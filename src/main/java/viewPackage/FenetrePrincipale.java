@@ -100,7 +100,6 @@ public class FenetrePrincipale extends JFrame
                     frameContainer.removeAll();
                     panneauInsertion = new PanneauInsertion();
                     frameContainer.add(panneauInsertion);
-                    frameContainer.repaint();
                     frameContainer.validate();
                 }
                 else

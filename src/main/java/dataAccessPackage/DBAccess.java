@@ -122,7 +122,12 @@ public class DBAccess implements DataAccess
                 // LES CHAMPS OBLIGATOIRES
                 //DATE
                 java.sql.Date sqlDate;
+
                 GregorianCalendar calendar = new GregorianCalendar();
+                // Peut pas utiliser le même calendar pour les 3 dates, pq ? Ou refaire un calendar = new GregorianCalendar avant l'utilisation
+                GregorianCalendar calendarVente = new GregorianCalendar();
+                GregorianCalendar calendarPreparation = new GregorianCalendar();
+
                 sqlDate = data.getDate("Date");
                 calendar.setTime(sqlDate);
                 ordrePreparation.setDate(calendar);
@@ -147,15 +152,17 @@ public class DBAccess implements DataAccess
                 // DateVente
                 sqlDate = data.getDate("DateVente");
                 if(! data.wasNull()){
-                    calendar.setTime(sqlDate);
-                    ordrePreparation.setDateVente(calendar);
+                    calendarVente.setTime(sqlDate);
+                    ordrePreparation.setDateVente(calendarVente);
                 }
                 // DatePreparation
                 sqlDate = data.getDate("DatePreparation");
                 if(! data.wasNull()){
-                    calendar.setTime(sqlDate);
-                    ordrePreparation.setDatePreparation(calendar);
+
+                    calendarPreparation.setTime(sqlDate);
+                    ordrePreparation.setDatePreparation(calendarPreparation);
                 }
+
                 // Remarque
                 remarque = data.getString("Remarque");
                 if(! data.wasNull()){
@@ -167,13 +174,19 @@ public class DBAccess implements DataAccess
                     ordrePreparation.setMatricule_Cui(matricule_Cui);
                 }
                 ordres.add(ordrePreparation);
+
+                //System.out.println(ordrePreparation.getDate().getTime());
+                /*if(ordrePreparation.getDateVente() !=null){
+                    System.out.println(ordrePreparation.getDateVente().getTime());
+                }
+                if(ordrePreparation.getDatePreparation() !=null){
+                    System.out.println(ordrePreparation.getDatePreparation().getTime());
+                }*/
             }
 
         } catch (SQLException e) {
             throw new AllOrdresException(e.getMessage());
         }
-
-
         return ordres;
     }
 

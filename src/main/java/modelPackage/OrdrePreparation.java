@@ -34,7 +34,6 @@ public class OrdrePreparation {
     public void setDate(GregorianCalendar date) throws ModelException
     {
         this.date = date;
-
         if (this.date == null)
             throw new ModelException("date");
     }
@@ -43,14 +42,13 @@ public class OrdrePreparation {
         this.datePreparation = datePreparation;
     }
 
-    public void setDateVente(GregorianCalendar dateVente) {
-        this.dateVente = dateVente;
+    public void setDateVente(GregorianCalendar dateVenteee) {
+        this.dateVente = dateVenteee;
     }
 
     public void setNumeroSequentiel(Integer numeroSequentiel) throws ModelException
     {
         this.numeroSequentiel = numeroSequentiel;
-
         if (this.numeroSequentiel == null || this.numeroSequentiel <= 0)
             throw new ModelException("numeroSequentiel");
     }
@@ -124,10 +122,14 @@ public class OrdrePreparation {
     }
 
     public GregorianCalendar getDateVente() {
-        return dateVente;
+        if(dateVente!=null)         System.out.println(this.dateVente.getTime());
+
+        return this.dateVente;
     }
 
     public GregorianCalendar getDatePreparation() {
+        if(datePreparation!=null)         System.out.println(this.datePreparation.getTime());
+
         return datePreparation;
     }
 

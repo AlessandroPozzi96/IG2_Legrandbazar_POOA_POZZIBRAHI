@@ -29,8 +29,8 @@ public class PanneauListing extends JPanel {
             System.out.println("Erreur ModelException");
         }
 
-        /* TEST
-        System.out.println(ordrePreparations.get(0).getDate());
+         //TEST
+        /*System.out.println(ordrePreparations.get(0).getDate());
         System.out.println(ordrePreparations.get(0).getNumeroSequentiel());
         System.out.println(ordrePreparations.get(0).getQuantitePrevue());
         System.out.println(ordrePreparations.get(0).getQuantiteProduite());
@@ -42,6 +42,10 @@ public class PanneauListing extends JPanel {
         System.out.println(ordrePreparations.get(0).getCodeBarre());
         System.out.println(ordrePreparations.get(0).getMatricule_Cui());
         System.out.println(ordrePreparations.get(0).getMatricule_Res());*/
+
+   /*     if (ordrePreparations.get(5).getDate().equals(ordrePreparations.get(5).getDatePreparation())) {
+            System.out.println("Date similaires !");
+        }*/
 
         AllOrdresPreparationModel allOrdresPreparationModel = new AllOrdresPreparationModel(ordrePreparations);
         JTable table = new JTable(allOrdresPreparationModel);

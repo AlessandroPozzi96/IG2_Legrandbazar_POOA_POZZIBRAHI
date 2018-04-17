@@ -9,17 +9,14 @@ import java.util.GregorianCalendar;
 
 public class PanneauSpinnerDate extends JPanel
 {
-    private JSpinner spinnerMois, spinnerJours, spinnerAnnees, spinnerDate;
-    private String[] monthStrings = {"Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Aout", "Septembre", "Octobre", "Novembre", "Décembre"};
-    private SpinnerListModel monthModel;
-    private SpinnerNumberModel yearsModel, daysModel;
+    private JSpinner spinnerDate;
     private SpinnerDateModel spinnerDateModel;
-    private JLabel jour, mois, annee;
-    private Calendar calendar = Calendar.getInstance();
+    private Calendar calendar;
 
     public PanneauSpinnerDate() {
         this.setLayout(new BorderLayout());
         //Version avec un modelDate
+        calendar = Calendar.getInstance();
         spinnerDateModel = new SpinnerDateModel();
         spinnerDateModel.setValue(calendar.getTime());
         spinnerDate = new JSpinner(spinnerDateModel);
@@ -28,22 +25,15 @@ public class PanneauSpinnerDate extends JPanel
 
     public void reinitialiserChamps ()
     {
+        calendar = Calendar.getInstance();
         spinnerDate.setValue(calendar.getTime());
     }
 
     public GregorianCalendar getDate ()
     {
         Calendar cal = new GregorianCalendar();
-        cal.setTime((Date)spinnerDate.getValue());
+        cal.setTime((Date) spinnerDate.getValue());
         return (GregorianCalendar) cal;
-    }
-
-    public JSpinner getSpinnerDate() {
-        return spinnerDate;
-    }
-
-    public void setSpinnerDate(JSpinner spinnerDate) {
-        this.spinnerDate = spinnerDate;
     }
 }
 

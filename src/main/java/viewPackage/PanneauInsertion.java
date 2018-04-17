@@ -328,6 +328,7 @@ public class PanneauInsertion extends JPanel
                         Integer matriR = Character.getNumericValue(matriRes);
                         ordrePreparation.setMatricule_Res(matriR);
                         controller.addOrdre(ordrePreparation);
+
                         //Affichage d'un message de confirmation  de l'insertion + réinitialisation des champs
                         JOptionPane.showMessageDialog(null, "Confirmation de l'insertion de l'ordre !", "Information", JOptionPane.INFORMATION_MESSAGE);
                         PanneauInsertion.this.removeAll();

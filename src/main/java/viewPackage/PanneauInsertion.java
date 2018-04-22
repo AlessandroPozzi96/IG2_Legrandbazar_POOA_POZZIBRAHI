@@ -25,7 +25,6 @@ public class PanneauInsertion extends JPanel
     private PanneauBienvenue panneauBienvenue;
     private JRadioButton urgent, pasUrgent, ouiDateVente, nonDateVente, ouiDatePrep, nonDatePrep;
     private ButtonGroup buttonGroup, buttonGroupDateVente, buttonGroupDatePrep;
-    private FonctionEcouteurs fonctionEcouteurs;
     private PanneauSpinnerDate spinnerDate, spinnerDateVente, spinnerDatePrep;
     private ApplicationController controller;
     private Integer dernierNumeroSequentiel;
@@ -244,106 +243,7 @@ public class PanneauInsertion extends JPanel
             {
                 if (e.getSource() == validation)
                 {
-                    Integer quantitePrevue = -1;
-                    try
-                    {
-                        quantitePrevue = Integer.valueOf(quantitePrevueText.getText());
-                    }
-                    catch (Exception error)
-                    {
-                        quantitePrevue = null;
-                    }
-                    finally
-                    {
-                        if (quantitePrevueText.getText().isEmpty() || quantitePrevue == null || quantitePrevue <= 0)
-                        {
-                            JOptionPane.showMessageDialog(null, "Quantité prévue incorrecte !", "Erreur", JOptionPane.ERROR_MESSAGE);
-                            quantitePrevueText.setBackground(Color.RED);
-                        }
-                        else
-                        {
-                            quantitePrevueText.setBackground(Color.WHITE);
-                        }
-                    }
-
-                    Integer quantiteProduite = null;
-                    if (!quantiteProduiteText.getText().isEmpty())
-                    {
-                        try
-                        {
-                            quantiteProduite = Integer.valueOf(quantiteProduiteText.getText());
-                        }
-                        catch (Exception error)
-                        {
-                            quantiteProduite = null;
-                        }
-                        finally
-                        {
-                            if (quantiteProduite == null || quantiteProduite <= 0)
-                            {
-                                JOptionPane.showMessageDialog(null, "Quantité produite incorrecte !", "Erreur", JOptionPane.ERROR_MESSAGE);
-                                quantiteProduiteText.setBackground(Color.RED);
-                            }
-                            else
-                            {
-                                quantiteProduiteText.setBackground(Color.WHITE);
-                            }
-                        }
-                    }
-                    //Ajout de l'ordre dans la DB
-                    ordrePreparation = new OrdrePreparation();
-                    try
-                    {
-                        ordrePreparation.setDate(spinnerDate.getDate());
-                        /*ordrePreparation.setNumeroSequentiel(dernierNumeroSequentiel);*/
-                        ordrePreparation.setNumeroSequentiel(0);
-                        ordrePreparation.setQuantitePrevue(quantitePrevue);
-                        ordrePreparation.setQuantiteProduite(quantiteProduite);
-                        if (ouiDateVente.isSelected())
-                        {
-                            ordrePreparation.setDateVente(spinnerDateVente.getDate());
-                        }
-                        else
-                        {
-                            ordrePreparation.setDateVente(null);
-                        }
-                        if (ouiDatePrep.isSelected())
-                        {
-                            ordrePreparation.setDatePreparation(spinnerDatePrep.getDate());
-                        }
-                        else
-                        {
-                            ordrePreparation.setDatePreparation(null);
-                        }
-
-                        ordrePreparation.setRemarque(remarqueText.getText());
-                        ordrePreparation.setEstUrgent(urgent.isSelected());
-                        ordrePreparation.setNom(recettes.get(recetteCombo.getSelectedIndex()));
-                        char cB = codeBarres.get(codeBarreCombo.getSelectedIndex()).charAt(0);
-                        Integer cBN = Character.getNumericValue(cB);
-                        ordrePreparation.setCodeBarre(cBN);
-                        char matriCui = matriculesCui.get(matriculeCuiCombo.getSelectedIndex()).charAt(0);
-                        Integer matriC = Character.getNumericValue(matriCui);
-                        ordrePreparation.setMatricule_Cui(matriC);
-                        char matriRes = matriculesRes.get(matriculeResCombo.getSelectedIndex()).charAt(0);
-                        Integer matriR = Character.getNumericValue(matriRes);
-                        ordrePreparation.setMatricule_Res(matriR);
-                        controller.addOrdre(ordrePreparation);
-
-                        //Affichage d'un message de confirmation  de l'insertion + réinitialisation des champs
-                        JOptionPane.showMessageDialog(null, "Confirmation de l'insertion de l'ordre !", "Information", JOptionPane.INFORMATION_MESSAGE);
-                        PanneauInsertion.this.removeAll();
-                        PanneauInsertion.this.add(new PanneauInsertion());
-                        PanneauInsertion.this.validate();
-                    }
-                    catch (ModelException eME)
-                    {
-                        eME.getMessage();
-                    }
-                    catch (AddOrdreException eAO)
-                    {
-                        eAO.getMessage();
-                    }
+                    validation();
                 }
                 else
                 {
@@ -372,6 +272,111 @@ public class PanneauInsertion extends JPanel
         {
         }
     }
+
+    public void validation ()
+    {
+        Integer quantitePrevue = -1;
+        try
+        {
+            quantitePrevue = Integer.valueOf(quantitePrevueText.getText());
+        }
+        catch (Exception error)
+        {
+            quantitePrevue = null;
+        }
+        finally
+        {
+            if (quantitePrevueText.getText().isEmpty() || quantitePrevue == null || quantitePrevue <= 0)
+            {
+                JOptionPane.showMessageDialog(null, "Quantité prévue incorrecte !", "Erreur", JOptionPane.ERROR_MESSAGE);
+                quantitePrevueText.setBackground(Color.RED);
+            }
+            else
+            {
+                quantitePrevueText.setBackground(Color.WHITE);
+            }
+        }
+
+        Integer quantiteProduite = null;
+        if (!quantiteProduiteText.getText().isEmpty())
+        {
+            try
+            {
+                quantiteProduite = Integer.valueOf(quantiteProduiteText.getText());
+            }
+            catch (Exception error)
+            {
+                quantiteProduite = null;
+            }
+            finally
+            {
+                if (quantiteProduite == null || quantiteProduite <= 0)
+                {
+                    JOptionPane.showMessageDialog(null, "Quantité produite incorrecte !", "Erreur", JOptionPane.ERROR_MESSAGE);
+                    quantiteProduiteText.setBackground(Color.RED);
+                }
+                else
+                {
+                    quantiteProduiteText.setBackground(Color.WHITE);
+                }
+            }
+        }
+        //Ajout de l'ordre dans la DB
+        ordrePreparation = new OrdrePreparation();
+        try
+        {
+            ordrePreparation.setDate(spinnerDate.getDate());
+            /*ordrePreparation.setNumeroSequentiel(dernierNumeroSequentiel);*/
+            ordrePreparation.setNumeroSequentiel(0);
+            ordrePreparation.setQuantitePrevue(quantitePrevue);
+            ordrePreparation.setQuantiteProduite(quantiteProduite);
+            if (ouiDateVente.isSelected())
+            {
+                ordrePreparation.setDateVente(spinnerDateVente.getDate());
+            }
+            else
+            {
+                ordrePreparation.setDateVente(null);
+            }
+            if (ouiDatePrep.isSelected())
+            {
+                ordrePreparation.setDatePreparation(spinnerDatePrep.getDate());
+            }
+            else
+            {
+                ordrePreparation.setDatePreparation(null);
+            }
+
+            ordrePreparation.setRemarque(remarqueText.getText());
+            ordrePreparation.setEstUrgent(urgent.isSelected());
+            ordrePreparation.setNom(recettes.get(recetteCombo.getSelectedIndex()));
+            char cB = codeBarres.get(codeBarreCombo.getSelectedIndex()).charAt(0);
+            Integer cBN = Character.getNumericValue(cB);
+            ordrePreparation.setCodeBarre(cBN);
+            char matriCui = matriculesCui.get(matriculeCuiCombo.getSelectedIndex()).charAt(0);
+            Integer matriC = Character.getNumericValue(matriCui);
+            ordrePreparation.setMatricule_Cui(matriC);
+            char matriRes = matriculesRes.get(matriculeResCombo.getSelectedIndex()).charAt(0);
+            Integer matriR = Character.getNumericValue(matriRes);
+            ordrePreparation.setMatricule_Res(matriR);
+            controller.addOrdre(ordrePreparation);
+
+            //Affichage d'un message de confirmation  de l'insertion + réinitialisation des champs
+            JOptionPane.showMessageDialog(null, "Confirmation de l'insertion de l'ordre !", "Information", JOptionPane.INFORMATION_MESSAGE);
+            PanneauInsertion.this.removeAll();
+            PanneauInsertion.this.add(new PanneauInsertion());
+            PanneauInsertion.this.validate();
+        }
+        catch (ModelException eME)
+        {
+            eME.getMessage();
+        }
+        catch (AddOrdreException eAO)
+        {
+            eAO.getMessage();
+        }
+    }
+
 }
 
 // TEST DB

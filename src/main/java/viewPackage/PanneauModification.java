@@ -1,54 +1,98 @@
 package viewPackage;
 
+import controllerPackage.ApplicationController;
+import exceptionPackage.AllOrdresException;
+import exceptionPackage.GeneralException;
+import exceptionPackage.ModelException;
+import modelPackage.OrdrePreparation;
+
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
-public class PanneauModification extends JPanel {
+public class PanneauModification extends JPanel
+{
     private JPanel panneauModifications, panneauBoutons;
-    private JList<String> ordresList;
-    private JLabel numeroIdentifiant, nomLabel, dateLabel, quantitePrevueLabel, quantiteProduiteLabel, dateVenteLabel, datePreparationLabel, remarqueLabel, estUrgentLabel, codeBarreLabel, matriculeCuiLabel, matriculeResLabel;
-    private JTextField nomText, quantitePrevueText, quantiteProduiteText, remarqueText, codeBarreText, matriculeCuiText, matriculeResText;
+    private ArrayList<OrdrePreparation> ordres;
+    private JComboBox ordresJCombo, recetteCombo, codeBarreCombo, matriculeCuiCombo, matriculeResCombo;
+    private JLabel ordresLabel, recetteLabel, quantitePrevueLabel, quantiteProduiteLabel, dateVenteLabel, datePreparationLabel, remarqueLabel, codeBarreLabel, matriculeCuiLabel, matriculeResLabel;
+    private JTextField quantitePrevueText, quantiteProduiteText, remarqueText;
     private JButton validation, retour, reinitialiser;
     private PanneauBienvenue panneauBienvenue;
-    private JRadioButton urgent, pasUrgent;
-    private ButtonGroup buttonGroup;
-    //Tableau qui simule un accès à la base de données
-    private String[] ordresDB = {"---Veuillez choisir un ordre---", "040420181", "040420182", "050420183", "040420184"};
-    private FonctionEcouteurs fonctionEcouteurs;
+    private JRadioButton urgent, pasUrgent, ouiDateVente, nonDateVente, ouiDatePrep, nonDatePrep;
+    private ButtonGroup buttonGroup, buttonGroupDateVente, buttonGroupDatePrep;
     private PanneauSpinnerDate spinnerDateVente, spinnerDatePrep;
+    private ApplicationController controller;
+    private DateFormat dateFormat;
+    private ArrayList<String> recettes, codeBarres, matriculesCui, matriculesRes;
 
     public PanneauModification()
     {
         //On créé les différents panneaux
         this.setLayout(new BorderLayout());
         panneauModifications = new JPanel();
-        panneauModifications.setLayout(new GridLayout(11, 2, 3, 3));
+        panneauModifications.setLayout(new GridLayout(13, 2, 3, 3));
         this.add(panneauModifications, BorderLayout.CENTER);
         panneauBoutons = new JPanel();
         panneauBoutons.setLayout(new FlowLayout());
         this.add(panneauBoutons, BorderLayout.SOUTH);
 
         //On créé les labels + les champs
-        numeroIdentifiant = new JLabel("Numéro identifiant de l'ordre :");
-        numeroIdentifiant.setHorizontalAlignment(SwingConstants.RIGHT);
-        numeroIdentifiant.setToolTipText("Choississez le numéro de l'ordre (Combinaison de la date et d'un numéro séquentiel)");
-        panneauModifications.add(numeroIdentifiant);
-        ordresList = new JList<>(ordresDB);
-        ordresList.setSelectedIndex(0);
-        ordresList.setVisibleRowCount(1);
-        ordresList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        panneauModifications.add(new JScrollPane(ordresList));
+        ordresLabel = new JLabel("Listes des ordres :");
+        ordresLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        ordresLabel.setToolTipText("Choississez l'ordre que vous voulez modifier ");
+        panneauModifications.add(ordresLabel);
+        setController(new ApplicationController());
 
-        nomLabel = new JLabel("Nom :");
-        nomLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        nomLabel.setToolTipText("Nom de la recette");
-        panneauModifications.add(nomLabel);
-        nomText = new JTextField();
-        panneauModifications.add(nomText);
+        ordres = new ArrayList<>();
+        try
+        {
+            ordres = controller.getAllOrdres();
+        }
+        catch (AllOrdresException e)
+        {
+            e.printStackTrace();
+        }
+        catch (ModelException e)
+        {
+            e.printStackTrace();
+        }
+        ordresJCombo = new JComboBox();
+        dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String dateString;
+        for (OrdrePreparation ordresCombox : ordres)
+        {
+            java.util.Date date = ordresCombox.getDate().getTime();
+            dateString = dateFormat.format(date);
+            ordresJCombo.addItem(ordresCombox.getNumeroSequentiel() + " -> " + dateString);
+        }
+        ordresJCombo.setMaximumRowCount(3);
+        panneauModifications.add(ordresJCombo);
+
+        recetteLabel = new JLabel("Recette :");
+        recetteLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        recetteLabel.setToolTipText("Nom de la recette à changer");
+        panneauModifications.add(recetteLabel);
+
+        recettes = new ArrayList<>();
+        try
+        {
+            recettes = controller.getAllRecetteNom();
+        } catch (GeneralException e)
+        {
+            System.out.println("Erreur Recupération des noms de recette");  // Changer en autre que println (Afficher une erreur dans la JCOMBOBOX par ex
+        }
+        recetteCombo = new JComboBox();
+        for(String recetteNom : recettes){
+            recetteCombo.addItem(recetteNom);
+        }
+        panneauModifications.add(recetteCombo);
 
         quantitePrevueLabel = new JLabel("Quantité prévue :");
         quantitePrevueLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -71,11 +115,33 @@ public class PanneauModification extends JPanel {
         spinnerDateVente = new PanneauSpinnerDate();
         panneauModifications.add(spinnerDateVente);
 
+        ouiDateVente = new JRadioButton("Modifier la date de vente", false);
+        ouiDateVente.setHorizontalAlignment(SwingConstants.LEFT);
+        panneauModifications.add(ouiDateVente);
+        nonDateVente = new JRadioButton("Ne pas modifier la date de vente", true);
+        nonDateVente.setHorizontalAlignment(SwingConstants.RIGHT);
+        panneauModifications.add(nonDateVente);
+
+        buttonGroupDateVente = new ButtonGroup();
+        buttonGroupDateVente.add(ouiDateVente);
+        buttonGroupDateVente.add(nonDateVente);
+
         datePreparationLabel = new JLabel("Date de préparation :");
         datePreparationLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         panneauModifications.add(datePreparationLabel);
         spinnerDatePrep = new PanneauSpinnerDate();
         panneauModifications.add(spinnerDatePrep);
+
+        ouiDatePrep = new JRadioButton("Modifier la date de préparation", false);
+        ouiDatePrep.setHorizontalAlignment(SwingConstants.LEFT);
+        panneauModifications.add(ouiDatePrep);
+        nonDatePrep = new JRadioButton("Ne pas modifier la date de préparation", true);
+        nonDatePrep.setHorizontalAlignment(SwingConstants.RIGHT);
+        panneauModifications.add(nonDatePrep);
+
+        buttonGroupDatePrep = new ButtonGroup();
+        buttonGroupDatePrep.add(ouiDatePrep);
+        buttonGroupDatePrep.add(nonDatePrep);
 
         remarqueLabel = new JLabel("Remarque : ");
         remarqueLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -100,22 +166,53 @@ public class PanneauModification extends JPanel {
         codeBarreLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         codeBarreLabel.setToolTipText("Référence vers le type d'article quand il sera mis en vente");
         panneauModifications.add(codeBarreLabel);
-        codeBarreText = new JTextField();
-        panneauModifications.add(codeBarreText);
+
+        codeBarres = new ArrayList<>();
+        try {
+            codeBarres = controller.getCodeBarres();
+        } catch (GeneralException e) {
+            e.printStackTrace();
+        }
+        codeBarreCombo = new JComboBox();
+        for(String codeBarre : codeBarres){
+            codeBarreCombo.addItem(codeBarre);
+        }
+        panneauModifications.add(codeBarreCombo);
 
         matriculeCuiLabel = new JLabel("Matricule cuisinier :");
         matriculeCuiLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         matriculeCuiLabel.setToolTipText("Référence vers le cuisinier à qui la préparation a été attribué");
         panneauModifications.add(matriculeCuiLabel);
-        matriculeCuiText = new JTextField();
-        panneauModifications.add(matriculeCuiText);
+
+        matriculesCui = new ArrayList<>();
+        try {
+            matriculesCui = controller.getMatriculesCui();
+        } catch (GeneralException e) {
+            e.printStackTrace();
+        }
+        matriculeCuiCombo = new JComboBox();
+        for(String matriculeCui : matriculesCui){
+            matriculeCuiCombo.addItem(matriculeCui);
+        }
+        panneauModifications.add(matriculeCuiCombo);
+
 
         matriculeResLabel = new JLabel("Matricule responsable :");
         matriculeResLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         matriculeResLabel.setToolTipText("Référence vers la responsable des ventes qui a créé l'ordre");
         panneauModifications.add(matriculeResLabel);
-        matriculeResText = new JTextField();
-        panneauModifications.add(matriculeResText);
+
+        matriculesRes = new ArrayList<>();
+        try {
+            matriculesRes = controller.getMatriculesRes();
+        } catch (GeneralException e) {
+            e.printStackTrace();
+        }
+        matriculeResCombo = new JComboBox();
+        for(String matriculeRes : matriculesRes){
+            matriculeResCombo.addItem(matriculeRes);
+        }
+        panneauModifications.add(matriculeResCombo);
 
         //Ajout des boutons au panneauBoutons
         retour = new JButton("Retour");
@@ -147,31 +244,13 @@ public class PanneauModification extends JPanel {
             {
                 if (e.getSource() == validation)
                 {
-                    if (nomText.getText().isEmpty())
-                    {
-                        //JOptionPane.showMessageDialog(null, "Message d'erreur", "Erreur", JOptionPane.PLAIN_MESSAGE);
-                        nomText.setBackground(Color.RED);
-                    }
-                    else
-                    {
-                        nomText.setBackground(Color.WHITE);
-                    }
+
                 }
                 else
                 {
                     if (e.getSource() == reinitialiser)
                     {
-                        spinnerDatePrep.reinitialiserChamps();
-                        spinnerDateVente.reinitialiserChamps();
-                        ordresList.clearSelection();
-                        buttonGroup.clearSelection();
-                        quantitePrevueText.setText("");
-                        quantiteProduiteText.setText("");
-                        remarqueText.setText("");
-                        nomText.setText("");
-                        codeBarreText.setText("");
-                        matriculeCuiText.setText("");
-                        matriculeResText.setText("");
+                       reinitialiser();
                     }
                 }
             }
@@ -187,4 +266,67 @@ public class PanneauModification extends JPanel {
         }
     }
 
+    public void setController(ApplicationController controller) {
+        this.controller = controller;
+    }
+
+    public void reinitialiser ()
+    {
+        spinnerDateVente.reinitialiserChamps();
+        spinnerDatePrep.reinitialiserChamps();
+        quantitePrevueText.setText("");
+        quantiteProduiteText.setText("");
+        remarqueText.setText("");
+    }
+
+    public void validation ()
+    {
+        Integer quantitePrevue = -1;
+        try
+        {
+            quantitePrevue = Integer.valueOf(quantitePrevueText.getText());
+        }
+        catch (Exception error)
+        {
+            quantitePrevue = null;
+        }
+        finally
+        {
+            if (quantitePrevueText.getText().isEmpty() || quantitePrevue == null || quantitePrevue <= 0)
+            {
+                JOptionPane.showMessageDialog(null, "Quantité prévue incorrecte !", "Erreur", JOptionPane.ERROR_MESSAGE);
+                quantitePrevueText.setBackground(Color.RED);
+            }
+            else
+            {
+                quantitePrevueText.setBackground(Color.WHITE);
+            }
+        }
+
+        Integer quantiteProduite = null;
+        if (!quantiteProduiteText.getText().isEmpty())
+        {
+            try
+            {
+                quantiteProduite = Integer.valueOf(quantiteProduiteText.getText());
+            }
+            catch (Exception error)
+            {
+                quantiteProduite = null;
+            }
+            finally
+            {
+                if (quantiteProduite == null || quantiteProduite <= 0)
+                {
+                    JOptionPane.showMessageDialog(null, "Quantité produite incorrecte !", "Erreur", JOptionPane.ERROR_MESSAGE);
+                    quantiteProduiteText.setBackground(Color.RED);
+                }
+                else
+                {
+                    quantiteProduiteText.setBackground(Color.WHITE);
+                }
+            }
+        }
+        //Modification de l'ordre dans la DB
+    }
 }

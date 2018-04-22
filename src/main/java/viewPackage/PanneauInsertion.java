@@ -295,7 +295,8 @@ public class PanneauInsertion extends JPanel
                     try
                     {
                         ordrePreparation.setDate(spinnerDate.getDate());
-                        ordrePreparation.setNumeroSequentiel(dernierNumeroSequentiel);
+                        /*ordrePreparation.setNumeroSequentiel(dernierNumeroSequentiel);*/
+                        ordrePreparation.setNumeroSequentiel(0);
                         ordrePreparation.setQuantitePrevue(quantitePrevue);
                         ordrePreparation.setQuantiteProduite(quantiteProduite);
                         if (ouiDateVente.isSelected())

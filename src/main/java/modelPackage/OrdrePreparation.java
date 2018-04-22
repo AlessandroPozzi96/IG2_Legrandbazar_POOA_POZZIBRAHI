@@ -49,7 +49,7 @@ public class OrdrePreparation {
     public void setNumeroSequentiel(Integer numeroSequentiel) throws ModelException
     {
         this.numeroSequentiel = numeroSequentiel;
-        if (this.numeroSequentiel == null || this.numeroSequentiel <= 0)
+        if (this.numeroSequentiel == null)
             throw new ModelException("numeroSequentiel");
     }
 

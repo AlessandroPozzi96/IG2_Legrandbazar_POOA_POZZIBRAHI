@@ -1,9 +1,6 @@
 package dataAccessPackage;
 
-import exceptionPackage.AddOrdreException;
-import exceptionPackage.AllOrdresException;
-import exceptionPackage.GeneralException;
-import exceptionPackage.ModelException;
+import exceptionPackage.*;
 import modelPackage.OrdrePreparation;
 
 import java.sql.*;
@@ -311,4 +308,84 @@ public class DBAccess implements DataAccess
             return numeroSequentielMax;
         }
 
+    @Override
+    public void updateOrdre(OrdrePreparation ordrePreparation) throws UpdateOrdreException
+    {
+        if ((connection = SingletonConnection.getInstance()) == null)
+            throw  new UpdateOrdreException("Erreur connexion !");
+
+        try
+        {
+            String sql = "update ordrepreparation set Date = ?, QuantitePrevue = ?, QuantiteProduite = ?, DateVente = ?, DatePreparation = ?, Remarque = ?, estUrgent = ?, Nom = ?, CodeBarre = ?, Matricule_Cui = ?, Matricule_Res = ? where NumeroSequentiel = '"+ ordrePreparation.getNumeroSequentiel() +"' ";
+            statement = connection.prepareStatement(sql);
+            java.sql.Date sqlDate = new java.sql.Date(ordrePreparation.getDate().getTimeInMillis());
+            statement.setDate(1, sqlDate);
+            statement.setInt(2, ordrePreparation.getQuantitePrevue());
+
+            if (ordrePreparation.getQuantiteProduite() != null) {
+                statement.setInt(3, ordrePreparation.getQuantiteProduite());
+            }
+            else
+            {
+                statement.setNull(3, Types.INTEGER);
+            }
+
+            if (ordrePreparation.getDateVente() != null)
+            {
+                sqlDate.setTime(ordrePreparation.getDateVente().getTimeInMillis());
+                statement.setDate(4, sqlDate);
+            }
+            else
+            {
+                statement.setNull(4, Types.TIMESTAMP);
+            }
+
+            if (ordrePreparation.getDatePreparation() != null)
+            {
+                sqlDate.setTime(ordrePreparation.getDatePreparation().getTimeInMillis());
+                statement.setDate(5, sqlDate);
+            }
+            else
+            {
+                statement.setNull(5, Types.TIMESTAMP);
+            }
+
+            if (ordrePreparation.getRemarque() != null)
+            {
+                statement.setString(6, ordrePreparation.getRemarque());
+            }
+            else
+            {
+                statement.setNull(6, Types.VARCHAR);
+            }
+
+            statement.setBoolean(7, ordrePreparation.getEstUrgent());
+            statement.setString(8, ordrePreparation.getNom());
+
+            if (ordrePreparation.getCodeBarre() != null)
+            {
+                statement.setInt(9, ordrePreparation.getCodeBarre());
+            }
+            else
+            {
+                statement.setNull(9, Types.INTEGER);
+            }
+
+            if (ordrePreparation.getMatricule_Cui() != null)
+            {
+                statement.setInt(10, ordrePreparation.getMatricule_Cui());
+            }
+            else
+            {
+                statement.setNull(10, Types.INTEGER);
+            }
+
+            statement.setInt(11, ordrePreparation.getMatricule_Res());
+            statement.executeUpdate();
+        }
+        catch (SQLException e)
+        {
+            throw new UpdateOrdreException("SQL error");
+        }
+    }
 }

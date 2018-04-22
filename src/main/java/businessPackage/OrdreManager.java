@@ -2,10 +2,7 @@ package businessPackage;
 
 import dataAccessPackage.DBAccess;
 import dataAccessPackage.DataAccess;
-import exceptionPackage.AddOrdreException;
-import exceptionPackage.AllOrdresException;
-import exceptionPackage.GeneralException;
-import exceptionPackage.ModelException;
+import exceptionPackage.*;
 import modelPackage.OrdrePreparation;
 
 import java.util.ArrayList;
@@ -50,5 +47,10 @@ public class OrdreManager
     public Integer getNumeroSequentiel () throws GeneralException
     {
         return dao.getNumeroSequentiel();
+    }
+
+    public void updateOrdre (OrdrePreparation ordrePreparation) throws UpdateOrdreException
+    {
+        dao.updateOrdre(ordrePreparation);
     }
 }

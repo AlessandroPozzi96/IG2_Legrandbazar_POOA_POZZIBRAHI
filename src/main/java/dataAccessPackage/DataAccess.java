@@ -1,9 +1,6 @@
 package dataAccessPackage;
 
-import exceptionPackage.AddOrdreException;
-import exceptionPackage.AllOrdresException;
-import exceptionPackage.GeneralException;
-import exceptionPackage.ModelException;
+import exceptionPackage.*;
 import modelPackage.OrdrePreparation;
 
 import java.util.ArrayList;
@@ -17,5 +14,6 @@ public interface DataAccess
     ArrayList<String> getMatriculesCui () throws GeneralException;
     ArrayList<String> getMatriculesRes () throws GeneralException;
     Integer getNumeroSequentiel () throws GeneralException;
+    void updateOrdre(OrdrePreparation ordrePreparation) throws UpdateOrdreException;
 
 }

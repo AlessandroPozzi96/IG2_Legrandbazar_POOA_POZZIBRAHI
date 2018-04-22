@@ -1,10 +1,7 @@
 package controllerPackage;
 
 import businessPackage.OrdreManager;
-import exceptionPackage.AddOrdreException;
-import exceptionPackage.AllOrdresException;
-import exceptionPackage.GeneralException;
-import exceptionPackage.ModelException;
+import exceptionPackage.*;
 import modelPackage.OrdrePreparation;
 
 import java.util.ArrayList;
@@ -50,5 +47,10 @@ public class ApplicationController
     public Integer getNumeroSquentiel() throws GeneralException
     {
         return manager.getNumeroSequentiel ();
+    }
+
+    public void updateOrdre (OrdrePreparation ordrePreparation) throws UpdateOrdreException
+    {
+        manager.updateOrdre(ordrePreparation);
     }
 }

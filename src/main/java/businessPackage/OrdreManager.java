@@ -4,6 +4,7 @@ import dataAccessPackage.DBAccess;
 import dataAccessPackage.DataAccess;
 import exceptionPackage.*;
 import modelPackage.OrdrePreparation;
+import modelPackage.Reservation;
 
 import java.util.ArrayList;
 
@@ -55,5 +56,9 @@ public class OrdreManager
     }
     public void supprimerOrdre(int numeroSequentiel)throws GeneralException {
         dao.supprimerOrdre(numeroSequentiel);
+    }
+
+    public ArrayList<Reservation> getForeignKeyReservation(int numeroSequentie) throws GeneralException {
+        return dao.getForeignKeyReservation(numeroSequentie);
     }
 }

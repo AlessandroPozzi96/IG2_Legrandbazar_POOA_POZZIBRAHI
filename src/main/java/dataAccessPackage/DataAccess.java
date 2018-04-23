@@ -2,6 +2,7 @@ package dataAccessPackage;
 
 import exceptionPackage.*;
 import modelPackage.OrdrePreparation;
+import modelPackage.Reservation;
 
 import java.util.ArrayList;
 
@@ -16,4 +17,6 @@ public interface DataAccess
     Integer getNumeroSequentiel () throws GeneralException;
     void updateOrdre(OrdrePreparation ordrePreparation) throws UpdateOrdreException;
     public void supprimerOrdre(int numeroSequentiel) throws GeneralException;
+
+    ArrayList<Reservation> getForeignKeyReservation(int numeroSequentie) throws GeneralException;
 }

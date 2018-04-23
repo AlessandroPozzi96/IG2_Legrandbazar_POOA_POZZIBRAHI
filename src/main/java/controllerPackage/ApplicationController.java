@@ -3,6 +3,7 @@ package controllerPackage;
 import businessPackage.OrdreManager;
 import exceptionPackage.*;
 import modelPackage.OrdrePreparation;
+import modelPackage.Reservation;
 
 import java.util.ArrayList;
 
@@ -54,7 +55,11 @@ public class ApplicationController
         manager.updateOrdre(ordrePreparation);
     }
 
-    public void supprimerOrdre(int numeroSequentiel)throws GeneralException {
+    public void supprimerOrdre(int numeroSequentiel)throws GeneralException  {
         manager.supprimerOrdre(numeroSequentiel);
+    }
+
+    public ArrayList<Reservation> getForeignKeyReservation(int numeroSequentie) throws GeneralException {
+        return manager.getForeignKeyReservation(numeroSequentie);
     }
 }

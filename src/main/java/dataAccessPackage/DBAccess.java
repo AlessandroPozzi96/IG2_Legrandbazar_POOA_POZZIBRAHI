@@ -2,6 +2,7 @@ package dataAccessPackage;
 
 import exceptionPackage.*;
 import modelPackage.OrdrePreparation;
+import modelPackage.Reservation;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.GregorianCalendar;
 public class DBAccess implements DataAccess
 {
     private OrdrePreparation ordrePreparation;
+    private Reservation reservation;
     private Connection connection;
     private PreparedStatement statement;
 
@@ -193,7 +195,7 @@ public class DBAccess implements DataAccess
         ArrayList<String> allRecetteNom = new ArrayList<>();
 
         if ((connection = SingletonConnection.getInstance()) == null)
-            throw  new GeneralException("les noms de recettes","Erreur connexion !");
+            throw  new GeneralException("Erreur connexion !","récupérer les noms de recettes");
 
         try {
             String sql = "SELECT Nom FROM dbgrandbazar.recette"; // Je sais pas si il faut faire le truc avec les ? mais ca me semble inutile
@@ -204,7 +206,7 @@ public class DBAccess implements DataAccess
                 allRecetteNom.add(data.getString("Nom"));
             }
         } catch (SQLException e) {
-            throw new GeneralException("les noms de recettes",e.getMessage());
+            throw new GeneralException(e.getMessage(),"récupérer les noms de recettes");
         }
         return allRecetteNom;
     }
@@ -213,7 +215,7 @@ public class DBAccess implements DataAccess
         ArrayList<String> allCodeBarres = new ArrayList<>();
         String typeArticle;
         if ((connection = SingletonConnection.getInstance()) == null)
-            throw  new GeneralException("les code barres","Erreur connexion !");
+            throw  new GeneralException("Erreur connexion !","récupérer les code barres");
 
         try {
             String sql = "Select CodeBarre, libelle from typearticle;"; // Je sais pas si il faut faire le truc avec les ? mais ca me semble inutile
@@ -226,7 +228,7 @@ public class DBAccess implements DataAccess
                 allCodeBarres.add(typeArticle);
             }
         } catch (SQLException e) {
-            throw new GeneralException("les code barres",e.getMessage());
+            throw new GeneralException(e.getMessage(),"récupérer les code barres");
         }
         return allCodeBarres;
     }
@@ -235,7 +237,7 @@ public class DBAccess implements DataAccess
         ArrayList<String> allMatriculesCui = new ArrayList<>();
         String cuisinier;
         if ((connection = SingletonConnection.getInstance()) == null)
-            throw  new GeneralException("les cuisiniers","Erreur connexion !");
+            throw  new GeneralException("Erreur connexion !","récupérer les cuisiniers");
 
         try {
             String sql = "Select * From cuisinier inner join membredupersonnel on Matricule_Cui = Matricule;"; // Je sais pas si il faut faire le truc avec les ? mais ca me semble inutile
@@ -249,7 +251,7 @@ public class DBAccess implements DataAccess
                 allMatriculesCui.add(cuisinier);
             }
         } catch (SQLException e) {
-            throw new GeneralException(e.getMessage(),"les cuisiniers");
+            throw new GeneralException(e.getMessage(),"récupérer les cuisiniers");
         }
         return allMatriculesCui;
     }
@@ -258,7 +260,7 @@ public class DBAccess implements DataAccess
         ArrayList<String> allMatriculeRes = new ArrayList<>();
         String responsableVente;
         if ((connection = SingletonConnection.getInstance()) == null)
-            throw  new GeneralException("les responsables des ventes","Erreur connexion !");
+            throw  new GeneralException("Erreur connexion !","récupérer les responsables des ventes");
 
         try {
             String sql = "Select * From responsablevente inner join membredupersonnel on MatriculeRes = Matricule;"; // Je sais pas si il faut faire le truc avec les ? mais ca me semble inutile
@@ -272,7 +274,7 @@ public class DBAccess implements DataAccess
                 allMatriculeRes.add(responsableVente);
             }
         } catch (SQLException e) {
-            throw new GeneralException(e.getMessage(),"les responsables des ventes");
+            throw new GeneralException(e.getMessage(),"récupérer les responsables des ventes");
         }
         return allMatriculeRes;    }
 
@@ -282,7 +284,7 @@ public class DBAccess implements DataAccess
             Integer numeroSequentielMax = 0;
 
             if ((connection = SingletonConnection.getInstance()) == null)
-                throw  new GeneralException("les numeros sequentiel","Erreur connexion !");
+                throw  new GeneralException("Erreur connexion !","récupérer les numeros sequentiel");
 
             try
             {
@@ -293,7 +295,7 @@ public class DBAccess implements DataAccess
                     numerosSquentiel.add(data.getInt("numeroSequentiel"));
                 }
             } catch (SQLException e) {
-                throw new GeneralException("les numeros sequentiel",e.getMessage());
+                throw new GeneralException(e.getMessage(),"récupérer les numeros sequentiel");
             }
 
             for (Integer numeros : numerosSquentiel)
@@ -390,7 +392,7 @@ public class DBAccess implements DataAccess
     }
     public void supprimerOrdre(int numeroSequentiel) throws GeneralException {
         if ((connection = SingletonConnection.getInstance()) == null)
-            throw  new GeneralException("les noms de recettes","Erreur connexion !");
+            throw  new GeneralException("Erreur connexion !","Supprimer un ordre");
 
 
         try {
@@ -399,8 +401,42 @@ public class DBAccess implements DataAccess
             statement.setInt(1, numeroSequentiel);
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new GeneralException(e.getMessage(),"Supprimer un ordre");
         }
 
+    }
+
+    public ArrayList<Reservation> getForeignKeyReservation(int numeroSequentie) throws GeneralException {
+        ArrayList<Reservation> reservations = new ArrayList<>();
+
+        if ((connection = SingletonConnection.getInstance()) == null)
+            throw  new GeneralException("Erreur connexion !","récupérer les foreignKey reservations");
+
+
+        try {
+            String sql = "SELECT * FROM dbgrandbazar.reservation where numeroSequentiel=?";
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1,numeroSequentie);
+            ResultSet data = statement.executeQuery(); // contient les lignes de résultat de la requête
+            ResultSetMetaData meta = data.getMetaData(); // Contient les meta données (nb colonnes, ...)
+
+            while(data.next()){
+
+                reservation = new Reservation();
+                // LES CHAMPS OBLIGATOIRES
+
+                // NumeroSequentiel
+                reservation.setNumeroSequentiel(data.getInt("numeroSequentiel"));
+                // QuantitePrevue
+                reservation.setCodeBarre(data.getInt("codeBarre"));
+                // EstUrgent
+                reservation.setQuantiteReserve(data.getInt("quantiteReserve"));
+                reservations.add(reservation);
+            }
+
+        } catch (SQLException e) {
+            throw new GeneralException(e.getMessage(),"récupérer les foreignKey reservations");
+        }
+        return reservations;
     }
 }

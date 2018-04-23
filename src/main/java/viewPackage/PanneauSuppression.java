@@ -1,10 +1,12 @@
 package viewPackage;
 
+import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 import controllerPackage.ApplicationController;
 import exceptionPackage.AllOrdresException;
 import exceptionPackage.GeneralException;
 import exceptionPackage.ModelException;
 import modelPackage.OrdrePreparation;
+import modelPackage.Reservation;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,7 +25,7 @@ public class PanneauSuppression extends JPanel {
     private JComboBox ordresJCombo;
     private DateFormat dateFormat;
     private JButton retour, suppression;
-
+    private ArrayList<Reservation> reservations;
     public PanneauSuppression(){
         //On créé les différents panneaux
         this.setLayout(new BorderLayout());
@@ -92,7 +94,6 @@ public class PanneauSuppression extends JPanel {
                     }
                     else{
                         suppression();
-                        JOptionPane.showMessageDialog(null, "Confirmation de la suppression de l'ordre !", "Information", JOptionPane.INFORMATION_MESSAGE);
                         PanneauSuppression.this.removeAll();
                         PanneauSuppression.this.add(new PanneauSuppression());
                         PanneauSuppression.this.validate();
@@ -107,10 +108,17 @@ public class PanneauSuppression extends JPanel {
         int i =0;
 
         String [] motSepare = ordrePreparationSelection.split(" ");
-        System.out.println(motSepare[0]);
 
         try {
-            controller.supprimerOrdre(Integer.parseInt(motSepare[0]));
+            reservations = controller.getForeignKeyReservation(Integer.parseInt(motSepare[0]));
+            if(reservations==null){
+                controller.supprimerOrdre(Integer.parseInt(motSepare[0]));
+            }
+            else{
+
+                JOptionPane.showMessageDialog(null, reservations.size()+" clé étrangére présente supprimer quand même ?", "Information", JOptionPane.INFORMATION_MESSAGE);
+                // SUPPRIMER LES CLE ETRANGER + PUIS SUPPRIMER L'ordre
+            }
         } catch (GeneralException e) {
             e.printStackTrace();
         }

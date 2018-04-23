@@ -13,6 +13,7 @@ import java.awt.event.ItemListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 public class PanneauModification extends JPanel
 {
@@ -31,6 +32,7 @@ public class PanneauModification extends JPanel
     private ArrayList<String> recettes, codeBarres, matriculesCui, matriculesRes;
     private OrdrePreparation ordrePreparation;
     private Integer iOrdre = null;
+    private FonctionEcouteurs fonctionEcouteurs;
 
     public PanneauModification()
     {
@@ -64,12 +66,10 @@ public class PanneauModification extends JPanel
             e.printStackTrace();
         }
         ordresJCombo = new JComboBox();
-        dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        String dateString;
+        String dateString = "";
         for (OrdrePreparation ordresCombox : ordres)
         {
-            java.util.Date date = ordresCombox.getDate().getTime();
-            dateString = dateFormat.format(date);
+            dateString = conversionDateVersString(ordresCombox.getDate());
             ordresJCombo.addItem(ordresCombox.getNumeroSequentiel() + " -> " + dateString);
         }
         ordresJCombo.setMaximumRowCount(5);
@@ -267,6 +267,12 @@ public class PanneauModification extends JPanel
             if (e.getStateChange() == ItemEvent.SELECTED)
             {
                 iOrdre = ordresJCombo.getSelectedIndex();
+                String ordre = "<html>" +
+                        "<h1> Date de création :" + conversionDateVersString(ordres.get(iOrdre).getDate()) + " Numéro séquentiel :" + ordres.get(iOrdre).getNumeroSequentiel() + "</h1>" +
+                        "<h2>" + ordres.get(iOrdre).getNom() + "</h2>" +
+                        "<h3> "+ ordres.get(iOrdre).getQuantitePrevue() + "</h3>" +
+                        "</html>";
+                JOptionPane.showMessageDialog(null, ordre, "Ordre de préparation", JOptionPane.INFORMATION_MESSAGE);
             }
         }
     }
@@ -388,9 +394,10 @@ public class PanneauModification extends JPanel
         }
     }
 
-    public void recuperationDateEtNumeroSequentiel()
+    public String conversionDateVersString (GregorianCalendar calendar)
     {
-
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        java.util.Date date = calendar.getTime();
+        return dateFormat.format(date);
     }
-
 }

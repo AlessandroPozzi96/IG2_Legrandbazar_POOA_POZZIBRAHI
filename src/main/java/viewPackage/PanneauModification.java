@@ -1,9 +1,7 @@
 package viewPackage;
 
 import controllerPackage.ApplicationController;
-import exceptionPackage.AllOrdresException;
-import exceptionPackage.GeneralException;
-import exceptionPackage.ModelException;
+import exceptionPackage.*;
 import modelPackage.OrdrePreparation;
 
 import javax.swing.*;
@@ -12,6 +10,8 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -31,6 +31,7 @@ public class PanneauModification extends JPanel
     private ApplicationController controller;
     private DateFormat dateFormat;
     private ArrayList<String> recettes, codeBarres, matriculesCui, matriculesRes;
+    private OrdrePreparation ordrePreparation;
 
     public PanneauModification()
     {
@@ -224,9 +225,11 @@ public class PanneauModification extends JPanel
 
         //Ajout des écouteurs aux boutons
         ButtonsAndTextsListener buttonsAndTextsListener = new ButtonsAndTextsListener();
+        JComboxListener jComboxListener = new JComboxListener();
         retour.addActionListener(buttonsAndTextsListener);
         validation.addActionListener(buttonsAndTextsListener);
         reinitialiser.addActionListener(buttonsAndTextsListener);
+        ordresJCombo.addItemListener(jComboxListener);
     }
 
     private class ButtonsAndTextsListener implements ActionListener
@@ -244,7 +247,7 @@ public class PanneauModification extends JPanel
             {
                 if (e.getSource() == validation)
                 {
-
+                    validation();
                 }
                 else
                 {
@@ -257,12 +260,14 @@ public class PanneauModification extends JPanel
         }
     }
 
-    //Ecouteurs de la liste
-    private class ListListener implements ListSelectionListener
+    private class JComboxListener implements ItemListener
     {
         @Override
-        public void valueChanged(ListSelectionEvent e) {
+        public void itemStateChanged(ItemEvent e) {
+            if (e.getItem() == ordresJCombo)
+            {
 
+            }
         }
     }
 
@@ -328,5 +333,65 @@ public class PanneauModification extends JPanel
             }
         }
         //Modification de l'ordre dans la DB
+        ordrePreparation = new OrdrePreparation();
+        try
+        {
+            Integer ordreIndice = 1;
+            //Récupération de la date et du numéro séquentiel
+            ordrePreparation.setDate(ordres.get(ordreIndice).getDate());
+            ordrePreparation.setNumeroSequentiel(ordres.get(ordreIndice).getNumeroSequentiel());
+            ordrePreparation.setQuantitePrevue(quantitePrevue);
+            ordrePreparation.setQuantiteProduite(quantiteProduite);
+            if (ouiDateVente.isSelected())
+            {
+                ordrePreparation.setDateVente(spinnerDateVente.getDate());
+            }
+            else
+            {
+                ordrePreparation.setDateVente(null);
+            }
+            if (ouiDatePrep.isSelected())
+            {
+                ordrePreparation.setDatePreparation(spinnerDatePrep.getDate());
+            }
+            else
+            {
+                ordrePreparation.setDatePreparation(null);
+            }
+
+            ordrePreparation.setRemarque(remarqueText.getText());
+            ordrePreparation.setEstUrgent(urgent.isSelected());
+            ordrePreparation.setNom(recettes.get(recetteCombo.getSelectedIndex()));
+            char cB = codeBarres.get(codeBarreCombo.getSelectedIndex()).charAt(0);
+            Integer cBN = Character.getNumericValue(cB);
+            ordrePreparation.setCodeBarre(cBN);
+            char matriCui = matriculesCui.get(matriculeCuiCombo.getSelectedIndex()).charAt(0);
+            Integer matriC = Character.getNumericValue(matriCui);
+            ordrePreparation.setMatricule_Cui(matriC);
+            char matriRes = matriculesRes.get(matriculeResCombo.getSelectedIndex()).charAt(0);
+            Integer matriR = Character.getNumericValue(matriRes);
+            ordrePreparation.setMatricule_Res(matriR);
+            controller.updateOrdre(ordrePreparation);
+
+            //Affichage d'un message de confirmation  de la modification + réinitialisation des champs
+            JOptionPane.showMessageDialog(null, "Confirmation de la modification de l'ordre !", "Information", JOptionPane.INFORMATION_MESSAGE);
+            PanneauModification.this.removeAll();
+            PanneauModification.this.add(new PanneauInsertion());
+            PanneauModification.this.validate();
+        }
+        catch (ModelException eME)
+        {
+            eME.getMessage();
+        }
+        catch (UpdateOrdreException eUO)
+        {
+            eUO.getMessage();
+        }
     }
+
+    public void recuperationDateEtNumeroSequentiel()
+    {
+
+    }
+
 }

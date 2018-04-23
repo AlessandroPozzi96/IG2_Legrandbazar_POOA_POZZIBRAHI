@@ -122,14 +122,10 @@ public class OrdrePreparation {
     }
 
     public GregorianCalendar getDateVente() {
-        if(dateVente!=null)         System.out.println(this.dateVente.getTime());
-
         return this.dateVente;
     }
 
     public GregorianCalendar getDatePreparation() {
-        if(datePreparation!=null)         System.out.println(this.datePreparation.getTime());
-
         return datePreparation;
     }
 

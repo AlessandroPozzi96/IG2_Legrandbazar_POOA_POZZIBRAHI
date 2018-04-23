@@ -5,8 +5,6 @@ import exceptionPackage.*;
 import modelPackage.OrdrePreparation;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -32,6 +30,7 @@ public class PanneauModification extends JPanel
     private DateFormat dateFormat;
     private ArrayList<String> recettes, codeBarres, matriculesCui, matriculesRes;
     private OrdrePreparation ordrePreparation;
+    private Integer iOrdre = null;
 
     public PanneauModification()
     {
@@ -73,7 +72,8 @@ public class PanneauModification extends JPanel
             dateString = dateFormat.format(date);
             ordresJCombo.addItem(ordresCombox.getNumeroSequentiel() + " -> " + dateString);
         }
-        ordresJCombo.setMaximumRowCount(3);
+        ordresJCombo.setMaximumRowCount(5);
+        ordresJCombo.setSelectedIndex(0);
         panneauModifications.add(ordresJCombo);
 
         recetteLabel = new JLabel("Recette :");
@@ -264,9 +264,9 @@ public class PanneauModification extends JPanel
     {
         @Override
         public void itemStateChanged(ItemEvent e) {
-            if (e.getItem() == ordresJCombo)
+            if (e.getStateChange() == ItemEvent.SELECTED)
             {
-
+                iOrdre = ordresJCombo.getSelectedIndex();
             }
         }
     }
@@ -336,10 +336,9 @@ public class PanneauModification extends JPanel
         ordrePreparation = new OrdrePreparation();
         try
         {
-            Integer ordreIndice = 1;
-            //Récupération de la date et du numéro séquentiel
-            ordrePreparation.setDate(ordres.get(ordreIndice).getDate());
-            ordrePreparation.setNumeroSequentiel(ordres.get(ordreIndice).getNumeroSequentiel());
+            //Récupération de la date et du numéro séquentiel via le JCombobox
+            ordrePreparation.setDate(ordres.get(iOrdre).getDate());
+            ordrePreparation.setNumeroSequentiel(ordres.get(iOrdre).getNumeroSequentiel());
             ordrePreparation.setQuantitePrevue(quantitePrevue);
             ordrePreparation.setQuantiteProduite(quantiteProduite);
             if (ouiDateVente.isSelected())
@@ -376,7 +375,7 @@ public class PanneauModification extends JPanel
             //Affichage d'un message de confirmation  de la modification + réinitialisation des champs
             JOptionPane.showMessageDialog(null, "Confirmation de la modification de l'ordre !", "Information", JOptionPane.INFORMATION_MESSAGE);
             PanneauModification.this.removeAll();
-            PanneauModification.this.add(new PanneauInsertion());
+            PanneauModification.this.add(new PanneauModification());
             PanneauModification.this.validate();
         }
         catch (ModelException eME)

@@ -439,4 +439,19 @@ public class DBAccess implements DataAccess
         }
         return reservations;
     }
+    public void supprimerForeignKeyReservation(int numeroSequentiel) throws GeneralException {
+        if ((connection = SingletonConnection.getInstance()) == null)
+            throw  new GeneralException("Erreur connexion !","Supprimer les clés étrangéres Reservation");
+
+
+        try {
+            String sql = "DELETE FROM `dbgrandbazar`.`reservation` WHERE numeroSequentiel=?;";
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, numeroSequentiel);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new GeneralException(e.getMessage(),"Supprimer les clés étrangéres Reservation");
+        }
+
+    }
 }

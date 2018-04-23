@@ -19,4 +19,6 @@ public interface DataAccess
     public void supprimerOrdre(int numeroSequentiel) throws GeneralException;
 
     ArrayList<Reservation> getForeignKeyReservation(int numeroSequentie) throws GeneralException;
+    public void supprimerForeignKeyReservation(int numeroSequentiel) throws GeneralException;
+
 }

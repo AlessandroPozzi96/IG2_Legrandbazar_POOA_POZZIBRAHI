@@ -116,7 +116,12 @@ public class PanneauSuppression extends JPanel {
             }
             else{
 
-                JOptionPane.showMessageDialog(null, reservations.size()+" clé étrangére présente supprimer quand même ?", "Information", JOptionPane.INFORMATION_MESSAGE);
+                if(JOptionPane.showConfirmDialog(null,reservations.size()+" clés étrangéres, supprimer quand même ?","Suppression Ordre",JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE)==JOptionPane.OK_OPTION){
+                    controller.supprimerForeignKeyReservation(Integer.parseInt(motSepare[0]));
+                    controller.supprimerOrdre(Integer.parseInt(motSepare[0]));
+                }else{
+                    // REFUS DE SUPPRESION
+                }
                 // SUPPRIMER LES CLE ETRANGER + PUIS SUPPRIMER L'ordre
             }
         } catch (GeneralException e) {

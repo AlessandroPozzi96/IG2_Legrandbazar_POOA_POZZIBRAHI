@@ -61,4 +61,7 @@ public class OrdreManager
     public ArrayList<Reservation> getForeignKeyReservation(int numeroSequentie) throws GeneralException {
         return dao.getForeignKeyReservation(numeroSequentie);
     }
+    public void supprimerForeignKeyReservation(int numeroSequentiel) throws GeneralException {
+        dao.supprimerForeignKeyReservation(numeroSequentiel);
+    }
 }

@@ -62,4 +62,7 @@ public class ApplicationController
     public ArrayList<Reservation> getForeignKeyReservation(int numeroSequentie) throws GeneralException {
         return manager.getForeignKeyReservation(numeroSequentie);
     }
+    public void supprimerForeignKeyReservation(int numeroSequentiel) throws GeneralException {
+        manager.supprimerForeignKeyReservation(numeroSequentiel);
+    }
 }

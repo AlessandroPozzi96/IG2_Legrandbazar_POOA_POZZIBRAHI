@@ -15,5 +15,5 @@ public interface DataAccess
     ArrayList<String> getMatriculesRes () throws GeneralException;
     Integer getNumeroSequentiel () throws GeneralException;
     void updateOrdre(OrdrePreparation ordrePreparation) throws UpdateOrdreException;
-
+    public void supprimerOrdre(int numeroSequentiel) throws GeneralException;
 }

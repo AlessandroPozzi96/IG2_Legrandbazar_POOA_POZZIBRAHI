@@ -388,4 +388,19 @@ public class DBAccess implements DataAccess
             throw new UpdateOrdreException("SQL error");
         }
     }
+    public void supprimerOrdre(int numeroSequentiel) throws GeneralException {
+        if ((connection = SingletonConnection.getInstance()) == null)
+            throw  new GeneralException("les noms de recettes","Erreur connexion !");
+
+
+        try {
+            String sql = "DELETE FROM `dbgrandbazar`.`ordrepreparation` WHERE NumeroSequentiel=?;";
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, numeroSequentiel);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
 }

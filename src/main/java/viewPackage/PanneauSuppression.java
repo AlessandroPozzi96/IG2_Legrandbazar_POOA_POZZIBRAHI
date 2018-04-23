@@ -2,6 +2,7 @@ package viewPackage;
 
 import controllerPackage.ApplicationController;
 import exceptionPackage.AllOrdresException;
+import exceptionPackage.GeneralException;
 import exceptionPackage.ModelException;
 import modelPackage.OrdrePreparation;
 
@@ -86,14 +87,33 @@ public class PanneauSuppression extends JPanel {
             }
             else{
                 if(e.getSource() == suppression){
-                    suppression();
+                    if(ordresJCombo.getSelectedItem() == null){
+                        JOptionPane.showMessageDialog(null, "Aucun ordre present dans la bd", "Information", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                    else{
+                        suppression();
+                        JOptionPane.showMessageDialog(null, "Confirmation de la suppression de l'ordre !", "Information", JOptionPane.INFORMATION_MESSAGE);
+                        PanneauSuppression.this.removeAll();
+                        PanneauSuppression.this.add(new PanneauSuppression());
+                        PanneauSuppression.this.validate();
+                    }
                 }
             }
         }
     }
     public void suppression(){
-        System.out.print(ordresJCombo.getSelectedItem());
-        String ordrePreparationSelection = (String)ordresJCombo.getSelectedItem();
+        String ordrePreparationSelection;
+        ordrePreparationSelection = ordresJCombo.getSelectedItem().toString();
+        int i =0;
+
+        String [] motSepare = ordrePreparationSelection.split(" ");
+        System.out.println(motSepare[0]);
+
+        try {
+            controller.supprimerOrdre(Integer.parseInt(motSepare[0]));
+        } catch (GeneralException e) {
+            e.printStackTrace();
+        }
 
     }
     public void setController(ApplicationController controller) {

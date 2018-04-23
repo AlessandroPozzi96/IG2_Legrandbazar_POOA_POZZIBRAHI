@@ -53,4 +53,8 @@ public class ApplicationController
     {
         manager.updateOrdre(ordrePreparation);
     }
+
+    public void supprimerOrdre(int numeroSequentiel)throws GeneralException {
+        manager.supprimerOrdre(numeroSequentiel);
+    }
 }

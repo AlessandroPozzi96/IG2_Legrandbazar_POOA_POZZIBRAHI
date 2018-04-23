@@ -53,4 +53,7 @@ public class OrdreManager
     {
         dao.updateOrdre(ordrePreparation);
     }
+    public void supprimerOrdre(int numeroSequentiel)throws GeneralException {
+        dao.supprimerOrdre(numeroSequentiel);
+    }
 }

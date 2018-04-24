@@ -189,6 +189,7 @@ public class PanneauInsertion extends JPanel
             e.printStackTrace();
         }
         matriculeCuiCombo = new JComboBox();
+        matriculeCuiCombo.addItem("Pas de cuisinier");
         for(String matriculeCui : matriculesCui){
             matriculeCuiCombo.addItem(matriculeCui);
         }
@@ -364,10 +365,14 @@ public class PanneauInsertion extends JPanel
                 Integer cBN = Character.getNumericValue(cB);
                 ordrePreparation.setCodeBarre(cBN);
             }
-
-            char matriCui = matriculesCui.get(matriculeCuiCombo.getSelectedIndex()).charAt(0);
-            Integer matriC = Character.getNumericValue(matriCui);
-            ordrePreparation.setMatricule_Cui(matriC);
+            if(matriculeCuiCombo.getSelectedIndex()==0){
+                ordrePreparation.setMatricule_Cui(null);
+            }
+            else{
+                char matriCui = matriculeCuiCombo.getSelectedItem().toString().charAt(0);
+                Integer matriC = Character.getNumericValue(matriCui);
+                ordrePreparation.setMatricule_Cui(matriC);
+            }
             char matriRes = matriculesRes.get(matriculeResCombo.getSelectedIndex()).charAt(0);
             Integer matriR = Character.getNumericValue(matriRes);
             ordrePreparation.setMatricule_Res(matriR);

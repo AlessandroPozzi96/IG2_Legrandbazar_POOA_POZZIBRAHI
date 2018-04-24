@@ -1,9 +1,14 @@
 package modelPackage;
 
 import exceptionPackage.ModelException;
+import viewPackage.FonctionsUtile;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Date.*;
+import java.util.Date;
 
 public class OrdrePreparation {
     private GregorianCalendar date;
@@ -154,6 +159,30 @@ public class OrdrePreparation {
         return matricule_Res;
     }
 
+    @Override
+    public String toString() {
+        String dateV = (dateVente != null)? this.conversionDateVersString(dateVente) : "Pas de date de vente disponible";
+        String dateP = (datePreparation != null)? this.conversionDateVersString(datePreparation) : "Pas de date de préparation disponible";
+        return "OrdrePreparation \n{" +
+                "\ndate=" + this.conversionDateVersString(date) +
+                ", \nnumeroSequentiel=" + numeroSequentiel +
+                ", \nquantitePrevue=" + quantitePrevue +
+                ", \nquantiteProduite=" + quantiteProduite +
+                ", \ndateVente=" + dateV +
+                ", \ndatePreparation=" + dateP +
+                ", \nremarque='" + remarque + '\'' +
+                ", \nestUrgent=" + estUrgent +
+                ", \nnom='" + nom + '\'' +
+                ", \ncodeBarre=" + codeBarre +
+                ", \nmatricule_Cui=" + matricule_Cui +
+                ", \nmatricule_Res=" + matricule_Res + "\n" +
+                '}';
+    }
 
-
+    public String conversionDateVersString (GregorianCalendar calendar)
+    {
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        java.util.Date date = calendar.getTime();
+        return dateFormat.format(date);
+    }
 }

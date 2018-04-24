@@ -12,6 +12,7 @@ public class FenetrePrincipale extends JFrame
     private PanneauListing panneauListing;
     private PanneauModification panneauModification;
     private PanneauSuppression panneauSuppression;
+    private PanneauRecherche1 panneauRecherche1;
     private JMenuBar menuBar;
     private JMenu application, ordre, recherches, tacheMetier;
     private JMenuItem quitter, insertionOrdre, modifierOrdre, supprimerOrdre, listerOrdres, recherche1, recherche2, recherche3;
@@ -64,6 +65,18 @@ public class FenetrePrincipale extends JFrame
         ordre.addSeparator();
         ordre.add(listerOrdres);
 
+        recherche1 = new JMenuItem("Recherche 1");
+        recherche1.setToolTipText("Listing des ordres de préparations");
+        recherche2 = new JMenuItem("Recherche 2");
+        recherche2.setToolTipText("Listing des ordres de préparations vendus");
+        recherche3 = new JMenuItem("Recherche 3");
+        recherche3.setToolTipText("Listing des articles achetés par un client");
+        recherches.add(recherche1);
+        recherches.addSeparator();
+        recherches.add(recherche2);
+        recherches.addSeparator();
+        recherches.add(recherche3);
+
         //On ajoute les différents écouteurs
         this.addWindowListener(new ClosingListener());
         ButtonsListener buttonsListener = new ButtonsListener();
@@ -72,6 +85,9 @@ public class FenetrePrincipale extends JFrame
         modifierOrdre.addActionListener(buttonsListener);
         supprimerOrdre.addActionListener(buttonsListener);
         listerOrdres.addActionListener(buttonsListener);
+        recherche1.addActionListener(buttonsListener);
+        recherche2.addActionListener(buttonsListener);
+        recherche3.addActionListener(buttonsListener);
 
         //On rends visible la fenetre
         this.setVisible(true);
@@ -123,12 +139,24 @@ public class FenetrePrincipale extends JFrame
                             frameContainer.validate();
                         }
                         else{
-                            if(e.getSource() == supprimerOrdre){
+                            if(e.getSource() == supprimerOrdre)
+                            {
                                 frameContainer.removeAll();
                                 panneauSuppression = new PanneauSuppression();
                                 frameContainer.add(panneauSuppression);
                                 frameContainer.repaint();
                                 frameContainer.validate();
+                            }
+                            else
+                            {
+                                if (e.getSource() == recherche1)
+                                {
+                                    frameContainer.removeAll();
+                                    panneauRecherche1 = new PanneauRecherche1();
+                                    frameContainer.add(panneauRecherche1);
+                                    frameContainer.repaint();
+                                    frameContainer.validate();
+                                }
                             }
                         }
                     }

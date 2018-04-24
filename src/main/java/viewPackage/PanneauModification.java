@@ -11,9 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 
 public class PanneauModification extends JPanel
 {
@@ -32,7 +30,6 @@ public class PanneauModification extends JPanel
     private ArrayList<String> recettes, codeBarres, matriculesCui, matriculesRes;
     private OrdrePreparation ordrePreparation;
     private Integer iOrdre = null;
-    private FonctionEcouteurs fonctionEcouteurs;
 
     public PanneauModification()
     {
@@ -69,11 +66,11 @@ public class PanneauModification extends JPanel
         String dateString = "";
         for (OrdrePreparation ordresCombox : ordres)
         {
-            dateString = conversionDateVersString(ordresCombox.getDate());
+            dateString = ordresCombox.conversionDateVersString(ordresCombox.getDate());
             ordresJCombo.addItem(ordresCombox.getNumeroSequentiel() + " -> " + dateString);
         }
         ordresJCombo.setMaximumRowCount(5);
-        ordresJCombo.setSelectedIndex(0);
+        //ordresJCombo.setSelectedIndex(0);
         panneauModifications.add(ordresJCombo);
 
         recetteLabel = new JLabel("Recette :");
@@ -266,13 +263,12 @@ public class PanneauModification extends JPanel
         public void itemStateChanged(ItemEvent e) {
             if (e.getStateChange() == ItemEvent.SELECTED)
             {
+              /*  String ordrePreparationSelection;
+                ordrePreparationSelection = ordresJCombo.getSelectedItem().toString();
+                String [] motSepare = ordrePreparationSelection.split(" ");
+                iOrdre = Integer.parseInt(motSepare[0]);*/
                 iOrdre = ordresJCombo.getSelectedIndex();
-                String ordre = "<html>" +
-                        "<h1> Date de création :" + conversionDateVersString(ordres.get(iOrdre).getDate()) + " Numéro séquentiel :" + ordres.get(iOrdre).getNumeroSequentiel() + "</h1>" +
-                        "<h2>" + ordres.get(iOrdre).getNom() + "</h2>" +
-                        "<h3> "+ ordres.get(iOrdre).getQuantitePrevue() + "</h3>" +
-                        "</html>";
-                JOptionPane.showMessageDialog(null, ordre, "Ordre de préparation", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, ordres.get(iOrdre).toString(), "Ordre de préparation", JOptionPane.INFORMATION_MESSAGE);
             }
         }
     }
@@ -394,10 +390,4 @@ public class PanneauModification extends JPanel
         }
     }
 
-    public String conversionDateVersString (GregorianCalendar calendar)
-    {
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        java.util.Date date = calendar.getTime();
-        return dateFormat.format(date);
-    }
 }

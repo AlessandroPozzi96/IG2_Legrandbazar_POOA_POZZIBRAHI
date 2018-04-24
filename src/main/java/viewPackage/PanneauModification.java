@@ -263,10 +263,6 @@ public class PanneauModification extends JPanel
         public void itemStateChanged(ItemEvent e) {
             if (e.getStateChange() == ItemEvent.SELECTED)
             {
-              /*  String ordrePreparationSelection;
-                ordrePreparationSelection = ordresJCombo.getSelectedItem().toString();
-                String [] motSepare = ordrePreparationSelection.split(" ");
-                iOrdre = Integer.parseInt(motSepare[0]);*/
                 iOrdre = ordresJCombo.getSelectedIndex();
                 JOptionPane.showMessageDialog(null, ordres.get(iOrdre).toString(), "Ordre de préparation", JOptionPane.INFORMATION_MESSAGE);
             }

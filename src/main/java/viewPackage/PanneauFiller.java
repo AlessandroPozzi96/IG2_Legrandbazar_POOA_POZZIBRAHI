@@ -6,12 +6,14 @@ import java.awt.*;
 public class PanneauFiller extends JPanel
 {
     private String texte;
-    private JTextField champ;
+    private JLabel champ;
 
     public PanneauFiller(String texte) {
         setTexte(texte);
         this.setLayout(new BorderLayout());
-        champ = new JTextField(texte);
+        champ = new JLabel(texte);
+        champ.setFont(new Font("Apple Casual", Font.PLAIN, 20));
+        champ.setHorizontalAlignment(0);
         this.add(champ, BorderLayout.CENTER);
     }
 

@@ -458,4 +458,92 @@ public class DBAccess implements DataAccess
         }
 
     }
+
+    @Override
+    public ArrayList<OrdrePreparation> getOrdresRecettesCuisiniers(Integer codeBarre, String recette) throws GetOrdresRecettesCuisiniersException, ModelException{
+        ArrayList<OrdrePreparation> ordres = new ArrayList<>();
+
+        if ((connection = SingletonConnection.getInstance()) == null)
+            throw  new GetOrdresRecettesCuisiniersException("Erreur connexion !");
+
+
+        try {
+            String sql = "select * \n" +
+                    "from ordrepreparation o join recette r on (o.Nom = r.Nom)\n" +
+                    "join cuisinier c on (o.Matricule_Cui = c.Matricule_Cui) \n" +
+                    "where o.CodeBarre is not null\n" +
+                    "and o.Matricule_Cui is not null\n" +
+                    "and o.CodeBarre = ?\n" +
+                    "and o.Matricule_Cui = ?\n" +
+                    "order by o.NumeroSequentiel;";
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, codeBarre);
+            statement.setString(2, recette);
+            ResultSet data = statement.executeQuery(); // contient les lignes de résultat de la requête
+            ResultSetMetaData meta = data.getMetaData(); // Contient les meta données (nb colonnes, ...)
+            int quantiteProduite;
+            String remarque;
+
+            while(data.next())
+            {
+
+                ordrePreparation = new OrdrePreparation();
+                java.sql.Date sqlDate;
+
+                GregorianCalendar calendar = new GregorianCalendar();
+                // Peut pas utiliser le même calendar pour les 3 dates, pq ? Ou refaire un calendar = new GregorianCalendar avant l'utilisation
+                GregorianCalendar calendarVente = new GregorianCalendar();
+                GregorianCalendar calendarPreparation = new GregorianCalendar();
+
+                sqlDate = data.getDate("Date");
+                calendar.setTime(sqlDate);
+                ordrePreparation.setDate(calendar);
+                // NumeroSequentiel
+                ordrePreparation.setNumeroSequentiel(data.getInt("NumeroSequentiel"));
+                // QuantitePrevue
+                ordrePreparation.setQuantitePrevue(data.getInt("QuantitePrevue"));
+                // EstUrgent
+                ordrePreparation.setEstUrgent(data.getBoolean("EstUrgent"));
+                // Nom (recette)
+                ordrePreparation.setNom(data.getString("Nom"));
+                // Matricule_Res
+                ordrePreparation.setMatricule_Res(data.getInt("Matricule_Res"));
+                // LES CHAMPS FACULTATIFS
+
+                // CodeBarre
+                ordrePreparation.setCodeBarre(data.getInt("CodeBarre"));
+                // QuantiteProduite
+                quantiteProduite = data.getInt("QuantiteProduite");
+                if(! data.wasNull()){
+                    ordrePreparation.setQuantiteProduite(quantiteProduite);
+                }
+                // DateVente
+                sqlDate = data.getDate("DateVente");
+                if(! data.wasNull()){
+                    calendarVente.setTime(sqlDate);
+                    ordrePreparation.setDateVente(calendarVente);
+                }
+                // DatePreparation
+                sqlDate = data.getDate("DatePreparation");
+                if(! data.wasNull()){
+
+                    calendarPreparation.setTime(sqlDate);
+                    ordrePreparation.setDatePreparation(calendarPreparation);
+                }
+
+                // Remarque
+                remarque = data.getString("Remarque");
+                if(! data.wasNull()){
+                    ordrePreparation.setRemarque(remarque);
+                }
+                // Matricule_Cui
+                ordrePreparation.setMatricule_Cui(data.getInt("Matricule_Cui"));
+                ordres.add(ordrePreparation);
+            }
+
+        } catch (SQLException e) {
+            throw new GetOrdresRecettesCuisiniersException(e.getMessage());
+        }
+        return ordres;
+    }
 }

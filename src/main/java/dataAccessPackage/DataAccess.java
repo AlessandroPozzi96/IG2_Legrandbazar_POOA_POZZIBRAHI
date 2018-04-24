@@ -16,9 +16,10 @@ public interface DataAccess
     ArrayList<String> getMatriculesRes () throws GeneralException;
     Integer getNumeroSequentiel () throws GeneralException;
     void updateOrdre(OrdrePreparation ordrePreparation) throws UpdateOrdreException;
-    public void supprimerOrdre(int numeroSequentiel) throws GeneralException;
+    void supprimerOrdre(int numeroSequentiel) throws GeneralException;
+    ArrayList<OrdrePreparation> getOrdresRecettesCuisiniers(Integer codeBarre, String recette) throws GetOrdresRecettesCuisiniersException, ModelException;
 
     ArrayList<Reservation> getForeignKeyReservation(int numeroSequentie) throws GeneralException;
-    public void supprimerForeignKeyReservation(int numeroSequentiel) throws GeneralException;
+    void supprimerForeignKeyReservation(int numeroSequentiel) throws GeneralException;
 
 }

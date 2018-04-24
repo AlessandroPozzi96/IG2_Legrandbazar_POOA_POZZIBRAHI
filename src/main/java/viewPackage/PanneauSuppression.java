@@ -82,10 +82,8 @@ public class PanneauSuppression extends JPanel {
     private class ButtonsAndTextsListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == retour) {
-                PanneauSuppression.this.removeAll();
-                PanneauSuppression.this.add(new PanneauBienvenue());
-                PanneauSuppression.this.repaint();
-                PanneauSuppression.this.validate();
+                changementPanneau((new PanneauBienvenue()));
+
             }
             else{
                 if(e.getSource() == suppression){
@@ -94,9 +92,6 @@ public class PanneauSuppression extends JPanel {
                     }
                     else{
                         suppression();
-                        PanneauSuppression.this.removeAll();
-                        PanneauSuppression.this.add(new PanneauSuppression());
-                        PanneauSuppression.this.validate();
                     }
                 }
             }
@@ -105,24 +100,23 @@ public class PanneauSuppression extends JPanel {
     public void suppression(){
         String ordrePreparationSelection;
         ordrePreparationSelection = ordresJCombo.getSelectedItem().toString();
-        int i =0;
-
         String [] motSepare = ordrePreparationSelection.split(" ");
-
         try {
             reservations = controller.getForeignKeyReservation(Integer.parseInt(motSepare[0]));
-            if(reservations==null){
+            if(reservations.size()==0){
                 controller.supprimerOrdre(Integer.parseInt(motSepare[0]));
+                changementPanneau(new PanneauSuppression());
             }
             else{
 
                 if(JOptionPane.showConfirmDialog(null,reservations.size()+" clés étrangéres, supprimer quand même ?","Suppression Ordre",JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE)==JOptionPane.OK_OPTION){
                     controller.supprimerForeignKeyReservation(Integer.parseInt(motSepare[0]));
                     controller.supprimerOrdre(Integer.parseInt(motSepare[0]));
+                    changementPanneau(new PanneauSuppression());
+
                 }else{
                     // REFUS DE SUPPRESION
                 }
-                // SUPPRIMER LES CLE ETRANGER + PUIS SUPPRIMER L'ordre
             }
         } catch (GeneralException e) {
             e.printStackTrace();
@@ -133,6 +127,11 @@ public class PanneauSuppression extends JPanel {
         this.controller = controller;
     }
 
+    public void changementPanneau(JPanel panel){
+        PanneauSuppression.this.removeAll();
+        PanneauSuppression.this.add(panel);
+        PanneauSuppression.this.validate();
+    }
 
 
 }

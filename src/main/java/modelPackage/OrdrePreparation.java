@@ -27,8 +27,10 @@ public class OrdrePreparation {
     {
         this.codeBarre = codeBarre;
 
-        if (this.codeBarre == null || this.codeBarre <= 0)
-            throw  new ModelException("CodeBarre");
+        if(codeBarre != null) {
+            if (this.codeBarre <= 0)
+                throw new ModelException("CodeBarre");
+        }
     }
 
     public void setDate(GregorianCalendar date) throws ModelException

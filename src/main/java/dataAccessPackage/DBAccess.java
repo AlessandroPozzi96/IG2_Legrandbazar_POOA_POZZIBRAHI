@@ -112,7 +112,7 @@ public class DBAccess implements DataAccess
             statement = connection.prepareStatement(sql);
             ResultSet data = statement.executeQuery(); // contient les lignes de résultat de la requête
             ResultSetMetaData meta = data.getMetaData(); // Contient les meta données (nb colonnes, ...)
-            int quantiteProduite, matricule_Cui;
+            int quantiteProduite, matricule_Cui, codeBarre;
             String remarque;
 
             while(data.next()){
@@ -138,11 +138,15 @@ public class DBAccess implements DataAccess
                 ordrePreparation.setEstUrgent(data.getBoolean("EstUrgent"));
                 // Nom (recette)
                 ordrePreparation.setNom(data.getString("Nom"));
-                // CodeBarre
-                ordrePreparation.setCodeBarre(data.getInt("CodeBarre"));
                 // Matricule_Res
                 ordrePreparation.setMatricule_Res(data.getInt("Matricule_Res"));
                 // LES CHAMPS FACULTATIFS
+
+                // CodeBarre
+                codeBarre = data.getInt("CodeBarre");
+                if(! data.wasNull()){
+                    ordrePreparation.setCodeBarre(codeBarre);
+                }
                 // QuantiteProduite
                 quantiteProduite = data.getInt("QuantiteProduite");
                 if(! data.wasNull()){

@@ -171,6 +171,7 @@ public class PanneauInsertion extends JPanel
             e.printStackTrace();
         }
         codeBarreCombo = new JComboBox();
+        codeBarreCombo.addItem("Pas d'article");
         for(String codeBarre : codeBarres){
             codeBarreCombo.addItem(codeBarre);
         }
@@ -352,10 +353,18 @@ public class PanneauInsertion extends JPanel
                 ordrePreparation.setRemarque(remarqueText.getText());
             }
             ordrePreparation.setEstUrgent(urgent.isSelected());
+
             ordrePreparation.setNom(recettes.get(recetteCombo.getSelectedIndex()));
-            char cB = codeBarres.get(codeBarreCombo.getSelectedIndex()).charAt(0);
-            Integer cBN = Character.getNumericValue(cB);
-            ordrePreparation.setCodeBarre(cBN);
+
+            if(codeBarreCombo.getSelectedIndex()==0){
+                ordrePreparation.setCodeBarre(null);
+            }
+            else{
+                char cB = codeBarreCombo.getSelectedItem().toString().charAt(0);
+                Integer cBN = Character.getNumericValue(cB);
+                ordrePreparation.setCodeBarre(cBN);
+            }
+
             char matriCui = matriculesCui.get(matriculeCuiCombo.getSelectedIndex()).charAt(0);
             Integer matriC = Character.getNumericValue(matriCui);
             ordrePreparation.setMatricule_Cui(matriC);

@@ -47,6 +47,7 @@ public class PanneauRecherche1 extends JPanel
             System.out.println("Erreur Recupération des noms de recette");  // Changer en autre que println (Afficher une erreur dans la JCOMBOBOX par ex
         }
         recettesJCombox = new JComboBox();
+        recettesJCombox.addItem("Pas de recettes");;
         for(String recetteNom : recettes)
         {
             recettesJCombox.addItem(recetteNom);
@@ -67,6 +68,7 @@ public class PanneauRecherche1 extends JPanel
             e.printStackTrace();
         }
         cuisiniersJCombox = new JComboBox();
+        cuisiniersJCombox.addItem("Pas de cuisiniers");
         for(String matriculeCui : cuisiniers){
             cuisiniersJCombox.addItem(matriculeCui);
         }

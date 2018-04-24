@@ -171,6 +171,7 @@ public class PanneauInsertion extends JPanel
             e.printStackTrace();
         }
         codeBarreCombo = new JComboBox();
+        codeBarreCombo.addItem("Pas d'article");
         for(String codeBarre : codeBarres){
             codeBarreCombo.addItem(codeBarre);
         }
@@ -188,6 +189,7 @@ public class PanneauInsertion extends JPanel
             e.printStackTrace();
         }
         matriculeCuiCombo = new JComboBox();
+        matriculeCuiCombo.addItem("Pas de cuisinier");
         for(String matriculeCui : matriculesCui){
             matriculeCuiCombo.addItem(matriculeCui);
         }
@@ -346,16 +348,31 @@ public class PanneauInsertion extends JPanel
             {
                 ordrePreparation.setDatePreparation(null);
             }
-
-            ordrePreparation.setRemarque(remarqueText.getText());
+            if(remarqueText.getText().equals("")){
+                ordrePreparation.setRemarque(null);  // Met a null car facultatif
+            }else{
+                ordrePreparation.setRemarque(remarqueText.getText());
+            }
             ordrePreparation.setEstUrgent(urgent.isSelected());
+
             ordrePreparation.setNom(recettes.get(recetteCombo.getSelectedIndex()));
-            char cB = codeBarres.get(codeBarreCombo.getSelectedIndex()).charAt(0);
-            Integer cBN = Character.getNumericValue(cB);
-            ordrePreparation.setCodeBarre(cBN);
-            char matriCui = matriculesCui.get(matriculeCuiCombo.getSelectedIndex()).charAt(0);
-            Integer matriC = Character.getNumericValue(matriCui);
-            ordrePreparation.setMatricule_Cui(matriC);
+
+            if(codeBarreCombo.getSelectedIndex()==0){
+                ordrePreparation.setCodeBarre(null);
+            }
+            else{
+                char cB = codeBarreCombo.getSelectedItem().toString().charAt(0);
+                Integer cBN = Character.getNumericValue(cB);
+                ordrePreparation.setCodeBarre(cBN);
+            }
+            if(matriculeCuiCombo.getSelectedIndex()==0){
+                ordrePreparation.setMatricule_Cui(null);
+            }
+            else{
+                char matriCui = matriculeCuiCombo.getSelectedItem().toString().charAt(0);
+                Integer matriC = Character.getNumericValue(matriCui);
+                ordrePreparation.setMatricule_Cui(matriC);
+            }
             char matriRes = matriculesRes.get(matriculeResCombo.getSelectedIndex()).charAt(0);
             Integer matriR = Character.getNumericValue(matriRes);
             ordrePreparation.setMatricule_Res(matriR);

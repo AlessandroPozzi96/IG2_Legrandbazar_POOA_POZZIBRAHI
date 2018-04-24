@@ -360,7 +360,11 @@ public class PanneauModification extends JPanel
                 ordrePreparation.setDatePreparation(null);
             }
 
-            ordrePreparation.setRemarque(remarqueText.getText());
+            if(remarqueText.getText().equals("")){
+                ordrePreparation.setRemarque(null);  // Met a null car facultatif
+            }else{
+                ordrePreparation.setRemarque(remarqueText.getText());
+            }
             ordrePreparation.setEstUrgent(urgent.isSelected());
             ordrePreparation.setNom(recettes.get(recetteCombo.getSelectedIndex()));
             char cB = codeBarres.get(codeBarreCombo.getSelectedIndex()).charAt(0);

@@ -2,9 +2,11 @@ package dataAccessPackage;
 
 import exceptionPackage.*;
 import modelPackage.OrdrePreparation;
+import modelPackage.Recherche2;
 import modelPackage.Reservation;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 public interface DataAccess
 {
@@ -21,5 +23,5 @@ public interface DataAccess
 
     ArrayList<Reservation> getForeignKeyReservation(int numeroSequentie) throws GeneralException;
     void supprimerForeignKeyReservation(int numeroSequentiel) throws GeneralException;
-
+    ArrayList<Recherche2> getRecherche2(GregorianCalendar dateDeb, GregorianCalendar dateFin) throws GeneralException, ModelException;
 }

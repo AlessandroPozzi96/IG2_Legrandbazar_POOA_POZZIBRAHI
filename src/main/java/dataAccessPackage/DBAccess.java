@@ -2,6 +2,7 @@ package dataAccessPackage;
 
 import exceptionPackage.*;
 import modelPackage.OrdrePreparation;
+import modelPackage.Recherche2;
 import modelPackage.Reservation;
 
 import java.sql.*;
@@ -475,7 +476,7 @@ public class DBAccess implements DataAccess
                     "and o.Matricule_Cui is not null\n" +
                     "and o.Matricule_Cui = ?\n" +
                     "and o.Nom = ?\n" +
-                    "order by o.NumeroSequentiel;";
+                    "order by o.NumeroSequentiel";
             statement = connection.prepareStatement(sql);
             statement.setInt(1, matri_Cui);
             statement.setString(2, recette);
@@ -549,5 +550,72 @@ public class DBAccess implements DataAccess
             throw new GetOrdresRecettesCuisiniersException(e.getMessage());
         }
         return ordres;
+    }
+
+    @Override
+    public ArrayList<Recherche2> getRecherche2(GregorianCalendar dateDeb, GregorianCalendar dateFin) throws GeneralException, ModelException {
+        ArrayList<Recherche2> recherches2 = new ArrayList<>();
+        Recherche2 recherche2;
+
+        if ((connection = SingletonConnection.getInstance()) == null)
+            throw  new GeneralException("Erreur connexion !", "GetRecherche2");
+
+
+        try {
+            String sql = "SET @DateDeb = ?\n" +
+                    "SET @DateFin = ?\n" +
+                    "\n" +
+                    "select o.NumeroSequentiel, o.Date 'DateOrdre', o.QuantitePrevue, o.EstUrgent, o.Matricule_Res, ti.Date 'DateTicket'\n" +
+                    "from ordrepreparation o join typearticle t on (o.CodeBarre = t.CodeBarre)\n" +
+                    "join ligneticket l on (l.CodeBarre = t.CodeBarre and l.NumTicket = \n" +
+                    "\t(select NumTicket\n" +
+                    "\t\tfrom ticket\n" +
+                    "        where date between @DateDeb and @DateFin))\n" +
+                    "join ticket ti on (ti.NumTicket = l.NumTicket)\n" +
+                    "where o.Date between @DateDeb and @DateFin\n" +
+                    "order by o.NumeroSequentiel;";
+            statement = connection.prepareStatement(sql);
+            java.sql.Date sqlDate = new java.sql.Date(dateDeb.getTimeInMillis());
+            statement.setDate(1, sqlDate);
+            sqlDate.setTime(dateFin.getTimeInMillis());
+            statement.setDate(2, sqlDate);
+
+            ResultSet data = statement.executeQuery(); // contient les lignes de résultat de la requête
+            ResultSetMetaData meta = data.getMetaData(); // Contient les meta données (nb colonnes, ...)
+
+            //Création des variables qui iront garnir recherche2
+            Integer numeroSequentiel;
+            Integer quantitePrevue;
+            Boolean estUrgent;
+            Integer matri_Res;
+
+            while(data.next())
+            {
+                GregorianCalendar dateOrdre = new GregorianCalendar();
+                // Peut pas utiliser le même calendar pour les 3 dates, pq ? Ou refaire un calendar = new GregorianCalendar avant l'utilisation
+                GregorianCalendar dateTicket = new GregorianCalendar();
+                //dateOrdre
+                sqlDate = data.getDate("DateOrdre");
+                dateOrdre.setTime(sqlDate);
+                // NumeroSequentiel
+                numeroSequentiel = data.getInt("NumeroSequentiel");
+                // QuantitePrevue
+                quantitePrevue = data.getInt("QuantitePrevue");
+                // EstUrgent
+                estUrgent = data.getBoolean("EstUrgent");
+                // Matricule_Res
+                matri_Res = data.getInt("Matricule_Res");
+                //dateTicket
+                sqlDate = data.getDate("DateTicket");
+                dateTicket.setTime(sqlDate);
+
+                recherche2 = new Recherche2(numeroSequentiel, dateOrdre, quantitePrevue, estUrgent, matri_Res, dateTicket);
+                recherches2.add(recherche2);
+            }
+
+        } catch (SQLException e) {
+            throw new GeneralException(e.getMessage(), "GetRecherche2");
+        }
+        return recherches2;
     }
 }

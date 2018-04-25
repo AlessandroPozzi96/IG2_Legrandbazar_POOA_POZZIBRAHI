@@ -275,11 +275,9 @@ public class PanneauModification extends JPanel
 
     public void reinitialiser ()
     {
-        spinnerDateVente.reinitialiserChamps();
-        spinnerDatePrep.reinitialiserChamps();
-        quantitePrevueText.setText("");
-        quantiteProduiteText.setText("");
-        remarqueText.setText("");
+        PanneauModification.this.removeAll();
+        PanneauModification.this.add(new PanneauModification());
+        PanneauModification.this.validate();
     }
 
     public void validation ()
@@ -376,9 +374,7 @@ public class PanneauModification extends JPanel
 
             //Affichage d'un message de confirmation  de la modification + réinitialisation des champs
             JOptionPane.showMessageDialog(null, "Confirmation de la modification de l'ordre !", "Information", JOptionPane.INFORMATION_MESSAGE);
-            PanneauModification.this.removeAll();
-            PanneauModification.this.add(new PanneauModification());
-            PanneauModification.this.validate();
+            reinitialiser();
         }
         catch (ModelException eME)
         {

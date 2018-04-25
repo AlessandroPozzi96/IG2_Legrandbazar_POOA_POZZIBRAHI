@@ -131,7 +131,14 @@ public class PanneauRecherche1 extends JPanel
                 {
                     if (e.getSource() == validation)
                     {
-                        if (matri_Cui != null || recette != null)
+                        recette = (String) recettesJCombox.getSelectedItem();
+
+                        String ordrePreparationSelection;
+                        ordrePreparationSelection = matriculeCuiCombo.getSelectedItem().toString();
+                        String [] motSepare = ordrePreparationSelection.split(" ");
+                        matri_Cui = Integer.parseInt(motSepare[0]);
+
+                        if (matri_Cui != null && recette != null)
                         {
                             ordres = new ArrayList<>();
 
@@ -150,11 +157,12 @@ public class PanneauRecherche1 extends JPanel
 
                             allOrdresPreparationModel = new AllOrdresPreparationModel(ordres);
                             jTable = new JTable(allOrdresPreparationModel);
-                            jTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+                            jTable.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
                             JScrollPane jScrollPane = new JScrollPane(jTable);
 
                             //On remplace le panneau de la recherche1 par la jtable
                             panneauRecherche1.removeAll();
+                            panneauRecherche1.setLayout(new BorderLayout());
                             panneauRecherche1.add(jScrollPane);
                             panneauRecherche1.repaint();
                             panneauRecherche1.validate();
@@ -172,12 +180,7 @@ public class PanneauRecherche1 extends JPanel
         public void itemStateChanged(ItemEvent e) {
             if (e.getStateChange() == ItemEvent.SELECTED)
             {
-                recette = (String) recettesJCombox.getSelectedItem();
 
-                String ordrePreparationSelection;
-                ordrePreparationSelection = matriculeCuiCombo.getSelectedItem().toString();
-                String [] motSepare = ordrePreparationSelection.split(" ");
-                matri_Cui = Integer.parseInt(motSepare[0]);
             }
         }
     }

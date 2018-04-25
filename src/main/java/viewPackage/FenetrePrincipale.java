@@ -13,6 +13,7 @@ public class FenetrePrincipale extends JFrame
     private PanneauModification panneauModification;
     private PanneauSuppression panneauSuppression;
     private PanneauRecherche1 panneauRecherche1;
+    private PanneauRecherche2 panneauRecherche2;
     private JMenuBar menuBar;
     private JMenu application, ordre, recherches, tacheMetier;
     private JMenuItem quitter, insertionOrdre, modifierOrdre, supprimerOrdre, listerOrdres, recherche1, recherche2, recherche3;
@@ -156,6 +157,16 @@ public class FenetrePrincipale extends JFrame
                                     frameContainer.add(panneauRecherche1);
                                     frameContainer.repaint();
                                     frameContainer.validate();
+                                }
+                                else
+                                {
+                                    if (e.getSource() == recherche2) {
+                                        frameContainer.removeAll();
+                                        panneauRecherche2 = new PanneauRecherche2();
+                                        frameContainer.add(panneauRecherche2);
+                                        frameContainer.repaint();
+                                        frameContainer.validate();
+                                    }
                                 }
                             }
                         }

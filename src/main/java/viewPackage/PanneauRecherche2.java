@@ -4,6 +4,10 @@ import controllerPackage.ApplicationController;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 public class PanneauRecherche2 extends JPanel
 {
@@ -13,6 +17,7 @@ public class PanneauRecherche2 extends JPanel
     private JButton retour, validation, nouvRecherche;
     private PanneauBienvenue panneauBienvenue;
     private PanneauFiller panneauFiller;
+    private PanneauSpinnerDate spinnerDateDeb, spinnerDateFin;
 
     public PanneauRecherche2() {
         setController(new ApplicationController());
@@ -24,6 +29,37 @@ public class PanneauRecherche2 extends JPanel
         panneauBoutons = new JPanel();
         panneauBoutons.setLayout(new FlowLayout());
         this.add(panneauBoutons, BorderLayout.SOUTH);
+
+        panneauFiller = new PanneauFiller("<html><h3>Permettre de lister les ordres de préparations vendu dans une intervalle de temps</h3></html>");
+        this.add(panneauFiller, BorderLayout.NORTH);
+
+        dateDebut = new JLabel("Date du début : ");
+        dateDebut.setHorizontalAlignment(SwingConstants.RIGHT);
+        panneauRecherche2.add(dateDebut);
+
+        spinnerDateDeb = new PanneauSpinnerDate();
+        panneauRecherche2.add(spinnerDateDeb);
+
+        dateFin = new JLabel("Date de fin : ");
+        dateFin.setHorizontalAlignment(SwingConstants.RIGHT);
+        panneauRecherche2.add(dateFin);
+
+        spinnerDateFin = new PanneauSpinnerDate();
+        panneauRecherche2.add(spinnerDateFin);
+
+        //Les boutons
+        retour = new JButton("Retour");
+        panneauBoutons.add(retour);
+        validation = new JButton("Validation");
+        panneauBoutons.add(validation);
+        nouvRecherche = new JButton("Nouvelle recherche");
+        panneauBoutons.add(nouvRecherche);
+
+        //Ecouteurs
+        ButtonsListener buttonsListener = new ButtonsListener();
+        retour.addActionListener(buttonsListener);
+        validation.addActionListener(buttonsListener);
+        nouvRecherche.addActionListener(buttonsListener);
     }
 
     public ApplicationController getController() {
@@ -32,5 +68,33 @@ public class PanneauRecherche2 extends JPanel
 
     public void setController(ApplicationController controller) {
         this.controller = controller;
+    }
+
+    private class ButtonsListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (e.getSource() == retour)
+            {
+                PanneauRecherche2.this.removeAll();
+                PanneauRecherche2.this.panneauBienvenue = new PanneauBienvenue();
+                PanneauRecherche2.this.add(panneauBienvenue);
+                PanneauRecherche2.this.repaint();
+                PanneauRecherche2.this.validate();
+            }
+            else
+            {
+                if (e.getSource() == nouvRecherche) {
+                    PanneauRecherche2.this.removeAll();
+                    PanneauRecherche2.this.add(new PanneauRecherche2());
+                    PanneauRecherche2.this.validate();
+                }
+                else
+                {
+                    if (e.getSource() == validation) {
+
+                    }
+                }
+            }
+        }
     }
 }

@@ -7,6 +7,7 @@ public class AddOrdreException extends Exception
     public AddOrdreException (String messageErreur)
     {
         this.messageErreur = messageErreur;
+        getMessage();
     }
 
     public String getMessage()

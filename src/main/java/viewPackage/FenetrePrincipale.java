@@ -16,7 +16,7 @@ public class FenetrePrincipale extends JFrame
     private PanneauRecherche2 panneauRecherche2;
     private JMenuBar menuBar;
     private JMenu application, ordre, recherches, tacheMetier;
-    private JMenuItem quitter, insertionOrdre, modifierOrdre, supprimerOrdre, listerOrdres, recherche1, recherche2, recherche3;
+    private JMenuItem quitter, insertionOrdre, modifierOrdre, supprimerOrdre, listerOrdres, recherche1, recherche2, recherche3, rechercheMoyenneJour;
 
     public FenetrePrincipale()
     {
@@ -78,6 +78,9 @@ public class FenetrePrincipale extends JFrame
         recherches.addSeparator();
         recherches.add(recherche3);
 
+        rechercheMoyenneJour = new JMenuItem("Recherche moyenne du jour");
+        tacheMetier.add(rechercheMoyenneJour);
+
         //On ajoute les différents écouteurs
         this.addWindowListener(new ClosingListener());
         ButtonsListener buttonsListener = new ButtonsListener();
@@ -89,7 +92,7 @@ public class FenetrePrincipale extends JFrame
         recherche1.addActionListener(buttonsListener);
         recherche2.addActionListener(buttonsListener);
         recherche3.addActionListener(buttonsListener);
-
+        rechercheMoyenneJour.addActionListener(buttonsListener);
         //On rends visible la fenetre
         this.setVisible(true);
     }
@@ -140,8 +143,7 @@ public class FenetrePrincipale extends JFrame
                             frameContainer.validate();
                         }
                         else{
-                            if(e.getSource() == supprimerOrdre)
-                            {
+                            if(e.getSource() == supprimerOrdre){
                                 frameContainer.removeAll();
                                 panneauSuppression = new PanneauSuppression();
                                 frameContainer.add(panneauSuppression);
@@ -166,6 +168,14 @@ public class FenetrePrincipale extends JFrame
                                         frameContainer.add(panneauRecherche2);
                                         frameContainer.repaint();
                                         frameContainer.validate();
+                                    }
+                                    else{
+                                        if(e.getSource() == rechercheMoyenneJour){
+                                            frameContainer.removeAll();
+                                            frameContainer.add(new PanneauTacheMetier());
+                                            frameContainer.repaint();
+                                            frameContainer.validate();
+                                        }
                                     }
                                 }
                             }

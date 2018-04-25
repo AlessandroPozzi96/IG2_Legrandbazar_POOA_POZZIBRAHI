@@ -52,9 +52,14 @@ public class DBAccess implements DataAccess
 
             if (ordrePreparation.getDatePreparation() != null)
             {
+                //sqlDate.setTime(ordrePreparation.getDatePreparation().getTimeInMillis());
+                //statement.setDate(6, sqlDate);
+
                 sqlDate.setTime(ordrePreparation.getDatePreparation().getTimeInMillis());
-                statement.setDate(6, sqlDate);
-            }
+                Timestamp datePrepa = new Timestamp(sqlDate.getTime());
+                statement.setTimestamp(6,datePrepa);
+
+                }
             else
             {
                 statement.setNull(6, Types.TIMESTAMP);

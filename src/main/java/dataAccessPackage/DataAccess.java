@@ -17,7 +17,7 @@ public interface DataAccess
     Integer getNumeroSequentiel () throws GeneralException;
     void updateOrdre(OrdrePreparation ordrePreparation) throws UpdateOrdreException;
     void supprimerOrdre(int numeroSequentiel) throws GeneralException;
-    ArrayList<OrdrePreparation> getOrdresRecettesCuisiniers(Integer codeBarre, String recette) throws GetOrdresRecettesCuisiniersException, ModelException;
+    ArrayList<OrdrePreparation> getOrdresRecettesCuisiniers(Integer matri_Cui, String recette) throws GetOrdresRecettesCuisiniersException, ModelException;
 
     ArrayList<Reservation> getForeignKeyReservation(int numeroSequentie) throws GeneralException;
     void supprimerForeignKeyReservation(int numeroSequentiel) throws GeneralException;

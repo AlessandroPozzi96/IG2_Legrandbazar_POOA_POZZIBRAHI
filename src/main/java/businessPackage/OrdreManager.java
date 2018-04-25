@@ -65,8 +65,8 @@ public class OrdreManager
         dao.supprimerForeignKeyReservation(numeroSequentiel);
     }
 
-    public ArrayList<OrdrePreparation> getOrdresRecettesCuisiniers(Integer codeBarre, String recette) throws GetOrdresRecettesCuisiniersException, ModelException
+    public ArrayList<OrdrePreparation> getOrdresRecettesCuisiniers(Integer matri_Cui, String recette) throws GetOrdresRecettesCuisiniersException, ModelException
     {
-        return dao.getOrdresRecettesCuisiniers(codeBarre, recette);
+        return dao.getOrdresRecettesCuisiniers(matri_Cui, recette);
     }
 }

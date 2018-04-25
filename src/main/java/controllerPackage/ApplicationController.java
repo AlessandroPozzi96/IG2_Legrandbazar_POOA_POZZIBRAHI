@@ -66,8 +66,8 @@ public class ApplicationController
         manager.supprimerForeignKeyReservation(numeroSequentiel);
     }
 
-    public ArrayList<OrdrePreparation> getOrdresRecettesCuisiniers(Integer codeBarre, String recette) throws GetOrdresRecettesCuisiniersException, ModelException
+    public ArrayList<OrdrePreparation> getOrdresRecettesCuisiniers(Integer matri_Cui, String recette) throws GetOrdresRecettesCuisiniersException, ModelException
     {
-        return manager.getOrdresRecettesCuisiniers(codeBarre, recette);
+        return manager.getOrdresRecettesCuisiniers(matri_Cui, recette);
     }
 }

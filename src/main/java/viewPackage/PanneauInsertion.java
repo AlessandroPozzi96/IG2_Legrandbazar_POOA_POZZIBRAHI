@@ -260,12 +260,9 @@ public class PanneauInsertion extends JPanel
 
     public void reinitialiser ()
     {
-        spinnerDate.reinitialiserChamps();
-        spinnerDateVente.reinitialiserChamps();
-        spinnerDatePrep.reinitialiserChamps();
-        quantitePrevueText.setText("");
-        quantiteProduiteText.setText("");
-        remarqueText.setText("");
+        PanneauInsertion.this.removeAll();
+        PanneauInsertion.this.add(new PanneauInsertion());
+        PanneauInsertion.this.validate();
     }
 
     private class ItemsListener implements ItemListener
@@ -380,9 +377,7 @@ public class PanneauInsertion extends JPanel
 
             //Affichage d'un message de confirmation  de l'insertion + réinitialisation des champs
             JOptionPane.showMessageDialog(null, "Confirmation de l'insertion de l'ordre !", "Information", JOptionPane.INFORMATION_MESSAGE);
-            PanneauInsertion.this.removeAll();
-            PanneauInsertion.this.add(new PanneauInsertion());
-            PanneauInsertion.this.validate();
+            reinitialiser();
         }
         catch (ModelException eME)
         {

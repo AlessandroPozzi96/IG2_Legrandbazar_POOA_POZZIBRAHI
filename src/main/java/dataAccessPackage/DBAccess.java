@@ -460,7 +460,7 @@ public class DBAccess implements DataAccess
     }
 
     @Override
-    public ArrayList<OrdrePreparation> getOrdresRecettesCuisiniers(Integer codeBarre, String recette) throws GetOrdresRecettesCuisiniersException, ModelException{
+    public ArrayList<OrdrePreparation> getOrdresRecettesCuisiniers(Integer matri_Cui, String recette) throws GetOrdresRecettesCuisiniersException, ModelException{
         ArrayList<OrdrePreparation> ordres = new ArrayList<>();
 
         if ((connection = SingletonConnection.getInstance()) == null)
@@ -471,17 +471,17 @@ public class DBAccess implements DataAccess
             String sql = "select * \n" +
                     "from ordrepreparation o join recette r on (o.Nom = r.Nom)\n" +
                     "join cuisinier c on (o.Matricule_Cui = c.Matricule_Cui) \n" +
-                    "where o.CodeBarre is not null\n" +
+                    "where o.Nom is not null\n" +
                     "and o.Matricule_Cui is not null\n" +
-                    "and o.CodeBarre = ?\n" +
                     "and o.Matricule_Cui = ?\n" +
+                    "and o.Nom = ?\n" +
                     "order by o.NumeroSequentiel;";
             statement = connection.prepareStatement(sql);
-            statement.setInt(1, codeBarre);
+            statement.setInt(1, matri_Cui);
             statement.setString(2, recette);
             ResultSet data = statement.executeQuery(); // contient les lignes de résultat de la requête
             ResultSetMetaData meta = data.getMetaData(); // Contient les meta données (nb colonnes, ...)
-            int quantiteProduite;
+            int quantiteProduite, codeBarre;
             String remarque;
 
             while(data.next())
@@ -511,7 +511,11 @@ public class DBAccess implements DataAccess
                 // LES CHAMPS FACULTATIFS
 
                 // CodeBarre
-                ordrePreparation.setCodeBarre(data.getInt("CodeBarre"));
+                codeBarre = data.getInt("CodeBarre");
+                if (!data.wasNull())
+                {
+                    ordrePreparation.setCodeBarre(codeBarre);
+                }
                 // QuantiteProduite
                 quantiteProduite = data.getInt("QuantiteProduite");
                 if(! data.wasNull()){

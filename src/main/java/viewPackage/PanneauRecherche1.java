@@ -18,16 +18,17 @@ public class PanneauRecherche1 extends JPanel
 {
     private JPanel panneauRecherche1, panneauBoutons;
     private ApplicationController controller;
-    private JLabel recettesLabel, codeBarresLabel, ordresLabel;
-    private JComboBox recettesJCombox, codeBarreCombo;
-    private ArrayList<String> recettes, codeBarres;
+    private JLabel recettesLabel, codeBarresLabel;
+    private JComboBox recettesJCombox, matriculeCuiCombo;
+    private ArrayList<String> recettes, matriculesCui;
     private ArrayList<OrdrePreparation> ordres;
-    private JButton retour, validation, reinitialiser;
+    private JButton retour, validation, nouvRecherche;
     private AllOrdresPreparationModel allOrdresPreparationModel;
     private JTable jTable;
     private PanneauBienvenue panneauBienvenue;
-    private Integer codeBarre = null;
+    private Integer matri_Cui = null;
     private String recette = null;
+    private PanneauFiller panneauFiller;
 
     public PanneauRecherche1()
     {
@@ -35,13 +36,16 @@ public class PanneauRecherche1 extends JPanel
         //Création des panneaux et de leurs layouts
         this.setLayout(new BorderLayout());
         panneauRecherche1 = new JPanel();
-        panneauRecherche1.setLayout(new GridLayout(3, 2, 3, 3));
+        panneauRecherche1.setLayout(new FlowLayout());
         panneauBoutons = new JPanel();
         panneauBoutons.setLayout(new FlowLayout());
         this.add(panneauRecherche1, BorderLayout.CENTER);
         this.add(panneauBoutons, BorderLayout.SOUTH);
 
         //Création des labels et des champs dans la grille
+        panneauFiller = new PanneauFiller("<html><h3>Permet d'afficher les ordres de préparations en fonction d'une recette et d'un cuisinier :</h3></html>");
+        this.add(panneauFiller, BorderLayout.NORTH);
+
         recettesLabel = new JLabel("Choisissez une recette : ");
         recettesLabel.setToolTipText("Recette des ordres de préparations");
         recettesLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -55,35 +59,28 @@ public class PanneauRecherche1 extends JPanel
             System.out.println("Erreur Recupération des noms de recette");  // Changer en autre que println (Afficher une erreur dans la JCOMBOBOX par ex
         }
         recettesJCombox = new JComboBox();
-        recettesJCombox.addItem("Pas de recettes");
         for(String recetteNom : recettes)
         {
             recettesJCombox.addItem(recetteNom);
         }
         panneauRecherche1.add(recettesJCombox);
 
-        codeBarresLabel = new JLabel("Code barre :");
+        codeBarresLabel = new JLabel("Matricule Cuisinier :");
         codeBarresLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        codeBarresLabel.setToolTipText("Référence vers le code barre à qui la préparation a été attribué");
+        codeBarresLabel.setToolTipText("Référence vers le cuisinier à qui la préparation a été attribué");
         panneauRecherche1.add(codeBarresLabel);
 
-        codeBarres = new ArrayList<>();
+        matriculesCui = new ArrayList<>();
         try {
-            codeBarres = controller.getCodeBarres();
+            matriculesCui = controller.getMatriculesCui();
         } catch (GeneralException e) {
             e.printStackTrace();
         }
-        codeBarreCombo = new JComboBox();
-        codeBarreCombo.addItem("Pas d'article");
-        for(String codeBarre : codeBarres){
-            codeBarreCombo.addItem(codeBarre);
+        matriculeCuiCombo = new JComboBox();
+        for(String matriculeCui : matriculesCui){
+            matriculeCuiCombo.addItem(matriculeCui);
         }
-        panneauRecherche1.add(codeBarreCombo);
-
-        ordresLabel = new JLabel("Résultat de la recherche : ");
-        ordresLabel.setToolTipText("Ordres de préparations afficher en fonction de la recette et du cuisinier");
-        ordresLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        panneauRecherche1.add(ordresLabel);
+        panneauRecherche1.add(matriculeCuiCombo);
 
         //On ajoute les boutons
 
@@ -91,18 +88,18 @@ public class PanneauRecherche1 extends JPanel
         panneauBoutons.add(retour);
         validation = new JButton("Valider la recherche");
         panneauBoutons.add(validation);
-        reinitialiser = new JButton("Reinitialiser");
-        panneauBoutons.add(reinitialiser);
+        nouvRecherche = new JButton("Nouvelle recherche");
+        panneauBoutons.add(nouvRecherche);
 
         //On ajoute les listeners aux boutons
 
         ButtonsAndTextsListener buttonsAndTextsListener = new ButtonsAndTextsListener();
         retour.addActionListener(buttonsAndTextsListener);
         validation.addActionListener(buttonsAndTextsListener);
-        reinitialiser.addActionListener(buttonsAndTextsListener);
+        nouvRecherche.addActionListener(buttonsAndTextsListener);
         ItemsListener itemsListener = new ItemsListener();
         recettesJCombox.addItemListener(itemsListener);
-        codeBarreCombo.addItemListener(itemsListener);
+        matriculeCuiCombo.addItemListener(itemsListener);
     }
 
     public void setController(ApplicationController controller) {
@@ -124,7 +121,7 @@ public class PanneauRecherche1 extends JPanel
             }
             else
             {
-                if (e.getSource() == reinitialiser)
+                if (e.getSource() == nouvRecherche)
                 {
                     PanneauRecherche1.this.removeAll();
                     PanneauRecherche1.this.add(new PanneauRecherche1());
@@ -134,13 +131,13 @@ public class PanneauRecherche1 extends JPanel
                 {
                     if (e.getSource() == validation)
                     {
-                        if (codeBarre != null && recette != null)
+                        if (matri_Cui != null || recette != null)
                         {
                             ordres = new ArrayList<>();
 
                             try
                             {
-                                ordres = getController().getOrdresRecettesCuisiniers(codeBarre, recette);
+                                ordres = getController().getOrdresRecettesCuisiniers(matri_Cui, recette);
                             }
                             catch (GetOrdresRecettesCuisiniersException eG)
                             {
@@ -155,7 +152,12 @@ public class PanneauRecherche1 extends JPanel
                             jTable = new JTable(allOrdresPreparationModel);
                             jTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
                             JScrollPane jScrollPane = new JScrollPane(jTable);
-                            panneauRecherche1.add(jScrollPane, BorderLayout.CENTER);
+
+                            //On remplace le panneau de la recherche1 par la jtable
+                            panneauRecherche1.removeAll();
+                            panneauRecherche1.add(jScrollPane);
+                            panneauRecherche1.repaint();
+                            panneauRecherche1.validate();
                         }
                     }
                 }
@@ -170,17 +172,12 @@ public class PanneauRecherche1 extends JPanel
         public void itemStateChanged(ItemEvent e) {
             if (e.getStateChange() == ItemEvent.SELECTED)
             {
-                if (recettesJCombox.getSelectedItem().equals("Pas d'article"))
-                {
-                    recette = (String) recettesJCombox.getSelectedItem();
-                }
-                if (!codeBarreCombo.getSelectedItem().equals("Pas d'article"))
-                {
-                    String ordrePreparationSelection;
-                    ordrePreparationSelection = codeBarreCombo.getSelectedItem().toString();
-                    String [] motSepare = ordrePreparationSelection.split(" ");
-                    codeBarre = Integer.parseInt(motSepare[0]);
-                }
+                recette = (String) recettesJCombox.getSelectedItem();
+
+                String ordrePreparationSelection;
+                ordrePreparationSelection = matriculeCuiCombo.getSelectedItem().toString();
+                String [] motSepare = ordrePreparationSelection.split(" ");
+                matri_Cui = Integer.parseInt(motSepare[0]);
             }
         }
     }

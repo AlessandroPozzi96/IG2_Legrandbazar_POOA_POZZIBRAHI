@@ -330,59 +330,62 @@ public class PanneauModification extends JPanel
         }
         //Modification de l'ordre dans la DB
         ordrePreparation = new OrdrePreparation();
-        try
+        if (!ordres.isEmpty())
         {
-            //Récupération de la date et du numéro séquentiel via le JCombobox
-            ordrePreparation.setDate(ordres.get(iOrdre).getDate());
-            ordrePreparation.setNumeroSequentiel(ordres.get(iOrdre).getNumeroSequentiel());
-            ordrePreparation.setQuantitePrevue(quantitePrevue);
-            ordrePreparation.setQuantiteProduite(quantiteProduite);
-            if (ouiDateVente.isSelected())
+            try
             {
-                ordrePreparation.setDateVente(spinnerDateVente.getDate());
-            }
-            else
-            {
-                ordrePreparation.setDateVente(null);
-            }
-            if (ouiDatePrep.isSelected())
-            {
-                ordrePreparation.setDatePreparation(spinnerDatePrep.getDate());
-            }
-            else
-            {
-                ordrePreparation.setDatePreparation(null);
-            }
+                //Récupération de la date et du numéro séquentiel via le JCombobox
+                ordrePreparation.setDate(ordres.get(iOrdre).getDate());
+                ordrePreparation.setNumeroSequentiel(ordres.get(iOrdre).getNumeroSequentiel());
+                ordrePreparation.setQuantitePrevue(quantitePrevue);
+                ordrePreparation.setQuantiteProduite(quantiteProduite);
+                if (ouiDateVente.isSelected())
+                {
+                    ordrePreparation.setDateVente(spinnerDateVente.getDate());
+                }
+                else
+                {
+                    ordrePreparation.setDateVente(null);
+                }
+                if (ouiDatePrep.isSelected())
+                {
+                    ordrePreparation.setDatePreparation(spinnerDatePrep.getDate());
+                }
+                else
+                {
+                    ordrePreparation.setDatePreparation(null);
+                }
 
-            if(remarqueText.getText().equals("")){
-                ordrePreparation.setRemarque(null);  // Met a null car facultatif
-            }else{
-                ordrePreparation.setRemarque(remarqueText.getText());
-            }
-            ordrePreparation.setEstUrgent(urgent.isSelected());
-            ordrePreparation.setNom(recettes.get(recetteCombo.getSelectedIndex()));
-            char cB = codeBarres.get(codeBarreCombo.getSelectedIndex()).charAt(0);
-            Integer cBN = Character.getNumericValue(cB);
-            ordrePreparation.setCodeBarre(cBN);
-            char matriCui = matriculesCui.get(matriculeCuiCombo.getSelectedIndex()).charAt(0);
-            Integer matriC = Character.getNumericValue(matriCui);
-            ordrePreparation.setMatricule_Cui(matriC);
-            char matriRes = matriculesRes.get(matriculeResCombo.getSelectedIndex()).charAt(0);
-            Integer matriR = Character.getNumericValue(matriRes);
-            ordrePreparation.setMatricule_Res(matriR);
-            controller.updateOrdre(ordrePreparation);
+                if(remarqueText.getText().equals("")){
+                    ordrePreparation.setRemarque(null);  // Met a null car facultatif
+                }else{
+                    ordrePreparation.setRemarque(remarqueText.getText());
+                }
+                ordrePreparation.setEstUrgent(urgent.isSelected());
+                ordrePreparation.setNom(recettes.get(recetteCombo.getSelectedIndex()));
+                char cB = codeBarres.get(codeBarreCombo.getSelectedIndex()).charAt(0);
+                Integer cBN = Character.getNumericValue(cB);
+                ordrePreparation.setCodeBarre(cBN);
+                char matriCui = matriculesCui.get(matriculeCuiCombo.getSelectedIndex()).charAt(0);
+                Integer matriC = Character.getNumericValue(matriCui);
+                ordrePreparation.setMatricule_Cui(matriC);
+                char matriRes = matriculesRes.get(matriculeResCombo.getSelectedIndex()).charAt(0);
+                Integer matriR = Character.getNumericValue(matriRes);
+                ordrePreparation.setMatricule_Res(matriR);
+                controller.updateOrdre(ordrePreparation);
 
-            //Affichage d'un message de confirmation  de la modification + réinitialisation des champs
-            JOptionPane.showMessageDialog(null, "Confirmation de la modification de l'ordre !", "Information", JOptionPane.INFORMATION_MESSAGE);
-            reinitialiser();
-        }
-        catch (ModelException eME)
-        {
-            eME.getMessage();
-        }
-        catch (UpdateOrdreException eUO)
-        {
-            eUO.getMessage();
+                //Affichage d'un message de confirmation  de la modification + réinitialisation des champs
+                JOptionPane.showMessageDialog(null, "Confirmation de la modification de l'ordre !", "Information", JOptionPane.INFORMATION_MESSAGE);
+                reinitialiser();
+            }
+            catch (ModelException eME)
+            {
+                eME.getMessage();
+            }
+            catch (UpdateOrdreException eUO)
+            {
+                eUO.getMessage();
+            }
         }
     }
 

@@ -354,7 +354,7 @@ public class PanneauInsertion extends JPanel
 
             ordrePreparation.setNom(recettes.get(recetteCombo.getSelectedIndex()));
 
-            if(codeBarreCombo.getSelectedIndex()==0){
+            if(codeBarreCombo.getSelectedIndex()==0 || codeBarreCombo.getSelectedItem().equals("Pas d'arcticle")){
                 ordrePreparation.setCodeBarre(null);
             }
             else{
@@ -362,7 +362,7 @@ public class PanneauInsertion extends JPanel
                 Integer cBN = Character.getNumericValue(cB);
                 ordrePreparation.setCodeBarre(cBN);
             }
-            if(matriculeCuiCombo.getSelectedIndex()==0){
+            if(matriculeCuiCombo.getSelectedIndex()==0 || matriculeCuiCombo.getSelectedItem().equals("Pas d'article")){
                 ordrePreparation.setMatricule_Cui(null);
             }
             else{

@@ -83,4 +83,9 @@ public class ApplicationController
     {
         return manager.getRecherche3(numClient);
     }
+
+    public ArrayList<String> getClients () throws GeneralException
+    {
+        return manager.getClients();
+    }
 }

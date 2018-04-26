@@ -627,8 +627,8 @@ public class DBAccess implements DataAccess
             throw  new GeneralException("Erreur connexion !","récupérer les clients");
 
         try {
-            String sql = "select c.Nom, , c.Prenom, c.NumClient" +
-                        " from client c";
+            String sql = "select c.Nom, c.Prenom, c.NumClient" +
+                        " from dbgrandbazar.client c";
             statement = connection.prepareStatement(sql);
             ResultSet data = statement.executeQuery();
 
@@ -669,7 +669,7 @@ public class DBAccess implements DataAccess
             String libelle;
             Integer quantite;
             GregorianCalendar dateTicket;
-            java.sql.Date sqlDate = new java.sql.Date(0);
+            java.sql.Date sqlDate;
 
             while (data.next())
             {

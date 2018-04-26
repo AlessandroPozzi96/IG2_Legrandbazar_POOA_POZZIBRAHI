@@ -82,4 +82,9 @@ public class OrdreManager
     {
         return dao.getRecherche3(numClient);
     }
+
+    public ArrayList<String> getClients () throws GeneralException
+    {
+        return dao.getClients();
+    }
 }

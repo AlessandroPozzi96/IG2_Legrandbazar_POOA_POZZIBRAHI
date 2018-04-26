@@ -138,7 +138,7 @@ public class PanneauRecherche1 extends JPanel
                         String [] motSepare = ordrePreparationSelection.split(" ");
                         matri_Cui = Integer.parseInt(motSepare[0]);
 
-                        if (matri_Cui != null && recette != null)
+                        if (!matriculesCui.isEmpty() && !recettes.isEmpty())
                         {
                             ordres = new ArrayList<>();
 

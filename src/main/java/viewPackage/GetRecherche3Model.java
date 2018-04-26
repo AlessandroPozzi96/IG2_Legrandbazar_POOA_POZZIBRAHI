@@ -4,6 +4,7 @@ import modelPackage.Recherche3;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class GetRecherche3Model extends AbstractTableModel
 {
@@ -24,7 +25,27 @@ public class GetRecherche3Model extends AbstractTableModel
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        return null;
+        Recherche3 recherche3 = contents.get(rowIndex);
+        switch (columnIndex) {
+            case 0 : return recherche3.getLibelle();
+            case 1 : return recherche3.getDateTicket().getTime();
+            case 2 : return recherche3.getQuantite();
+            default: return null;
+        }
+    }
+
+    public Class getColumnClass(int column){
+        Class c;
+        switch (column){
+            case 0 : c = String.class;
+                break;
+            case 1 : c = Date.class;
+                break;
+            case 2 : c = Integer.class;
+                break;
+            default : c = String.class;
+        }
+        return c;
     }
 
     public void setContents(ArrayList<Recherche3> contents) {

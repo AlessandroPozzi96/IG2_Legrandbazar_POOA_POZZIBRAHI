@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class PanneauInsertion extends JPanel
 {
-    private JPanel panneauFormulaire, panneauBoutons;
+    private JPanel panneauFormulaire, panneauBoutons,panneauDateVente,panneauDatePreparation;
     private JLabel recetteLabel, dateLabel, numeroSequencielLabel, quantitePrevueLabel, quantiteProduiteLabel, dateVenteLabel, datePreparationLabel, remarqueLabel, codeBarreLabel, matriculeCuiLabel, matriculeResLabel;
     private JTextField numeroSequentielText, quantitePrevueText, quantiteProduiteText, remarqueText;
     private JComboBox codeBarreCombo, matriculeCuiCombo, matriculeResCombo, recetteCombo;
@@ -29,14 +29,14 @@ public class PanneauInsertion extends JPanel
     private ApplicationController controller;
     private Integer dernierNumeroSequentiel;
     private OrdrePreparation ordrePreparation;
-
+    private JCheckBox bouttonDateVente, bouttonDatePreparation;
     public PanneauInsertion()
     {
         controller = new ApplicationController();
         //Création des panneaux et de leurs layouts
         this.setLayout(new BorderLayout());
         panneauFormulaire = new JPanel();
-        panneauFormulaire.setLayout(new GridLayout(14, 2, 3, 3));
+        panneauFormulaire.setLayout(new GridLayout(12, 2, 3, 3));
         /*panneauFormulaire.setBackground(Color.RED);*/
         panneauBoutons = new JPanel();
         /*panneauBoutons.setBackground(Color.RED);*/
@@ -103,41 +103,48 @@ public class PanneauInsertion extends JPanel
         panneauFormulaire.add(quantiteProduiteText);
 
         // Faire un truc avec code Barre et date Vente (grisé quand pas relié a un code barre = null et non grisé quand relié a un code barre)
+        bouttonDateVente = new JCheckBox("Encoder une date vente");
+        bouttonDateVente.setHorizontalAlignment(SwingConstants.RIGHT);
+        panneauFormulaire.add(bouttonDateVente);
+
+        bouttonDateVente.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                spinnerDateVente.getSpinnerDate().setEnabled(bouttonDateVente.isSelected());
+            }
+        });
+
+
+        panneauDateVente = new JPanel();
         dateVenteLabel = new JLabel("Date vente : ");
         dateVenteLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         dateVenteLabel.setToolTipText("[FACULTATIF] Date de mise en vente");
-        panneauFormulaire.add(dateVenteLabel);
+        panneauDateVente.add(dateVenteLabel);
         spinnerDateVente = new PanneauSpinnerDate();
-        panneauFormulaire.add(spinnerDateVente);
+        spinnerDateVente.getSpinnerDate().setEnabled(false);
+        panneauDateVente.add(spinnerDateVente);
+        panneauFormulaire.add(panneauDateVente);
 
-        ouiDateVente = new JRadioButton("Enregistrer la date de vente", false);
-        ouiDateVente.setHorizontalAlignment(SwingConstants.LEFT);
-        panneauFormulaire.add(ouiDateVente);
-        nonDateVente = new JRadioButton("Ne pas enregistrer la date de vente", true);
-        nonDateVente.setHorizontalAlignment(SwingConstants.RIGHT);
-        panneauFormulaire.add(nonDateVente);
+        bouttonDatePreparation = new JCheckBox("Encoder une date préparation");
+        bouttonDatePreparation.setHorizontalAlignment(SwingConstants.RIGHT);
+        panneauFormulaire.add(bouttonDatePreparation);
 
-        buttonGroupDateVente = new ButtonGroup();
-        buttonGroupDateVente.add(ouiDateVente);
-        buttonGroupDateVente.add(nonDateVente);
+        bouttonDatePreparation.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                spinnerDatePrep.getSpinnerDate().setEnabled(bouttonDatePreparation.isSelected());
+            }
+        });
 
+        panneauDatePreparation = new JPanel();
         datePreparationLabel = new JLabel("Date de préparation :");
         datePreparationLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         datePreparationLabel.setToolTipText("[FACULTATIF] Date lors de la préparation");
-        panneauFormulaire.add(datePreparationLabel);
+        panneauDatePreparation.add(datePreparationLabel);
         spinnerDatePrep = new PanneauSpinnerDate();
-        panneauFormulaire.add(spinnerDatePrep);
-
-        ouiDatePrep = new JRadioButton("Enregistrer la date de préparation", false);
-        ouiDatePrep.setHorizontalAlignment(SwingConstants.LEFT);
-        panneauFormulaire.add(ouiDatePrep);
-        nonDatePrep = new JRadioButton("Ne pas enregistrer la date de préparation", true);
-        nonDatePrep.setHorizontalAlignment(SwingConstants.RIGHT);
-        panneauFormulaire.add(nonDatePrep);
-
-        buttonGroupDatePrep = new ButtonGroup();
-        buttonGroupDatePrep.add(ouiDatePrep);
-        buttonGroupDatePrep.add(nonDatePrep);
+        spinnerDatePrep.getSpinnerDate().setEnabled(false);
+        panneauDatePreparation.add(spinnerDatePrep);
+        panneauFormulaire.add(panneauDatePreparation);
 
         remarqueLabel = new JLabel("Remarque : ");
         remarqueLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -195,7 +202,6 @@ public class PanneauInsertion extends JPanel
         }
         panneauFormulaire.add(matriculeCuiCombo);
 
-
         matriculeResLabel = new JLabel("Matricule responsable :");
         matriculeResLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         matriculeResLabel.setToolTipText("Référence vers la responsable des ventes qui a créé l'ordre");
@@ -212,7 +218,6 @@ public class PanneauInsertion extends JPanel
             matriculeResCombo.addItem(matriculeRes);
         }
         panneauFormulaire.add(matriculeResCombo);
-
 
         //Ajout des boutons au panneauBoutons
         retour = new JButton("Retour");
@@ -329,7 +334,7 @@ public class PanneauInsertion extends JPanel
             ordrePreparation.setNumeroSequentiel(0);
             ordrePreparation.setQuantitePrevue(quantitePrevue);
             ordrePreparation.setQuantiteProduite(quantiteProduite);
-            if (ouiDateVente.isSelected())
+            if (bouttonDateVente.isSelected())
             {
                 ordrePreparation.setDateVente(spinnerDateVente.getDate());
             }
@@ -337,7 +342,7 @@ public class PanneauInsertion extends JPanel
             {
                 ordrePreparation.setDateVente(null);
             }
-            if (ouiDatePrep.isSelected())
+            if (bouttonDatePreparation.isSelected())
             {
                 ordrePreparation.setDatePreparation(spinnerDatePrep.getDate());
             }

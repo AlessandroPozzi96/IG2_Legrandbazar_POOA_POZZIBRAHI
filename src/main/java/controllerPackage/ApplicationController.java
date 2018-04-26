@@ -3,9 +3,11 @@ package controllerPackage;
 import businessPackage.OrdreManager;
 import exceptionPackage.*;
 import modelPackage.OrdrePreparation;
+import modelPackage.Recherche2;
 import modelPackage.Reservation;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 public class ApplicationController
 {
@@ -69,5 +71,10 @@ public class ApplicationController
     public ArrayList<OrdrePreparation> getOrdresRecettesCuisiniers(Integer matri_Cui, String recette) throws GetOrdresRecettesCuisiniersException, ModelException
     {
         return manager.getOrdresRecettesCuisiniers(matri_Cui, recette);
+    }
+
+    public ArrayList<Recherche2> getRecherche2(GregorianCalendar dateDeb, GregorianCalendar dateFin) throws GeneralException, ModelException
+    {
+        return manager.getRecherche2(dateDeb, dateFin);
     }
 }

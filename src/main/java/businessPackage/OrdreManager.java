@@ -4,9 +4,11 @@ import dataAccessPackage.DBAccess;
 import dataAccessPackage.DataAccess;
 import exceptionPackage.*;
 import modelPackage.OrdrePreparation;
+import modelPackage.Recherche2;
 import modelPackage.Reservation;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 public class OrdreManager
 {
@@ -68,5 +70,10 @@ public class OrdreManager
     public ArrayList<OrdrePreparation> getOrdresRecettesCuisiniers(Integer matri_Cui, String recette) throws GetOrdresRecettesCuisiniersException, ModelException
     {
         return dao.getOrdresRecettesCuisiniers(matri_Cui, recette);
+    }
+
+    public ArrayList<Recherche2> getRecherche2(GregorianCalendar dateDeb, GregorianCalendar dateFin) throws GeneralException, ModelException
+    {
+        return dao.getRecherche2(dateDeb, dateFin);
     }
 }

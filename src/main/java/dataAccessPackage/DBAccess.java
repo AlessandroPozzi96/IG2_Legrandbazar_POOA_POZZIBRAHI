@@ -567,8 +567,8 @@ public class DBAccess implements DataAccess
 
 
         try {
-            String sql = "SET @DateDeb = ?\n" +
-                    "SET @DateFin = ?\n" +
+            String sql = "SET @DateDeb = str_to_date(?, '%M %d %Y')\n" +
+                    "SET @DateFin = str_to_date(?, '%M %d %Y'\n" +
                     "\n" +
                     "select o.NumeroSequentiel, o.Date 'DateOrdre', o.QuantitePrevue, o.EstUrgent, o.Matricule_Res, ti.Date 'DateTicket'\n" +
                     "from ordrepreparation o join typearticle t on (o.CodeBarre = t.CodeBarre)\n" +

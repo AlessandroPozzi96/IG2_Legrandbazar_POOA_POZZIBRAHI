@@ -1,6 +1,9 @@
 package viewPackage;
 
 import controllerPackage.ApplicationController;
+import exceptionPackage.GeneralException;
+import exceptionPackage.ModelException;
+import modelPackage.Recherche2;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
 
 public class PanneauRecherche2 extends JPanel
 {
@@ -18,6 +22,9 @@ public class PanneauRecherche2 extends JPanel
     private PanneauBienvenue panneauBienvenue;
     private PanneauFiller panneauFiller;
     private PanneauSpinnerDate spinnerDateDeb, spinnerDateFin;
+    private ArrayList<Recherche2> recherches2;
+    private GetRecherche2Model getRecherche2Model;
+    private JTable jTable;
 
     public PanneauRecherche2() {
         setController(new ApplicationController());
@@ -91,7 +98,33 @@ public class PanneauRecherche2 extends JPanel
                 else
                 {
                     if (e.getSource() == validation) {
+                        recherches2 = new ArrayList<>();
 
+                        try
+                        {
+                            recherches2 = controller.getRecherche2(spinnerDateDeb.getDate(), spinnerDateFin.getDate());
+
+                        }
+                        catch (ModelException eM)
+                        {
+                            System.out.println(eM.getMessage());
+                        }
+                        catch (GeneralException eG)
+                        {
+                            System.out.println(eG.getMessage());
+                        }
+
+                        getRecherche2Model = new GetRecherche2Model(recherches2);
+                        jTable = new JTable(getRecherche2Model);
+                        jTable.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
+                        JScrollPane jScrollPane = new JScrollPane(jTable);
+
+                        //On remplace le panneau de la recherche1 par la jtable
+                        panneauRecherche2.removeAll();
+                        panneauRecherche2.setLayout(new BorderLayout());
+                        panneauRecherche2.add(jScrollPane);
+                        panneauRecherche2.repaint();
+                        panneauRecherche2.validate();
                     }
                 }
             }

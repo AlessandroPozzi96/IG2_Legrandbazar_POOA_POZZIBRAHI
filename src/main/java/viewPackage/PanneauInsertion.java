@@ -23,8 +23,8 @@ public class PanneauInsertion extends JPanel
     private ArrayList<String> recettes, codeBarres, matriculesCui, matriculesRes;
     private JButton validation, retour, reinitialiser;
     private PanneauBienvenue panneauBienvenue;
-    private JRadioButton urgent, pasUrgent, ouiDateVente, nonDateVente, ouiDatePrep, nonDatePrep;
-    private ButtonGroup buttonGroup, buttonGroupDateVente, buttonGroupDatePrep;
+    private JRadioButton urgent, pasUrgent;
+    private ButtonGroup buttonGroup;
     private PanneauSpinnerDate spinnerDate, spinnerDateVente, spinnerDatePrep;
     private ApplicationController controller;
     private Integer dernierNumeroSequentiel;
@@ -367,7 +367,7 @@ public class PanneauInsertion extends JPanel
                 Integer cBN = Character.getNumericValue(cB);
                 ordrePreparation.setCodeBarre(cBN);
             }
-            if(matriculeCuiCombo.getSelectedIndex()==0 || matriculeCuiCombo.getSelectedItem().equals("Pas d'article")){
+            if(matriculeCuiCombo.getSelectedIndex()==0 || matriculeCuiCombo.getSelectedItem().equals("Pas de cuisinier")){
                 ordrePreparation.setMatricule_Cui(null);
             }
             else{

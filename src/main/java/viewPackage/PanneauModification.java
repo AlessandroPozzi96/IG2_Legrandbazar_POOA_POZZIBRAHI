@@ -15,21 +15,21 @@ import java.util.ArrayList;
 
 public class PanneauModification extends JPanel
 {
-    private JPanel panneauModifications, panneauBoutons;
+    private JPanel panneauModifications, panneauBoutons,panneauDateVente,panneauDatePreparation;
     private ArrayList<OrdrePreparation> ordres;
     private JComboBox ordresJCombo, recetteCombo, codeBarreCombo, matriculeCuiCombo, matriculeResCombo;
     private JLabel ordresLabel, recetteLabel, quantitePrevueLabel, quantiteProduiteLabel, dateVenteLabel, datePreparationLabel, remarqueLabel, codeBarreLabel, matriculeCuiLabel, matriculeResLabel;
     private JTextField quantitePrevueText, quantiteProduiteText, remarqueText;
     private JButton validation, retour, reinitialiser;
     private PanneauBienvenue panneauBienvenue;
-    private JRadioButton urgent, pasUrgent, ouiDateVente, nonDateVente, ouiDatePrep, nonDatePrep;
-    private ButtonGroup buttonGroup, buttonGroupDateVente, buttonGroupDatePrep;
+    private JRadioButton urgent, pasUrgent;
+    private ButtonGroup buttonGroup;
     private PanneauSpinnerDate spinnerDateVente, spinnerDatePrep;
     private ApplicationController controller;
-    private DateFormat dateFormat;
     private ArrayList<String> recettes, codeBarres, matriculesCui, matriculesRes;
     private OrdrePreparation ordrePreparation;
     private Integer iOrdre = null;
+    private JCheckBox bouttonDateVente, bouttonDatePreparation;
 
     public PanneauModification()
     {
@@ -106,40 +106,48 @@ public class PanneauModification extends JPanel
         quantiteProduiteText = new JTextField();
         panneauModifications.add(quantiteProduiteText);
 
+        bouttonDateVente = new JCheckBox("Encoder une date vente");
+        bouttonDateVente.setHorizontalAlignment(SwingConstants.RIGHT);
+        panneauModifications.add(bouttonDateVente);
+
+        bouttonDateVente.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                spinnerDateVente.getSpinnerDate().setEnabled(bouttonDateVente.isSelected());
+            }
+        });
+
+
+        panneauDateVente = new JPanel();
         dateVenteLabel = new JLabel("Date vente : ");
         dateVenteLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        dateVenteLabel.setToolTipText("Date de mise en vente");
-        panneauModifications.add(dateVenteLabel);
+        dateVenteLabel.setToolTipText("[FACULTATIF] Date de mise en vente");
+        panneauDateVente.add(dateVenteLabel);
         spinnerDateVente = new PanneauSpinnerDate();
-        panneauModifications.add(spinnerDateVente);
+        spinnerDateVente.getSpinnerDate().setEnabled(false);
+        panneauDateVente.add(spinnerDateVente);
+        panneauModifications.add(panneauDateVente);
 
-        ouiDateVente = new JRadioButton("Modifier la date de vente", false);
-        ouiDateVente.setHorizontalAlignment(SwingConstants.LEFT);
-        panneauModifications.add(ouiDateVente);
-        nonDateVente = new JRadioButton("Ne pas modifier la date de vente", true);
-        nonDateVente.setHorizontalAlignment(SwingConstants.RIGHT);
-        panneauModifications.add(nonDateVente);
+        bouttonDatePreparation = new JCheckBox("Encoder une date préparation");
+        bouttonDatePreparation.setHorizontalAlignment(SwingConstants.RIGHT);
+        panneauModifications.add(bouttonDatePreparation);
 
-        buttonGroupDateVente = new ButtonGroup();
-        buttonGroupDateVente.add(ouiDateVente);
-        buttonGroupDateVente.add(nonDateVente);
+        bouttonDatePreparation.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                spinnerDatePrep.getSpinnerDate().setEnabled(bouttonDatePreparation.isSelected());
+            }
+        });
 
+        panneauDatePreparation = new JPanel();
         datePreparationLabel = new JLabel("Date de préparation :");
         datePreparationLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        panneauModifications.add(datePreparationLabel);
+        datePreparationLabel.setToolTipText("[FACULTATIF] Date lors de la préparation");
+        panneauDatePreparation.add(datePreparationLabel);
         spinnerDatePrep = new PanneauSpinnerDate();
-        panneauModifications.add(spinnerDatePrep);
-
-        ouiDatePrep = new JRadioButton("Modifier la date de préparation", false);
-        ouiDatePrep.setHorizontalAlignment(SwingConstants.LEFT);
-        panneauModifications.add(ouiDatePrep);
-        nonDatePrep = new JRadioButton("Ne pas modifier la date de préparation", true);
-        nonDatePrep.setHorizontalAlignment(SwingConstants.RIGHT);
-        panneauModifications.add(nonDatePrep);
-
-        buttonGroupDatePrep = new ButtonGroup();
-        buttonGroupDatePrep.add(ouiDatePrep);
-        buttonGroupDatePrep.add(nonDatePrep);
+        spinnerDatePrep.getSpinnerDate().setEnabled(false);
+        panneauDatePreparation.add(spinnerDatePrep);
+        panneauModifications.add(panneauDatePreparation);
 
         remarqueLabel = new JLabel("Remarque : ");
         remarqueLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -172,6 +180,7 @@ public class PanneauModification extends JPanel
             e.printStackTrace();
         }
         codeBarreCombo = new JComboBox();
+        codeBarreCombo.addItem("Pas d'article");
         for(String codeBarre : codeBarres){
             codeBarreCombo.addItem(codeBarre);
         }
@@ -189,6 +198,7 @@ public class PanneauModification extends JPanel
             e.printStackTrace();
         }
         matriculeCuiCombo = new JComboBox();
+        matriculeCuiCombo.addItem("Pas de cuisinier");
         for(String matriculeCui : matriculesCui){
             matriculeCuiCombo.addItem(matriculeCui);
         }
@@ -339,7 +349,7 @@ public class PanneauModification extends JPanel
                 ordrePreparation.setNumeroSequentiel(ordres.get(iOrdre).getNumeroSequentiel());
                 ordrePreparation.setQuantitePrevue(quantitePrevue);
                 ordrePreparation.setQuantiteProduite(quantiteProduite);
-                if (ouiDateVente.isSelected())
+                if (bouttonDateVente.isSelected())
                 {
                     ordrePreparation.setDateVente(spinnerDateVente.getDate());
                 }
@@ -347,7 +357,7 @@ public class PanneauModification extends JPanel
                 {
                     ordrePreparation.setDateVente(null);
                 }
-                if (ouiDatePrep.isSelected())
+                if (bouttonDatePreparation.isSelected())
                 {
                     ordrePreparation.setDatePreparation(spinnerDatePrep.getDate());
                 }
@@ -363,12 +373,21 @@ public class PanneauModification extends JPanel
                 }
                 ordrePreparation.setEstUrgent(urgent.isSelected());
                 ordrePreparation.setNom(recettes.get(recetteCombo.getSelectedIndex()));
-                char cB = codeBarres.get(codeBarreCombo.getSelectedIndex()).charAt(0);
-                Integer cBN = Character.getNumericValue(cB);
-                ordrePreparation.setCodeBarre(cBN);
-                char matriCui = matriculesCui.get(matriculeCuiCombo.getSelectedIndex()).charAt(0);
-                Integer matriC = Character.getNumericValue(matriCui);
-                ordrePreparation.setMatricule_Cui(matriC);
+                if (codeBarreCombo.getSelectedIndex() == 0 || codeBarreCombo.getSelectedItem().equals("Pas d'article")) {
+                    ordrePreparation.setCodeBarre(null);
+                } else {
+                    char cB = codeBarres.get(codeBarreCombo.getSelectedIndex()).charAt(0);
+                    Integer cBN = Character.getNumericValue(cB);
+                    ordrePreparation.setCodeBarre(cBN);
+                }
+                if(matriculeCuiCombo.getSelectedIndex()==0 || matriculeCuiCombo.getSelectedItem().equals("Pas de cuisinier")){
+                    ordrePreparation.setMatricule_Cui(null);
+                }
+                else{
+                    char matriCui = matriculeCuiCombo.getSelectedItem().toString().charAt(0);
+                    Integer matriC = Character.getNumericValue(matriCui);
+                    ordrePreparation.setMatricule_Cui(matriC);
+                }
                 char matriRes = matriculesRes.get(matriculeResCombo.getSelectedIndex()).charAt(0);
                 Integer matriR = Character.getNumericValue(matriRes);
                 ordrePreparation.setMatricule_Res(matriR);

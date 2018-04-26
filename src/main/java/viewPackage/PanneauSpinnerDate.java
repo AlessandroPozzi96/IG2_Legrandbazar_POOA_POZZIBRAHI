@@ -35,6 +35,11 @@ public class PanneauSpinnerDate extends JPanel
         cal.setTime((Date) spinnerDate.getValue());
         return (GregorianCalendar) cal;
     }
+
+    public JSpinner getSpinnerDate(){
+        return this.spinnerDate;
+    }
+
 }
 
         /*

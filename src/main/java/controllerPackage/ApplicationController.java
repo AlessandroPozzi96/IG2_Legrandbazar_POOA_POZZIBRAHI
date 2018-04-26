@@ -6,9 +6,11 @@ import modelPackage.OrdrePreparation;
 import modelPackage.Recherche2;
 import modelPackage.Recherche3;
 import modelPackage.Reservation;
+import modelPackage.TacheMetier;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 
 public class ApplicationController
 {
@@ -83,6 +85,12 @@ public class ApplicationController
     {
         return manager.getRecherche3(numClient);
     }
+
+    public ArrayList<TacheMetier> getDatesPreparationDuJour(int jour)throws GeneralException{
+
+        return manager.getDatesPreparationDuJour(jour);
+    }
+
 
     public ArrayList<String> getClients () throws GeneralException
     {

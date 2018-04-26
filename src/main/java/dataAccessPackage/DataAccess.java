@@ -27,4 +27,5 @@ public interface DataAccess
     ArrayList<Recherche2> getRecherche2(GregorianCalendar dateDeb, GregorianCalendar dateFin) throws GeneralException, ModelException;
     ArrayList<String> getClients () throws GeneralException;
     ArrayList<Recherche3> getRecherche3 (Integer numClient) throws GeneralException, ModelException;
+    ArrayList<GregorianCalendar>getDatesPreparationDuJour(int jour) throws GeneralException;
 }

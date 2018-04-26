@@ -4,6 +4,7 @@ import businessPackage.OrdreManager;
 import exceptionPackage.*;
 import modelPackage.OrdrePreparation;
 import modelPackage.Recherche2;
+import modelPackage.Recherche3;
 import modelPackage.Reservation;
 
 import java.util.ArrayList;
@@ -76,5 +77,10 @@ public class ApplicationController
     public ArrayList<Recherche2> getRecherche2(GregorianCalendar dateDeb, GregorianCalendar dateFin) throws GeneralException, ModelException
     {
         return manager.getRecherche2(dateDeb, dateFin);
+    }
+
+    public ArrayList<Recherche3> getRecherche3 (Integer numClient) throws GeneralException, ModelException
+    {
+        return manager.getRecherche3(numClient);
     }
 }

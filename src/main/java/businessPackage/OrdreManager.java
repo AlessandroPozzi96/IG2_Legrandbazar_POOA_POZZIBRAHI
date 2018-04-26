@@ -5,6 +5,7 @@ import dataAccessPackage.DataAccess;
 import exceptionPackage.*;
 import modelPackage.OrdrePreparation;
 import modelPackage.Recherche2;
+import modelPackage.Recherche3;
 import modelPackage.Reservation;
 
 import java.util.ArrayList;
@@ -75,5 +76,10 @@ public class OrdreManager
     public ArrayList<Recherche2> getRecherche2(GregorianCalendar dateDeb, GregorianCalendar dateFin) throws GeneralException, ModelException
     {
         return dao.getRecherche2(dateDeb, dateFin);
+    }
+
+    public ArrayList<Recherche3> getRecherche3 (Integer numClient) throws GeneralException, ModelException
+    {
+        return dao.getRecherche3(numClient);
     }
 }

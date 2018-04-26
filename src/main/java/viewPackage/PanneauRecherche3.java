@@ -13,6 +13,7 @@ public class PanneauRecherche3 extends JPanel
     private ApplicationController controller;
     private JButton retour, validation, nouvRecherche;
     private PanneauFiller panneauFiller;
+    private PanneauBienvenue panneauBienvenue;
 
     public PanneauRecherche3()
     {
@@ -44,7 +45,23 @@ public class PanneauRecherche3 extends JPanel
     {
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            if (e.getSource() == retour)
+            {
+                PanneauRecherche3.this.removeAll();
+                PanneauRecherche3.this.panneauBienvenue = new PanneauBienvenue();
+                PanneauRecherche3.this.add(panneauBienvenue);
+                PanneauRecherche3.this.repaint();
+                PanneauRecherche3.this.validate();
+            }
+            else
+                {
+                if (e.getSource() == nouvRecherche)
+                {
+                    PanneauRecherche3.this.removeAll();
+                    PanneauRecherche3.this.add(new PanneauRecherche2());
+                    PanneauRecherche3.this.validate();
+                }
+            }
         }
     }
 

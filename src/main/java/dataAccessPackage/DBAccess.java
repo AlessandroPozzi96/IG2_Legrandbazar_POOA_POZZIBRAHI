@@ -3,6 +3,7 @@ package dataAccessPackage;
 import exceptionPackage.*;
 import modelPackage.OrdrePreparation;
 import modelPackage.Recherche2;
+import modelPackage.Recherche3;
 import modelPackage.Reservation;
 
 import java.sql.*;
@@ -567,13 +568,9 @@ public class DBAccess implements DataAccess
 
 
         try {
-            String sql =
-                    "select o.NumeroSequentiel, o.Date 'DateOrdre', o.QuantitePrevue, o.EstUrgent, o.Matricule_Res, ti.Date 'DateTicket'\n" +
+            String sql = "select o.NumeroSequentiel, o.Date as 'DateOrdre', o.QuantitePrevue, o.EstUrgent, o.Matricule_Res, ti.Date as 'DateTicket'\n" +
                     "from ordrepreparation o join typearticle t on (o.CodeBarre = t.CodeBarre)\n" +
-                    "join ligneticket l on (l.CodeBarre = t.CodeBarre and l.NumTicket = \n" +
-                    "\t(select NumTicket\n" +
-                    "\t\tfrom ticket\n" +
-                    "        where date between ? and ?))\n" +
+                    "join ligneticket l on (l.CodeBarre = t.CodeBarre)\n" +
                     "join ticket ti on (ti.NumTicket = l.NumTicket)\n" +
                     "where o.Date between ? and ?\n" +
                     "order by o.NumeroSequentiel;";
@@ -582,10 +579,6 @@ public class DBAccess implements DataAccess
             statement.setDate(1, sqlDate);
             sqlDate.setTime(dateFin.getTimeInMillis());
             statement.setDate(2, sqlDate);
-            sqlDate.setTime(dateDeb.getTimeInMillis());
-            statement.setDate(3, sqlDate);
-            sqlDate.setTime(dateFin.getTimeInMillis());
-            statement.setDate(4, sqlDate);
 
             ResultSet data = statement.executeQuery(); // contient les lignes de résultat de la requête
             ResultSetMetaData meta = data.getMetaData(); // Contient les meta données (nb colonnes, ...)
@@ -624,5 +617,77 @@ public class DBAccess implements DataAccess
             throw new GeneralException(e.getMessage(), "GetRecherche2");
         }
         return recherches2;
+    }
+
+    public ArrayList<String> getClients () throws GeneralException
+    {
+        ArrayList<String> clients = new ArrayList<>();
+        String chaineClient = "";
+        if ((connection = SingletonConnection.getInstance()) == null)
+            throw  new GeneralException("Erreur connexion !","récupérer les clients");
+
+        try {
+            String sql = "select c.Nom, , c.Prenom, c.NumClient" +
+                        " from client c";
+            statement = connection.prepareStatement(sql);
+            ResultSet data = statement.executeQuery();
+
+            while(data.next()) {
+                chaineClient += data.getInt("NumClient");
+                chaineClient += " " + data.getString("Nom") + " " + data.getString("Prenom");
+                clients.add(chaineClient);
+            }
+        } catch (SQLException e) {
+            throw new GeneralException(e.getMessage(),"récupérer les clients");
+        }
+        return clients;
+    }
+
+    public ArrayList<Recherche3> getRecherche3 (Integer numClient) throws GeneralException, ModelException
+    {
+        ArrayList<Recherche3> recherches3 = new ArrayList<>();
+        Recherche3 recherche3;
+
+        if ((connection = SingletonConnection.getInstance()) == null)
+            throw  new GeneralException("Erreur connexion !", "GetRecherche3");
+
+        try
+        {
+            String sql = "select ty.Libelle, t.Date, l.Quantite\n" +
+                    "from client c join ticket t on (c.NumClient = t.NumClient)\n" +
+                    "join ligneticket l on (t.NumTicket = l.NumTicket)\n" +
+                    "join typearticle ty on (l.CodeBarre = ty.CodeBarre)\n" +
+                    "where c.NumClient = ?\n" +
+                    "order by c.NumClient;";
+
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, numClient);
+
+            ResultSet data = statement.executeQuery(); // contient les lignes de résultat de la requête
+            ResultSetMetaData meta = data.getMetaData(); //
+
+            String libelle;
+            Integer quantite;
+            GregorianCalendar dateTicket;
+            java.sql.Date sqlDate = new java.sql.Date(0);
+
+            while (data.next())
+            {
+                libelle = data.getString("Libelle");
+                dateTicket = new GregorianCalendar();
+                sqlDate = data.getDate("Date");
+                dateTicket.setTime(sqlDate);
+                quantite = data.getInt("Quantite");
+
+                recherche3 = new Recherche3(libelle, dateTicket, quantite);
+                recherches3.add(recherche3);
+            }
+        }
+        catch (SQLException e)
+        {
+            throw new GeneralException(e.getMessage(), "GetRecherche3");
+        }
+
+        return  recherches3;
     }
 }

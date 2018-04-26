@@ -12,6 +12,7 @@ public class Recherche2
     private Boolean estUrgent;
     private Integer matri_Res;
     private GregorianCalendar dateTicket;
+    private String model = "Recherche2";
 
     public Recherche2(Integer numeroSequentiel, GregorianCalendar dateOrdre, Integer quantitePrevue, Boolean estUrgent, Integer matri_Res, GregorianCalendar dateTicket) throws ModelException {
         setNumeroSequentiel(numeroSequentiel);
@@ -31,7 +32,7 @@ public class Recherche2
 
         if (numeroSequentiel == null || numeroSequentiel <= 0 )
         {
-            throw new ModelException("NumeroSequentiel recherche 2");
+            throw new ModelException("NumeroSequentiel recherche 2", model);
         }
     }
 
@@ -51,7 +52,7 @@ public class Recherche2
         this.quantitePrevue = quantitePrevue;
 
         if (quantitePrevue == null || quantitePrevue <= 0) {
-            throw new ModelException("quantitePrevue recherche2");
+            throw new ModelException("quantitePrevue recherche2", model);
         }
     }
 
@@ -64,7 +65,7 @@ public class Recherche2
 
         if (estUrgent == null)
         {
-            throw new ModelException("EstUrgent recherche2");
+            throw new ModelException("EstUrgent recherche2", model);
         }
     }
 
@@ -76,7 +77,7 @@ public class Recherche2
         this.matri_Res = matri_Res;
 
         if (matri_Res == null || matri_Res <= 0) {
-            throw new ModelException("matri_Res recherche2");
+            throw new ModelException("matri_Res recherche2", model);
         }
     }
 

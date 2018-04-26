@@ -115,7 +115,6 @@ public class PanneauRecherche2 extends JPanel
                         }
 
                         if (!recherches2.isEmpty()) {
-                            System.out.println(recherches2.get(0).toString());
                             getRecherche2Model = new GetRecherche2Model(recherches2);
                             jTable = new JTable(getRecherche2Model);
                             jTable.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);

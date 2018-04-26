@@ -87,4 +87,16 @@ public class Recherche2
     public void setDateTicket(GregorianCalendar dateTicket) {
         this.dateTicket = dateTicket;
     }
+
+    @Override
+    public String toString() {
+        return "Recherche2{" +
+                "numeroSequentiel=" + numeroSequentiel +
+                ", dateOrdre=" + dateOrdre +
+                ", quantitePrevue=" + quantitePrevue +
+                ", estUrgent=" + estUrgent +
+                ", matri_Res=" + matri_Res +
+                ", dateTicket=" + dateTicket +
+                '}';
+    }
 }

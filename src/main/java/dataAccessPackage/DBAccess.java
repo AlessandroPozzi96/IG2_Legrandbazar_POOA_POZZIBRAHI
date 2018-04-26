@@ -567,23 +567,25 @@ public class DBAccess implements DataAccess
 
 
         try {
-            String sql = "SET @DateDeb = str_to_date(?, '%M %d %Y')\n" +
-                    "SET @DateFin = str_to_date(?, '%M %d %Y'\n" +
-                    "\n" +
+            String sql =
                     "select o.NumeroSequentiel, o.Date 'DateOrdre', o.QuantitePrevue, o.EstUrgent, o.Matricule_Res, ti.Date 'DateTicket'\n" +
                     "from ordrepreparation o join typearticle t on (o.CodeBarre = t.CodeBarre)\n" +
                     "join ligneticket l on (l.CodeBarre = t.CodeBarre and l.NumTicket = \n" +
                     "\t(select NumTicket\n" +
                     "\t\tfrom ticket\n" +
-                    "        where date between @DateDeb and @DateFin))\n" +
+                    "        where date between ? and ?))\n" +
                     "join ticket ti on (ti.NumTicket = l.NumTicket)\n" +
-                    "where o.Date between @DateDeb and @DateFin\n" +
+                    "where o.Date between ? and ?\n" +
                     "order by o.NumeroSequentiel;";
             statement = connection.prepareStatement(sql);
             java.sql.Date sqlDate = new java.sql.Date(dateDeb.getTimeInMillis());
             statement.setDate(1, sqlDate);
             sqlDate.setTime(dateFin.getTimeInMillis());
             statement.setDate(2, sqlDate);
+            sqlDate.setTime(dateDeb.getTimeInMillis());
+            statement.setDate(3, sqlDate);
+            sqlDate.setTime(dateFin.getTimeInMillis());
+            statement.setDate(4, sqlDate);
 
             ResultSet data = statement.executeQuery(); // contient les lignes de résultat de la requête
             ResultSetMetaData meta = data.getMetaData(); // Contient les meta données (nb colonnes, ...)

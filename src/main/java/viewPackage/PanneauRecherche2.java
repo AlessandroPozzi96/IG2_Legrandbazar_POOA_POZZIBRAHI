@@ -102,7 +102,7 @@ public class PanneauRecherche2 extends JPanel
 
                         try
                         {
-                            recherches2 = controller.getRecherche2(spinnerDateDeb.getDate(), spinnerDateFin.getDate());
+                            recherches2 = getController().getRecherche2(spinnerDateDeb.getDate(), spinnerDateFin.getDate());
 
                         }
                         catch (ModelException eM)
@@ -114,17 +114,20 @@ public class PanneauRecherche2 extends JPanel
                             System.out.println(eG.getMessage());
                         }
 
-                        getRecherche2Model = new GetRecherche2Model(recherches2);
-                        jTable = new JTable(getRecherche2Model);
-                        jTable.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
-                        JScrollPane jScrollPane = new JScrollPane(jTable);
+                        if (!recherches2.isEmpty()) {
+                            System.out.println(recherches2.get(0).toString());
+                            getRecherche2Model = new GetRecherche2Model(recherches2);
+                            jTable = new JTable(getRecherche2Model);
+                            jTable.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
+                            JScrollPane jScrollPane = new JScrollPane(jTable);
 
-                        //On remplace le panneau de la recherche1 par la jtable
-                        panneauRecherche2.removeAll();
-                        panneauRecherche2.setLayout(new BorderLayout());
-                        panneauRecherche2.add(jScrollPane);
-                        panneauRecherche2.repaint();
-                        panneauRecherche2.validate();
+                            //On remplace le panneau de la recherche1 par la jtable
+                            panneauRecherche2.removeAll();
+                            panneauRecherche2.setLayout(new BorderLayout());
+                            panneauRecherche2.add(jScrollPane);
+                            panneauRecherche2.repaint();
+                            panneauRecherche2.validate();
+                        }
                     }
                 }
             }

@@ -155,17 +155,19 @@ public class PanneauRecherche1 extends JPanel
                                 System.out.println(eM.getMessage());
                             }
 
-                            allOrdresPreparationModel = new AllOrdresPreparationModel(ordres);
-                            jTable = new JTable(allOrdresPreparationModel);
-                            jTable.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
-                            JScrollPane jScrollPane = new JScrollPane(jTable);
+                            if (!ordres.isEmpty()) {
+                                allOrdresPreparationModel = new AllOrdresPreparationModel(ordres);
+                                jTable = new JTable(allOrdresPreparationModel);
+                                jTable.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
+                                JScrollPane jScrollPane = new JScrollPane(jTable);
 
-                            //On remplace le panneau de la recherche1 par la jtable
-                            panneauRecherche1.removeAll();
-                            panneauRecherche1.setLayout(new BorderLayout());
-                            panneauRecherche1.add(jScrollPane);
-                            panneauRecherche1.repaint();
-                            panneauRecherche1.validate();
+                                //On remplace le panneau de la recherche1 par la jtable
+                                panneauRecherche1.removeAll();
+                                panneauRecherche1.setLayout(new BorderLayout());
+                                panneauRecherche1.add(jScrollPane);
+                                panneauRecherche1.repaint();
+                                panneauRecherche1.validate();
+                            }
                         }
                     }
                 }
@@ -178,10 +180,6 @@ public class PanneauRecherche1 extends JPanel
     {
         @Override
         public void itemStateChanged(ItemEvent e) {
-            if (e.getStateChange() == ItemEvent.SELECTED)
-            {
-
-            }
         }
     }
 

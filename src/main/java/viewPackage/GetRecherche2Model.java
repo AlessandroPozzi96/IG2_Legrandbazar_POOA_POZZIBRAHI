@@ -22,22 +22,11 @@ public class GetRecherche2Model extends AbstractTableModel
         setContents(recherches2);
     }
 
-    @Override
-    public int getRowCount() {
-        return columnNames.size();
-    }
+    public int getColumnCount( ) { return columnNames.size( ); }
+    public int getRowCount( ) { return contents.size( ); }
+    public String getColumnName(int column) { return columnNames.get(column);}
 
-    @Override
-    public int getColumnCount() {
-        return contents.size();
-    }
-
-    public String getColumnName(int column)
-    {
-        return columnNames.get(column);
-    }
-
-    @Override
+        @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Recherche2 recherche2 = contents.get(rowIndex);
         switch (columnIndex)

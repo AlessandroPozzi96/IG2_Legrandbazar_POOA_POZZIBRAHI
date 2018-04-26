@@ -288,7 +288,6 @@ public class DBAccess implements DataAccess
             throw new GeneralException(e.getMessage(),"récupérer les responsables des ventes");
         }
         return allMatriculeRes;    }
-
         public Integer getNumeroSequentiel () throws GeneralException
         {
             ArrayList<Integer> numerosSquentiel = new ArrayList<>();
@@ -450,6 +449,7 @@ public class DBAccess implements DataAccess
         }
         return reservations;
     }
+
     public void supprimerForeignKeyReservation(int numeroSequentiel) throws GeneralException {
         if ((connection = SingletonConnection.getInstance()) == null)
             throw  new GeneralException("Erreur connexion !","Supprimer les clés étrangéres Reservation");
@@ -690,4 +690,37 @@ public class DBAccess implements DataAccess
 
         return  recherches3;
     }
+
+    public ArrayList<GregorianCalendar>getDatesPreparationDuJour(int jour) throws GeneralException {
+        ArrayList<GregorianCalendar> datesPreparationDuJour = new ArrayList<>();
+
+        if ((connection = SingletonConnection.getInstance()) == null)
+            throw  new GeneralException("Erreur connexion !", "les dates de préparation du jour");
+
+
+        try {
+            String sql = "SELECT DatePreparation FROM dbgrandbazar.ordrepreparation where dayofweek(DatePreparation) = ? and DatePreparation between date_sub(now(), interval 21 day) and now()";
+            // rajouter le choix a l'utilisateur le nombre de jours dans la moyenne
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, jour);
+            ResultSet data = statement.executeQuery(); // contient les lignes de résultat de la requête
+            ResultSetMetaData meta = data.getMetaData(); // Contient les meta données (nb colonnes, ...)
+
+
+            Timestamp datePreparation;
+            java.sql.Date sqlDate ;
+            GregorianCalendar dataPrepa;
+            while(data.next()){
+                dataPrepa = new GregorianCalendar();
+                datePreparation = data.getTimestamp("DatePreparation");
+                dataPrepa.setTime(datePreparation);
+                datesPreparationDuJour.add(dataPrepa);
+            }
+        } catch (SQLException e) {
+            throw new GeneralException(e.getMessage(), "les dates de préparation du jour");
+        }
+
+        return datesPreparationDuJour;
+    }
+
 }

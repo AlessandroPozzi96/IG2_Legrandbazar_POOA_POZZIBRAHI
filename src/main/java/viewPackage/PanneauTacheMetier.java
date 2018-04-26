@@ -1,11 +1,16 @@
 package viewPackage;
 
 import controllerPackage.ApplicationController;
+import exceptionPackage.GeneralException;
+import modelPackage.TacheMetier;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PanneauTacheMetier extends JPanel {
 
@@ -14,8 +19,8 @@ public class PanneauTacheMetier extends JPanel {
     private ApplicationController controller;
     private JButton recherche,retour;
     private JComboBox<String> joursCombo;
-    private static String [] jours = {"Lundi","Mardi","Mercredi","Jeudi","Vendredi"};
-
+    private Map<String, Integer> jours = Map.of("Lundi",2,"Mardi",3,"Mercredi",4,"Jeudi",5,"Vendredi",6,"Samedi",7,"Dimanche",1);
+    private ArrayList<TacheMetier> tacheMetiers;
     public PanneauTacheMetier(){
         this.setLayout(new BorderLayout());
         panneauTacheMetier = new JPanel();
@@ -31,7 +36,7 @@ public class PanneauTacheMetier extends JPanel {
         panneauTacheMetier.add(joursLabel);
 
         joursCombo = new JComboBox<>();
-        for(String jour : jours){
+        for(String jour : jours.keySet()){
             joursCombo.addItem(jour);
         }
         panneauTacheMetier.add(joursCombo);
@@ -56,7 +61,7 @@ public class PanneauTacheMetier extends JPanel {
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == retour) {
                 PanneauTacheMetier.this.removeAll();
-                PanneauTacheMetier.this.add(new PanneauTacheMetier());
+                PanneauTacheMetier.this.add(new PanneauBienvenue());
                 PanneauTacheMetier.this.validate();
             }
             else{
@@ -67,6 +72,32 @@ public class PanneauTacheMetier extends JPanel {
         }
     }
     public void recherche(){
-        System.out.println(joursCombo.getSelectedItem().toString());
+        tacheMetiers = new ArrayList<>();
+        try {
+            tacheMetiers = controller.getDatesPreparationDuJour(jours.get(joursCombo.getSelectedItem()));
+            /*System.out.println(tranchesHoraire.get("huitADix"));
+            System.out.println(tranchesHoraire.get("dixUneADouze"));
+            System.out.println(tranchesHoraire.get("douzeUneAQuatorze"));
+            System.out.println(tranchesHoraire.get("quatorzeUneASeize"));*/
+
+            for(TacheMetier tacheMetier : tacheMetiers){
+                System.out.println(tacheMetier.getTrancheHoraire());
+                System.out.println(tacheMetier.getMoyenne());
+            }
+
+            TrancheHoraireJourModel trancheHoraireJourModel = new TrancheHoraireJourModel(tacheMetiers);
+            JTable table = new JTable(trancheHoraireJourModel);
+            table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+            JScrollPane scrollPane = new JScrollPane(table);
+
+            PanneauTacheMetier.this.removeAll();
+            PanneauTacheMetier.this.add(scrollPane);
+            PanneauTacheMetier.this.validate();
+
+
+        } catch (GeneralException e) {
+            e.printStackTrace();
+        }
+
     }
 }

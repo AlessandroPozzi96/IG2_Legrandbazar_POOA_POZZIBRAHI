@@ -30,6 +30,7 @@ public class PanneauModification extends JPanel
     private OrdrePreparation ordrePreparation;
     private Integer iOrdre = null;
     private JCheckBox bouttonDateVente, bouttonDatePreparation;
+    private FenetreModification fenetreModification;
 
     public PanneauModification()
     {
@@ -274,7 +275,8 @@ public class PanneauModification extends JPanel
             if (e.getStateChange() == ItemEvent.SELECTED)
             {
                 iOrdre = ordresJCombo.getSelectedIndex();
-                JOptionPane.showMessageDialog(null, ordres.get(iOrdre).toString(), "Ordre de préparation", JOptionPane.INFORMATION_MESSAGE);
+/*                JOptionPane.showMessageDialog(null, ordres.get(iOrdre).toString(), "Ordre de préparation", JOptionPane.INFORMATION_MESSAGE);*/
+                fenetreModification = new FenetreModification(ordres, iOrdre);
             }
         }
     }

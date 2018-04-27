@@ -3,9 +3,11 @@ package viewPackage;
 import modelPackage.OrdrePreparation;
 
 import javax.swing.table.AbstractTableModel;
+import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
-import java.util.GregorianCalendar;
+import java.util.List;
 
 public class AllOrdresPreparationModel extends AbstractTableModel {
 

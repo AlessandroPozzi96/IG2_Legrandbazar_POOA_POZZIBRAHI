@@ -13,9 +13,8 @@ import java.awt.event.ItemListener;
 import java.text.DateFormat;
 import java.util.ArrayList;
 
-public class PanneauModification extends JPanel
-{
-    private JPanel panneauModifications, panneauBoutons,panneauDateVente,panneauDatePreparation;
+public class PanneauModification extends JPanel {
+    private JPanel panneauModifications, panneauBoutons, panneauDateVente, panneauDatePreparation;
     private ArrayList<OrdrePreparation> ordres;
     private JComboBox ordresJCombo, recetteCombo, codeBarreCombo, matriculeCuiCombo, matriculeResCombo;
     private JLabel ordresLabel, recetteLabel, quantitePrevueLabel, quantiteProduiteLabel, dateVenteLabel, datePreparationLabel, remarqueLabel, codeBarreLabel, matriculeCuiLabel, matriculeResLabel;
@@ -28,12 +27,11 @@ public class PanneauModification extends JPanel
     private ApplicationController controller;
     private ArrayList<String> recettes, codeBarres, matriculesCui, matriculesRes;
     private OrdrePreparation ordrePreparation;
-    private Integer iOrdre = null;
+    private int iOrdre = 0;
     private JCheckBox bouttonDateVente, bouttonDatePreparation;
     private FenetreModification fenetreModification;
 
-    public PanneauModification()
-    {
+    public PanneauModification() {
         //On créé les différents panneaux
         this.setLayout(new BorderLayout());
         panneauModifications = new JPanel();
@@ -51,28 +49,32 @@ public class PanneauModification extends JPanel
         setController(new ApplicationController());
 
         ordres = new ArrayList<>();
-        try
-        {
+        try {
             ordres = controller.getAllOrdres();
-        }
-        catch (AllOrdresException e)
-        {
+        } catch (AllOrdresException e) {
             e.printStackTrace();
-        }
-        catch (ModelException e)
-        {
+        } catch (ModelException e) {
             e.printStackTrace();
         }
         ordresJCombo = new JComboBox();
         String dateString = "";
-        for (OrdrePreparation ordresCombox : ordres)
-        {
+        for (OrdrePreparation ordresCombox : ordres) {
             dateString = ordresCombox.conversionDateVersString(ordresCombox.getDate());
             ordresJCombo.addItem(ordresCombox.getNumeroSequentiel() + " -> " + dateString);
         }
         ordresJCombo.setMaximumRowCount(5);
-        //ordresJCombo.setSelectedIndex(0);
         panneauModifications.add(ordresJCombo);
+
+        ordresJCombo.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    changementOrdre();
+                }
+
+            }
+        });
 
         recetteLabel = new JLabel("Recette :");
         recetteLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -80,15 +82,13 @@ public class PanneauModification extends JPanel
         panneauModifications.add(recetteLabel);
 
         recettes = new ArrayList<>();
-        try
-        {
+        try {
             recettes = controller.getAllRecetteNom();
-        } catch (GeneralException e)
-        {
+        } catch (GeneralException e) {
             System.out.println("Erreur Recupération des noms de recette");  // Changer en autre que println (Afficher une erreur dans la JCOMBOBOX par ex
         }
         recetteCombo = new JComboBox();
-        for(String recetteNom : recettes){
+        for (String recetteNom : recettes) {
             recetteCombo.addItem(recetteNom);
         }
         panneauModifications.add(recetteCombo);
@@ -182,10 +182,11 @@ public class PanneauModification extends JPanel
         }
         codeBarreCombo = new JComboBox();
         codeBarreCombo.addItem("Pas d'article");
-        for(String codeBarre : codeBarres){
+        for (String codeBarre : codeBarres) {
             codeBarreCombo.addItem(codeBarre);
         }
         panneauModifications.add(codeBarreCombo);
+
 
         matriculeCuiLabel = new JLabel("Matricule cuisinier :");
         matriculeCuiLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -200,7 +201,7 @@ public class PanneauModification extends JPanel
         }
         matriculeCuiCombo = new JComboBox();
         matriculeCuiCombo.addItem("Pas de cuisinier");
-        for(String matriculeCui : matriculesCui){
+        for (String matriculeCui : matriculesCui) {
             matriculeCuiCombo.addItem(matriculeCui);
         }
         panneauModifications.add(matriculeCuiCombo);
@@ -218,7 +219,7 @@ public class PanneauModification extends JPanel
             e.printStackTrace();
         }
         matriculeResCombo = new JComboBox();
-        for(String matriculeRes : matriculesRes){
+        for (String matriculeRes : matriculesRes) {
             matriculeResCombo.addItem(matriculeRes);
         }
         panneauModifications.add(matriculeResCombo);
@@ -233,144 +234,116 @@ public class PanneauModification extends JPanel
 
         //Ajout des écouteurs aux boutons
         ButtonsAndTextsListener buttonsAndTextsListener = new ButtonsAndTextsListener();
-        JComboxListener jComboxListener = new JComboxListener();
+        //JComboxListener jComboxListener = new JComboxListener();  ->>>>>>>>>>>>>>>>>>>>>>>>>>>
         retour.addActionListener(buttonsAndTextsListener);
         validation.addActionListener(buttonsAndTextsListener);
         reinitialiser.addActionListener(buttonsAndTextsListener);
-        ordresJCombo.addItemListener(jComboxListener);
+        //ordresJCombo.addItemListener(jComboxListener);   // ->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+        changementOrdre();  //  --> met les modif pour l'ordre
+
+
     }
 
-    private class ButtonsAndTextsListener implements ActionListener
-    {
+    private class ButtonsAndTextsListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            if (e.getSource() == retour)
-            {
+            if (e.getSource() == retour) {
                 PanneauModification.this.removeAll();
                 PanneauModification.this.panneauBienvenue = new PanneauBienvenue();
                 PanneauModification.this.add(panneauBienvenue);
                 PanneauModification.this.repaint();
                 PanneauModification.this.validate();
-            }
-            else
-            {
-                if (e.getSource() == validation)
-                {
+            } else {
+                if (e.getSource() == validation) {
                     validation();
-                }
-                else
-                {
-                    if (e.getSource() == reinitialiser)
-                    {
-                       reinitialiser();
+                } else {
+                    if (e.getSource() == reinitialiser) {
+                        reinitialiser();
                     }
                 }
             }
         }
     }
 
-    private class JComboxListener implements ItemListener
+
+
+
+   /*private class JComboxListener implements ItemListener
     {
         @Override
         public void itemStateChanged(ItemEvent e) {
             if (e.getStateChange() == ItemEvent.SELECTED)
             {
                 iOrdre = ordresJCombo.getSelectedIndex();
-/*                JOptionPane.showMessageDialog(null, ordres.get(iOrdre).toString(), "Ordre de préparation", JOptionPane.INFORMATION_MESSAGE);*/
+               JOptionPane.showMessageDialog(null, ordres.get(iOrdre).toString(), "Ordre de préparation", JOptionPane.INFORMATION_MESSAGE);
                 fenetreModification = new FenetreModification(ordres, iOrdre);
             }
         }
-    }
+    }*/
 
     public void setController(ApplicationController controller) {
         this.controller = controller;
     }
 
-    public void reinitialiser ()
-    {
+    public void reinitialiser() {
         PanneauModification.this.removeAll();
         PanneauModification.this.add(new PanneauModification());
         PanneauModification.this.validate();
     }
 
-    public void validation ()
-    {
+    public void validation() {
         Integer quantitePrevue = -1;
-        try
-        {
+        try {
             quantitePrevue = Integer.valueOf(quantitePrevueText.getText());
-        }
-        catch (Exception error)
-        {
+        } catch (Exception error) {
             quantitePrevue = null;
-        }
-        finally
-        {
-            if (quantitePrevueText.getText().isEmpty() || quantitePrevue == null || quantitePrevue <= 0)
-            {
+        } finally {
+            if (quantitePrevueText.getText().isEmpty() || quantitePrevue == null || quantitePrevue <= 0) {
                 JOptionPane.showMessageDialog(null, "Quantité prévue incorrecte !", "Erreur", JOptionPane.ERROR_MESSAGE);
                 quantitePrevueText.setBackground(Color.RED);
-            }
-            else
-            {
+            } else {
                 quantitePrevueText.setBackground(Color.WHITE);
             }
         }
 
         Integer quantiteProduite = null;
-        if (!quantiteProduiteText.getText().isEmpty())
-        {
-            try
-            {
+        if (!quantiteProduiteText.getText().isEmpty()) {
+            try {
                 quantiteProduite = Integer.valueOf(quantiteProduiteText.getText());
-            }
-            catch (Exception error)
-            {
+            } catch (Exception error) {
                 quantiteProduite = null;
-            }
-            finally
-            {
-                if (quantiteProduite == null || quantiteProduite <= 0)
-                {
+            } finally {
+                if (quantiteProduite == null || quantiteProduite <= 0) {
                     JOptionPane.showMessageDialog(null, "Quantité produite incorrecte !", "Erreur", JOptionPane.ERROR_MESSAGE);
                     quantiteProduiteText.setBackground(Color.RED);
-                }
-                else
-                {
+                } else {
                     quantiteProduiteText.setBackground(Color.WHITE);
                 }
             }
         }
         //Modification de l'ordre dans la DB
         ordrePreparation = new OrdrePreparation();
-        if (!ordres.isEmpty())
-        {
-            try
-            {
+        if (!ordres.isEmpty()) {
+            try {
                 //Récupération de la date et du numéro séquentiel via le JCombobox
                 ordrePreparation.setDate(ordres.get(iOrdre).getDate());
                 ordrePreparation.setNumeroSequentiel(ordres.get(iOrdre).getNumeroSequentiel());
                 ordrePreparation.setQuantitePrevue(quantitePrevue);
                 ordrePreparation.setQuantiteProduite(quantiteProduite);
-                if (bouttonDateVente.isSelected())
-                {
+                if (bouttonDateVente.isSelected()) {
                     ordrePreparation.setDateVente(spinnerDateVente.getDate());
-                }
-                else
-                {
+                } else {
                     ordrePreparation.setDateVente(null);
                 }
-                if (bouttonDatePreparation.isSelected())
-                {
+                if (bouttonDatePreparation.isSelected()) {
                     ordrePreparation.setDatePreparation(spinnerDatePrep.getDate());
-                }
-                else
-                {
+                } else {
                     ordrePreparation.setDatePreparation(null);
                 }
 
-                if(remarqueText.getText().equals("")){
+                if (remarqueText.getText().equals("")) {
                     ordrePreparation.setRemarque(null);  // Met a null car facultatif
-                }else{
+                } else {
                     ordrePreparation.setRemarque(remarqueText.getText());
                 }
                 ordrePreparation.setEstUrgent(urgent.isSelected());
@@ -382,10 +355,9 @@ public class PanneauModification extends JPanel
                     Integer cBN = Character.getNumericValue(cB);
                     ordrePreparation.setCodeBarre(cBN);
                 }
-                if(matriculeCuiCombo.getSelectedIndex()==0 || matriculeCuiCombo.getSelectedItem().equals("Pas de cuisinier")){
+                if (matriculeCuiCombo.getSelectedIndex() == 0 || matriculeCuiCombo.getSelectedItem().equals("Pas de cuisinier")) {
                     ordrePreparation.setMatricule_Cui(null);
-                }
-                else{
+                } else {
                     char matriCui = matriculeCuiCombo.getSelectedItem().toString().charAt(0);
                     Integer matriC = Character.getNumericValue(matriCui);
                     ordrePreparation.setMatricule_Cui(matriC);
@@ -398,16 +370,113 @@ public class PanneauModification extends JPanel
                 //Affichage d'un message de confirmation  de la modification + réinitialisation des champs
                 JOptionPane.showMessageDialog(null, "Confirmation de la modification de l'ordre !", "Information", JOptionPane.INFORMATION_MESSAGE);
                 reinitialiser();
-            }
-            catch (ModelException eME)
-            {
+            } catch (ModelException eME) {
                 eME.getMessage();
-            }
-            catch (UpdateOrdreException eUO)
-            {
+            } catch (UpdateOrdreException eUO) {
                 eUO.getMessage();
             }
         }
     }
 
+    public void changementOrdre() {
+        OrdrePreparation ordre = new OrdrePreparation();
+        ordre = ordres.get(ordresJCombo.getSelectedIndex());
+        int i = 0;
+        // crer une fonction dans les jCombo peu être pas mal, je trouve pas si une existe
+        while (i < recetteCombo.getItemCount()) {
+            if (ordre.getNom().equals(recetteCombo.getItemAt(i).toString())) {
+                recetteCombo.setSelectedIndex(i);
+                break; // est-ce propre ? :O
+            }
+            i++;
+        }
+
+
+        quantitePrevueText.setText(ordre.getQuantitePrevue().toString());
+        if (ordre.getQuantiteProduite() != null) {
+            quantiteProduiteText.setText(ordre.getQuantiteProduite().toString());
+        } else {
+            quantiteProduiteText.setText("");
+        }
+
+        if (ordre.getRemarque() != null) {
+            remarqueText.setText(ordre.getRemarque().toString());
+        } else {
+            remarqueText.setText("");
+        }
+
+        if (ordre.getEstUrgent()) {
+            urgent.setSelected(true);
+        } else {
+            pasUrgent.setSelected(true);
+        }
+
+        if (ordre.getDateVente() == null) {
+            if (bouttonDateVente.isSelected()) {
+                bouttonDateVente.doClick();
+            }
+        } else {  // ->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> CHANGER POUR METTRE A JOUR LA DATE
+            if (!bouttonDateVente.isSelected()) {
+                bouttonDateVente.doClick();
+            }
+            spinnerDateVente.setDate(ordre.getDateVente());
+        }
+
+        if (ordre.getDatePreparation() == null) {
+            if (bouttonDatePreparation.isSelected()) {
+                bouttonDatePreparation.doClick();
+            }
+        } else {  // ->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> CHANGER POUR METTRE A JOUR LA DATE
+            if (!bouttonDatePreparation.isSelected()) {
+                bouttonDatePreparation.doClick();
+            }
+            spinnerDatePrep.setDate(ordre.getDatePreparation());
+        }
+
+        // crer une fonction dans les jCombo peu être pas mal, je trouve pas si une existe déja
+        if (ordre.getCodeBarre() != null) {
+            i = 1; // peut commencer au 2 éme
+            while (i < codeBarreCombo.getItemCount()) {
+                String [] motSepare = codeBarreCombo.getItemAt(i).toString().split(" ");
+                if (ordre.getCodeBarre().equals(Integer.parseInt(motSepare[0]))) {
+                    codeBarreCombo.setSelectedIndex(i);
+                    System.out.println("code barre trouver");
+                    break; // est-ce propre ? :O
+                }
+                i++;
+            }
+        }else{
+            codeBarreCombo.setSelectedIndex(0);
+        }
+
+        // crer une fonction dans les jCombo peu être pas mal, je trouve pas si une existe déja
+        if (ordre.getMatricule_Cui() != null) {
+            i = 1; // peut commencer au 2éme
+            System.out.println(ordre.getMatricule_Cui());
+            while (i < matriculeCuiCombo.getItemCount()) {
+                String [] motSepare = matriculeCuiCombo.getItemAt(i).toString().split(" ");
+                if (ordre.getMatricule_Cui().equals(Integer.parseInt(motSepare[0]))) {
+                    matriculeCuiCombo.setSelectedIndex(i);
+                    break; // est-ce propre ? :O
+                }
+                i++;
+            }
+        }else{
+            matriculeCuiCombo.setSelectedIndex(0);
+        }
+
+        // crer une fonction dans les jCombo peu être pas mal, je trouve pas si une existe déja
+        if (ordre.getMatricule_Res() != null) {
+            i = 0;
+            while (i < matriculeResCombo.getItemCount()) {
+                String [] motSepare = matriculeResCombo.getItemAt(i).toString().split(" ");
+                if (ordre.getMatricule_Res().equals(Integer.parseInt(motSepare[0]))) {
+                    matriculeResCombo.setSelectedIndex(i);
+                    break; // est-ce propre ? :O
+                }
+                i++;
+            }
+        }
+
+    }
 }

@@ -96,4 +96,8 @@ public class ApplicationController
     {
         return manager.getClients();
     }
+
+    public Integer conversionStringVersInteger(String chaine) {
+        return manager.conversionStringVersInteger(chaine);
+    }
 }

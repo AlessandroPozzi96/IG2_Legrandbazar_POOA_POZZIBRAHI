@@ -125,4 +125,17 @@ public class OrdreManager
         return tacheMetiers;
     }
 
+    public Integer conversionStringVersInteger(String chaine) {
+        Integer entier;
+        try
+        {
+            entier = Integer.valueOf(chaine);
+        }
+        catch (Exception error)
+        {
+            entier = -1;
+        }
+        return  entier;
+    }
+
 }

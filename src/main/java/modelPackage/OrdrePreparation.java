@@ -1,7 +1,6 @@
 package modelPackage;
 
 import exceptionPackage.ModelException;
-import viewPackage.FonctionsUtile;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

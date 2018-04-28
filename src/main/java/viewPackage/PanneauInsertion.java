@@ -279,50 +279,29 @@ public class PanneauInsertion extends JPanel
 
     public void validation ()
     {
-        Integer quantitePrevue = -1;
-        try
+        Integer quantitePrevue = controller.conversionStringVersInteger(quantitePrevueText.getText());
+        if (quantitePrevueText.getText().isEmpty() || quantitePrevue == null || quantitePrevue <= 0)
         {
-            quantitePrevue = Integer.valueOf(quantitePrevueText.getText());
+            JOptionPane.showMessageDialog(null, "Quantité prévue incorrecte !", "Erreur", JOptionPane.ERROR_MESSAGE);
+            quantitePrevueText.setBackground(Color.RED);
         }
-        catch (Exception error)
+        else
         {
-            quantitePrevue = null;
-        }
-        finally
-        {
-            if (quantitePrevueText.getText().isEmpty() || quantitePrevue == null || quantitePrevue <= 0)
-            {
-                JOptionPane.showMessageDialog(null, "Quantité prévue incorrecte !", "Erreur", JOptionPane.ERROR_MESSAGE);
-                quantitePrevueText.setBackground(Color.RED);
-            }
-            else
-            {
-                quantitePrevueText.setBackground(Color.WHITE);
-            }
+            quantitePrevueText.setBackground(Color.WHITE);
         }
 
         Integer quantiteProduite = null;
         if (!quantiteProduiteText.getText().isEmpty())
         {
-            try
+            quantiteProduite = controller.conversionStringVersInteger(quantiteProduiteText.getText());
+            if (quantiteProduite == null || quantiteProduite <= 0)
             {
-                quantiteProduite = Integer.valueOf(quantiteProduiteText.getText());
+                JOptionPane.showMessageDialog(null, "Quantité produite incorrecte !", "Erreur", JOptionPane.ERROR_MESSAGE);
+                quantiteProduiteText.setBackground(Color.RED);
             }
-            catch (Exception error)
+            else
             {
-                quantiteProduite = null;
-            }
-            finally
-            {
-                if (quantiteProduite == null || quantiteProduite <= 0)
-                {
-                    JOptionPane.showMessageDialog(null, "Quantité produite incorrecte !", "Erreur", JOptionPane.ERROR_MESSAGE);
-                    quantiteProduiteText.setBackground(Color.RED);
-                }
-                else
-                {
-                    quantiteProduiteText.setBackground(Color.WHITE);
-                }
+                quantiteProduiteText.setBackground(Color.WHITE);
             }
         }
         //Ajout de l'ordre dans la DB
@@ -350,7 +329,7 @@ public class PanneauInsertion extends JPanel
             {
                 ordrePreparation.setDatePreparation(null);
             }
-            if(remarqueText.getText().equals("")){
+            if(remarqueText.getText().isEmpty()){
                 ordrePreparation.setRemarque(null);  // Met a null car facultatif
             }else{
                 ordrePreparation.setRemarque(remarqueText.getText());

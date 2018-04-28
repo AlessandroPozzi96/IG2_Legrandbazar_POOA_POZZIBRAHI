@@ -25,7 +25,7 @@ public class FenetrePrincipale extends JFrame
         setSize(600,650);
         setLocationRelativeTo(null);
 
-        //On ajoute le panneauBienvenu
+        //On ajoute le panneauBienvenue
         frameContainer = this.getContentPane();
         frameContainer.setLayout(new BorderLayout());
         panneauBienvenue = new PanneauBienvenue();

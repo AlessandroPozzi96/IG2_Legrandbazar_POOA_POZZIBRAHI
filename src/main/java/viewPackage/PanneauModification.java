@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class PanneauModification extends JPanel {
     private JPanel panneauModifications, panneauBoutons, panneauDateVente, panneauDatePreparation;
     private ArrayList<OrdrePreparation> ordres;
-    private JComboBox ordresJCombo, recetteCombo, codeBarreCombo, matriculeCuiCombo, matriculeResCombo;
+    private JComboBox ordresJCombo ,codeBarreCombo,matriculeCuiCombo,matriculeResCombo,recetteCombo;
     private JLabel ordresLabel, recetteLabel, quantitePrevueLabel, quantiteProduiteLabel, dateVenteLabel, datePreparationLabel, remarqueLabel, codeBarreLabel, matriculeCuiLabel, matriculeResLabel;
     private JTextField quantitePrevueText, quantiteProduiteText, remarqueText;
     private JButton validation, retour, reinitialiser;
@@ -25,6 +25,7 @@ public class PanneauModification extends JPanel {
     private ButtonGroup buttonGroup;
     private PanneauSpinnerDate spinnerDateVente, spinnerDatePrep;
     private ApplicationController controller;
+
     private ArrayList<String> recettes, codeBarres, matriculesCui, matriculesRes;
     private OrdrePreparation ordrePreparation;
     private int iOrdre = 0;
@@ -56,6 +57,7 @@ public class PanneauModification extends JPanel {
         } catch (ModelException e) {
             e.printStackTrace();
         }
+       //                System.out.println(ordres.get(0).getDatePreparation().getTime());
         ordresJCombo = new JComboBox();
         String dateString = "";
         for (OrdrePreparation ordresCombox : ordres) {
@@ -351,7 +353,8 @@ public class PanneauModification extends JPanel {
                 if (codeBarreCombo.getSelectedIndex() == 0 || codeBarreCombo.getSelectedItem().equals("Pas d'article")) {
                     ordrePreparation.setCodeBarre(null);
                 } else {
-                    char cB = codeBarres.get(codeBarreCombo.getSelectedIndex()).charAt(0);
+                    System.out.println(codeBarreCombo.getSelectedItem());
+                    char cB = codeBarreCombo.getSelectedItem().toString().charAt(0);
                     Integer cBN = Character.getNumericValue(cB);
                     ordrePreparation.setCodeBarre(cBN);
                 }
@@ -381,16 +384,16 @@ public class PanneauModification extends JPanel {
     public void changementOrdre() {
         OrdrePreparation ordre = new OrdrePreparation();
         ordre = ordres.get(ordresJCombo.getSelectedIndex());
+
         int i = 0;
-        // crer une fonction dans les jCombo peu être pas mal, je trouve pas si une existe
+               // crer une fonction dans les jCombo peu être pas mal, je trouve pas si une existe
         while (i < recetteCombo.getItemCount()) {
             if (ordre.getNom().equals(recetteCombo.getItemAt(i).toString())) {
                 recetteCombo.setSelectedIndex(i);
-                break; // est-ce propre ? :O
-            }
+               break; // est-ce propre ? :O
+                 }
             i++;
-        }
-
+            }
 
         quantitePrevueText.setText(ordre.getQuantitePrevue().toString());
         if (ordre.getQuantiteProduite() != null) {
@@ -435,24 +438,25 @@ public class PanneauModification extends JPanel {
 
         // crer une fonction dans les jCombo peu être pas mal, je trouve pas si une existe déja
         if (ordre.getCodeBarre() != null) {
-            i = 1; // peut commencer au 2 éme
+
+            i = 1;
+            // crer une fonction dans les jCombo peu être pas mal, je trouve pas si une existe
             while (i < codeBarreCombo.getItemCount()) {
                 String [] motSepare = codeBarreCombo.getItemAt(i).toString().split(" ");
                 if (ordre.getCodeBarre().equals(Integer.parseInt(motSepare[0]))) {
                     codeBarreCombo.setSelectedIndex(i);
-                    System.out.println("code barre trouver");
                     break; // est-ce propre ? :O
                 }
                 i++;
             }
+
         }else{
             codeBarreCombo.setSelectedIndex(0);
         }
-
         // crer une fonction dans les jCombo peu être pas mal, je trouve pas si une existe déja
         if (ordre.getMatricule_Cui() != null) {
-            i = 1; // peut commencer au 2éme
-            System.out.println(ordre.getMatricule_Cui());
+            i = 1;
+            // crer une fonction dans les jCombo peu être pas mal, je trouve pas si une existe
             while (i < matriculeCuiCombo.getItemCount()) {
                 String [] motSepare = matriculeCuiCombo.getItemAt(i).toString().split(" ");
                 if (ordre.getMatricule_Cui().equals(Integer.parseInt(motSepare[0]))) {
@@ -461,13 +465,14 @@ public class PanneauModification extends JPanel {
                 }
                 i++;
             }
-        }else{
+            } else{
             matriculeCuiCombo.setSelectedIndex(0);
         }
 
         // crer une fonction dans les jCombo peu être pas mal, je trouve pas si une existe déja
         if (ordre.getMatricule_Res() != null) {
             i = 0;
+            // crer une fonction dans les jCombo peu être pas mal, je trouve pas si une existe
             while (i < matriculeResCombo.getItemCount()) {
                 String [] motSepare = matriculeResCombo.getItemAt(i).toString().split(" ");
                 if (ordre.getMatricule_Res().equals(Integer.parseInt(motSepare[0]))) {

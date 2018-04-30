@@ -280,6 +280,7 @@ public class DBAccess implements DataAccess
             throw new GeneralException(e.getMessage(),"récupérer les responsables des ventes");
         }
         return allMatriculeRes;    }
+
         public Integer getNumeroSequentiel () throws GeneralException
         {
             ArrayList<Integer> numerosSquentiel = new ArrayList<>();

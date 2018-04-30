@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public class PanneauTacheMetier extends JPanel {
@@ -18,9 +19,14 @@ public class PanneauTacheMetier extends JPanel {
     private ApplicationController controller;
     private JButton recherche,retour;
     private JComboBox<String> joursCombo;
+
     private Map<String, Integer> jours = Map.of("Lundi",2,"Mardi",3,"Mercredi",4,"Jeudi",5,"Vendredi",6,"Samedi",7,"Dimanche",1);
+
     private ArrayList<TacheMetier> tacheMetiers;
     public PanneauTacheMetier(){
+
+
+
         this.setLayout(new BorderLayout());
         panneauTacheMetier = new JPanel();
         //panneauSuppression.setLayout();
@@ -35,13 +41,23 @@ public class PanneauTacheMetier extends JPanel {
         panneauTacheMetier.add(joursLabel);
 
         joursCombo = new JComboBox<>();
-        for(String jour : jours.keySet()){
+
+
+        joursCombo.addItem("Lundi");
+        joursCombo.addItem("Mardi");
+        joursCombo.addItem("Mercredi");
+        joursCombo.addItem("Jeudi");
+        joursCombo.addItem("Vendredi");
+        joursCombo.addItem("Samedi");
+        joursCombo.addItem("Dimanche");
+
+        /*for(String jour : jours.keySet()){   --> ne parcourt pas la hashmap dans l'ordre ?
+            System.out.println(jour);
             joursCombo.addItem(jour);
-        }
+        }*/
+
         panneauTacheMetier.add(joursCombo);
-
         setController(new ApplicationController());
-
         //Ajout des boutons au panneauBoutons
         retour = new JButton("Retour");
         panneauBoutons.add(retour);

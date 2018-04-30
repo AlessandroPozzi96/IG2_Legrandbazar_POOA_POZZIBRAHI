@@ -35,7 +35,7 @@ public class PanneauModification extends JPanel {
         //On créé les différents panneaux
         this.setLayout(new BorderLayout());
         panneauModifications = new JPanel();
-        panneauModifications.setLayout(new GridLayout(13, 2, 3, 3));
+        panneauModifications.setLayout(new GridLayout(12, 2, 3, 3));
         this.add(panneauModifications, BorderLayout.CENTER);
         panneauBoutons = new JPanel();
         panneauBoutons.setLayout(new FlowLayout());
@@ -240,8 +240,10 @@ public class PanneauModification extends JPanel {
         reinitialiser.addActionListener(buttonsAndTextsListener);
         //ordresJCombo.addItemListener(jComboxListener);   // ->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-        changementOrdre();  //  --> met les modif pour l'ordre
 
+        if(! ordres.isEmpty()) {
+            changementOrdre();  //  --> met les modif pour l'ordre
+        }
 
     }
 

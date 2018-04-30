@@ -108,14 +108,10 @@ public class PanneauSuppression extends JPanel {
                 changementPanneau(new PanneauSuppression());
             }
             else{
-
                 if(JOptionPane.showConfirmDialog(null,reservations.size()+" clés étrangéres, supprimer quand même ?","Suppression Ordre",JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE)==JOptionPane.OK_OPTION){
                     controller.supprimerForeignKeyReservation(Integer.parseInt(motSepare[0]));
                     controller.supprimerOrdre(Integer.parseInt(motSepare[0]));
                     changementPanneau(new PanneauSuppression());
-
-                }else{
-                    // REFUS DE SUPPRESION
                 }
             }
         } catch (GeneralException e) {

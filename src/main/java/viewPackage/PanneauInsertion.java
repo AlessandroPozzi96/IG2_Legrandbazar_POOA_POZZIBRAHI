@@ -30,7 +30,7 @@ public class PanneauInsertion extends JPanel
     private Integer dernierNumeroSequentiel;
     private OrdrePreparation ordrePreparation;
     private JCheckBox bouttonDateVente, bouttonDatePreparation;
-
+    private  String [] motSepare;
     public PanneauInsertion()
     {
         controller = new ApplicationController();
@@ -38,7 +38,6 @@ public class PanneauInsertion extends JPanel
         this.setLayout(new BorderLayout());
         panneauFormulaire = new JPanel();
         panneauFormulaire.setLayout(new GridLayout(12, 2, 3, 3));
-        /*panneauFormulaire.setBackground(Color.RED);*/
         panneauBoutons = new JPanel();
         /*panneauBoutons.setBackground(Color.RED);*/
         panneauBoutons.setLayout(new FlowLayout());
@@ -103,7 +102,6 @@ public class PanneauInsertion extends JPanel
         quantiteProduiteText = new JTextField();
         panneauFormulaire.add(quantiteProduiteText);
 
-        // Faire un truc avec code Barre et date Vente (grisé quand pas relié a un code barre = null et non grisé quand relié a un code barre)
         bouttonDateVente = new JCheckBox("Encoder une date vente");
         bouttonDateVente.setHorizontalAlignment(SwingConstants.RIGHT);
         panneauFormulaire.add(bouttonDateVente);
@@ -114,7 +112,6 @@ public class PanneauInsertion extends JPanel
                 spinnerDateVente.getSpinnerDate().setEnabled(bouttonDateVente.isSelected());
             }
         });
-
 
         panneauDateVente = new JPanel();
         dateVenteLabel = new JLabel("Date vente : ");
@@ -230,7 +227,6 @@ public class PanneauInsertion extends JPanel
 
         //On ajoute les action aux listeners
         ButtonsAndTextsListener buttonsAndTextsListener = new ButtonsAndTextsListener();
-        ItemListener itemListener = new ItemsListener();
         retour.addActionListener(buttonsAndTextsListener);
         validation.addActionListener(buttonsAndTextsListener);
         reinitialiser.addActionListener(buttonsAndTextsListener);
@@ -241,11 +237,7 @@ public class PanneauInsertion extends JPanel
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == retour)
             {
-                PanneauInsertion.this.removeAll();
-                PanneauInsertion.this.panneauBienvenue = new PanneauBienvenue();
-                PanneauInsertion.this.add(panneauBienvenue);
-                PanneauInsertion.this.repaint();
-                PanneauInsertion.this.validate();
+                changementPanneau(new PanneauBienvenue());
             }
             else
             {
@@ -257,42 +249,35 @@ public class PanneauInsertion extends JPanel
                 {
                     if (e.getSource() == reinitialiser)
                     {
-                        reinitialiser();
+                        changementPanneau(new PanneauInsertion());
                     }
                 }
             }
         }
     }
-
-    public void reinitialiser ()
+    public void changementPanneau (JPanel panneau)
     {
         PanneauInsertion.this.removeAll();
-        PanneauInsertion.this.add(new PanneauInsertion());
+        PanneauInsertion.this.add(panneau);
         PanneauInsertion.this.validate();
-    }
-
-    private class ItemsListener implements ItemListener
-    {
-        public void itemStateChanged(ItemEvent e)
-        {
-        }
     }
 
     public void validation ()
     {
         Integer quantitePrevue = controller.conversionStringVersInteger(quantitePrevueText.getText());
-        if (quantitePrevueText.getText().isEmpty() || quantitePrevue == null || quantitePrevue <= 0)
+
+        if (quantitePrevueText.getText().isEmpty() || quantitePrevue == null || quantitePrevue <= 0) // le isEmpty est inutile (me semble) car si il est vide quantitéprévue = -1 donc erreur
         {
-            JOptionPane.showMessageDialog(null, "Quantité prévue incorrecte !", "Erreur", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Quantité prévue incorrecte !\nVeuillez entrez un nombre positif.", "Erreur", JOptionPane.ERROR_MESSAGE);
             quantitePrevueText.setBackground(Color.RED);
         }
-        else
+        /*else
         {
             quantitePrevueText.setBackground(Color.WHITE);
-        }
+        }*/// --> inutile car on réinitialise le panneau d'office
 
         Integer quantiteProduite = null;
-        if (!quantiteProduiteText.getText().isEmpty())
+        if (! quantiteProduiteText.getText().isEmpty())
         {
             try
             {
@@ -306,13 +291,13 @@ public class PanneauInsertion extends JPanel
             {
                 if (quantiteProduite == null || quantiteProduite <= 0)
                 {
-                    JOptionPane.showMessageDialog(null, "Quantité produite incorrecte !", "Erreur", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Quantité produite incorrecte !\nVeuillez entrez un nombre positif, ou aucune valeur.", "Erreur", JOptionPane.ERROR_MESSAGE);
                     quantiteProduiteText.setBackground(Color.RED);
                 }
-                else
+                /*else
                 {
                     quantiteProduiteText.setBackground(Color.WHITE);
-                }
+                }*/  // --> inutile car on réinitialise le panneau d'office
             }
         }
         //Ajout de l'ordre dans la DB
@@ -353,26 +338,27 @@ public class PanneauInsertion extends JPanel
                 ordrePreparation.setCodeBarre(null);
             }
             else{
-                char cB = codeBarreCombo.getSelectedItem().toString().charAt(0);
-                Integer cBN = Character.getNumericValue(cB);
+                motSepare = codeBarreCombo.getSelectedItem().toString().split(" ");
+                Integer cBN = Integer.parseInt(motSepare[0]);
                 ordrePreparation.setCodeBarre(cBN);
             }
             if(matriculeCuiCombo.getSelectedIndex()==0 || matriculeCuiCombo.getSelectedItem().equals("Pas de cuisinier")){
                 ordrePreparation.setMatricule_Cui(null);
             }
             else{
-                char matriCui = matriculeCuiCombo.getSelectedItem().toString().charAt(0);
-                Integer matriC = Character.getNumericValue(matriCui);
+                motSepare = matriculeCuiCombo.getSelectedItem().toString().split(" ");
+                Integer matriC = Integer.parseInt(motSepare[0]);
                 ordrePreparation.setMatricule_Cui(matriC);
             }
-            char matriRes = matriculesRes.get(matriculeResCombo.getSelectedIndex()).charAt(0);
-            Integer matriR = Character.getNumericValue(matriRes);
+            motSepare = matriculeResCombo.getSelectedItem().toString().split(" ");
+            //char matriRes = matriculesRes.get(matriculeResCombo.getSelectedIndex()).charAt(0);
+            Integer matriR = Integer.parseInt(motSepare[0]);
             ordrePreparation.setMatricule_Res(matriR);
             controller.addOrdre(ordrePreparation);
 
             //Affichage d'un message de confirmation  de l'insertion + réinitialisation des champs
             JOptionPane.showMessageDialog(null, "Confirmation de l'insertion de l'ordre !", "Information", JOptionPane.INFORMATION_MESSAGE);
-            reinitialiser();
+            changementPanneau(new PanneauInsertion());
         }
         catch (ModelException eME)
         {
@@ -383,24 +369,4 @@ public class PanneauInsertion extends JPanel
             eAO.getMessage();
         }
     }
-
 }
-
-// TEST DB
-/*        DBAccess dBAccess = new DBAccess();
-        Connection connection = dBAccess.getConnection();
-        String sql = "SELECT * FROM dbgrandbazar.ordrepreparation where QuantitePrevue=4;";
-        ResultSet data;
-        String nomRecetteOrdre="";
-        try {
-            PreparedStatement statement = connection.prepareStatement(sql);
-            data = statement.executeQuery();
-            while (data.next()){
-                nomRecetteOrdre = data.getString("Nom");
-            }
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        System.out.println(nomRecetteOrdre);*/
-// FIN TEST DB

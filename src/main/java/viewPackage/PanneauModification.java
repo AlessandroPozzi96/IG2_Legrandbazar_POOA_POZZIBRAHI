@@ -56,7 +56,6 @@ public class PanneauModification extends JPanel {
         } catch (ModelException e) {
             e.printStackTrace();
         }
-       //                System.out.println(ordres.get(0).getDatePreparation().getTime());
         ordresJCombo = new JComboBox();
         String dateString = "";
         for (OrdrePreparation ordresCombox : ordres) {
@@ -348,7 +347,7 @@ public class PanneauModification extends JPanel {
                 if (codeBarreCombo.getSelectedIndex() == 0 || codeBarreCombo.getSelectedItem().equals("Pas d'article")) {
                     ordrePreparation.setCodeBarre(null);
                 } else {
-                    System.out.println(codeBarreCombo.getSelectedItem());
+                    //System.out.println(codeBarreCombo.getSelectedItem());
                     char cB = codeBarreCombo.getSelectedItem().toString().charAt(0);
                     Integer cBN = Character.getNumericValue(cB);
                     ordrePreparation.setCodeBarre(cBN);
@@ -413,18 +412,19 @@ public class PanneauModification extends JPanel {
             if (bouttonDateVente.isSelected()) {
                 bouttonDateVente.doClick();
             }
-        } else {  // ->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> CHANGER POUR METTRE A JOUR LA DATE
+        } else {
             if (!bouttonDateVente.isSelected()) {
                 bouttonDateVente.doClick();
             }
-            spinnerDateVente.setDate(ordre.getDateVente());
+            //System.out.println(ordre.getDateVente().getTime());
+            spinnerDateVente.setDate(ordre.getDateVente());  // ICI
         }
 
         if (ordre.getDatePreparation() == null) {
             if (bouttonDatePreparation.isSelected()) {
                 bouttonDatePreparation.doClick();
             }
-        } else {  // ->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> CHANGER POUR METTRE A JOUR LA DATE
+        } else {
             if (!bouttonDatePreparation.isSelected()) {
                 bouttonDatePreparation.doClick();
             }

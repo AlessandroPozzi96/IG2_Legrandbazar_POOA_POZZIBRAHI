@@ -30,6 +30,7 @@ public class PanneauInsertion extends JPanel
     private Integer dernierNumeroSequentiel;
     private OrdrePreparation ordrePreparation;
     private JCheckBox bouttonDateVente, bouttonDatePreparation;
+
     public PanneauInsertion()
     {
         controller = new ApplicationController();
@@ -293,15 +294,25 @@ public class PanneauInsertion extends JPanel
         Integer quantiteProduite = null;
         if (!quantiteProduiteText.getText().isEmpty())
         {
-            quantiteProduite = controller.conversionStringVersInteger(quantiteProduiteText.getText());
-            if (quantiteProduite == null || quantiteProduite <= 0)
+            try
             {
-                JOptionPane.showMessageDialog(null, "Quantité produite incorrecte !", "Erreur", JOptionPane.ERROR_MESSAGE);
-                quantiteProduiteText.setBackground(Color.RED);
+                quantiteProduite = Integer.valueOf(quantiteProduiteText.getText());
             }
-            else
+            catch (Exception error)
             {
-                quantiteProduiteText.setBackground(Color.WHITE);
+                quantiteProduite = null;
+            }
+            finally
+            {
+                if (quantiteProduite == null || quantiteProduite <= 0)
+                {
+                    JOptionPane.showMessageDialog(null, "Quantité produite incorrecte !", "Erreur", JOptionPane.ERROR_MESSAGE);
+                    quantiteProduiteText.setBackground(Color.RED);
+                }
+                else
+                {
+                    quantiteProduiteText.setBackground(Color.WHITE);
+                }
             }
         }
         //Ajout de l'ordre dans la DB
@@ -329,7 +340,7 @@ public class PanneauInsertion extends JPanel
             {
                 ordrePreparation.setDatePreparation(null);
             }
-            if(remarqueText.getText().isEmpty()){
+            if(remarqueText.getText().equals("")){
                 ordrePreparation.setRemarque(null);  // Met a null car facultatif
             }else{
                 ordrePreparation.setRemarque(remarqueText.getText());

@@ -6,6 +6,7 @@ import modelPackage.Recherche2;
 import modelPackage.Recherche3;
 import modelPackage.Reservation;
 
+import java.awt.desktop.SystemSleepEvent;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -165,14 +166,12 @@ public class DBAccess implements DataAccess
                     calendarVente.setTime(sqlDate);
                     ordrePreparation.setDateVente(calendarVente);
                 }
-                // DatePreparation
-                sqlDate = data.getDate("DatePreparation");
-                if(! data.wasNull()){
 
-                    calendarPreparation.setTime(sqlDate);
+                Timestamp datePrepa = data.getTimestamp("DatePreparation");
+                if(! data.wasNull()){
+                    calendarPreparation.setTime(datePrepa);
                     ordrePreparation.setDatePreparation(calendarPreparation);
                 }
-
                 // Remarque
                 remarque = data.getString("Remarque");
                 if(! data.wasNull()){
@@ -185,13 +184,6 @@ public class DBAccess implements DataAccess
                 }
                 ordres.add(ordrePreparation);
 
-                //System.out.println(ordrePreparation.getDate().getTime());
-                /*if(ordrePreparation.getDateVente() !=null){
-                    System.out.println(ordrePreparation.getDateVente().getTime());
-                }
-                if(ordrePreparation.getDatePreparation() !=null){
-                    System.out.println(ordrePreparation.getDatePreparation().getTime());
-                }*/
             }
 
         } catch (SQLException e) {
@@ -354,7 +346,8 @@ public class DBAccess implements DataAccess
             if (ordrePreparation.getDatePreparation() != null)
             {
                 sqlDate.setTime(ordrePreparation.getDatePreparation().getTimeInMillis());
-                statement.setDate(5, sqlDate);
+                Timestamp datePrepa = new Timestamp(sqlDate.getTime());
+                statement.setTimestamp(5, datePrepa);
             }
             else
             {

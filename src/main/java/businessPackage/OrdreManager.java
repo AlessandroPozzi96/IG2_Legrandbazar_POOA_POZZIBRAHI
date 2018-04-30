@@ -14,7 +14,7 @@ import java.util.GregorianCalendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
-
+@SuppressWarnings({"deprecation"})
 public class OrdreManager
 {
     private DataAccess dao;
@@ -93,25 +93,25 @@ public class OrdreManager
     }
 
     public ArrayList<TacheMetier> getDatesPreparationDuJour(int jour)throws GeneralException{
-        Double huitADix, dixUneADouze, douzeUneAQuatorze, quatorzeUneASeize;
-        huitADix = dixUneADouze = douzeUneAQuatorze = quatorzeUneASeize = 0.0;
+        Double huitADix, dixUneADouze, douzeAQuatorze, quatorzeASeize;
+        huitADix = dixUneADouze = douzeAQuatorze = quatorzeASeize = 0.0;
         ArrayList<GregorianCalendar> datesPreparationDuJour;
         datesPreparationDuJour = dao.getDatesPreparationDuJour(jour);
         ArrayList<TacheMetier> tacheMetiers;
 
 
         for(GregorianCalendar cal : datesPreparationDuJour){
-            if(cal.getTime().getHours()<= 10){
+            if(cal.getTime().getHours()< 10){
                 huitADix ++;
             }else{
-                if(cal.getTime().getHours()<=12){
+                if(cal.getTime().getHours()<12){
                     dixUneADouze++;
                 }else{
-                    if(cal.getTime().getHours()<=14){
-                        douzeUneAQuatorze++;
+                    if(cal.getTime().getHours()<14){
+                        douzeAQuatorze++;
                     }
                     else{
-                        quatorzeUneASeize++;
+                        quatorzeASeize++;
                     }
                 }
             }
@@ -119,8 +119,8 @@ public class OrdreManager
         tacheMetiers = new ArrayList<>();
         tacheMetiers.add(new TacheMetier("8h à 10h",huitADix/3.0));
         tacheMetiers.add(new TacheMetier("10h à 12h",dixUneADouze/3.0));
-        tacheMetiers.add(new TacheMetier("12h à 14h",douzeUneAQuatorze/3.0));
-        tacheMetiers.add(new TacheMetier("14h à 16h",quatorzeUneASeize/3.0));
+        tacheMetiers.add(new TacheMetier("12h à 14h",douzeAQuatorze/3.0));
+        tacheMetiers.add(new TacheMetier("14h à 16h",quatorzeASeize/3.0));
 
         return tacheMetiers;
     }

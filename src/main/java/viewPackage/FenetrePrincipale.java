@@ -1,8 +1,10 @@
 package viewPackage;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
 
 public class FenetrePrincipale extends JFrame
 {
@@ -81,6 +83,14 @@ public class FenetrePrincipale extends JFrame
 
         rechercheMoyenneJour = new JMenuItem("Recherche moyenne du jour");
         tacheMetier.add(rechercheMoyenneJour);
+
+        //On ajoute une icone
+        try{
+            setIconImage(ImageIO.read(new File("./gb.png")));
+        }
+        catch (Exception ex){
+            System.out.println("Incon non chargée");
+        }
 
         //On ajoute les différents écouteurs
         this.addWindowListener(new ClosingListener());

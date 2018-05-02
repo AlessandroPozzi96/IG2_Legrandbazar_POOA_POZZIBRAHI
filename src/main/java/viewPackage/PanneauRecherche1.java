@@ -167,6 +167,10 @@ public class PanneauRecherche1 extends JPanel
                                 panneauRecherche1.repaint();
                                 panneauRecherche1.validate();
                             }
+                            else
+                            {
+                                JOptionPane.showMessageDialog(null, "Erreur ! \n Aucun élément ne correspond à votre recherche", "Erreur recherche", JOptionPane.ERROR_MESSAGE);
+                            }
                         }
                     }
                 }

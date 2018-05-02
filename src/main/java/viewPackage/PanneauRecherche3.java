@@ -138,6 +138,10 @@ public class PanneauRecherche3 extends JPanel
                                 panneauRecherche3.validate();
                             }
                         }
+                        else
+                        {
+                            JOptionPane.showMessageDialog(null, "Erreur ! \n Aucun client disponible", "Erreur recherche", JOptionPane.ERROR_MESSAGE);
+                        }
                     }
                 }
             }

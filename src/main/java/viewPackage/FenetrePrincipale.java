@@ -21,6 +21,7 @@ public class FenetrePrincipale extends JFrame
     private JMenu application, ordre, recherches, tacheMetier;
     private JMenuItem quitter, insertionOrdre, modifierOrdre, supprimerOrdre, listerOrdres, recherche1, recherche2, recherche3, rechercheMoyenneJour;
     private GifAnimationThread gifAnimationThread;
+    private JPanel panneauCaddy;
 
     public FenetrePrincipale()
     {
@@ -31,6 +32,7 @@ public class FenetrePrincipale extends JFrame
         //On ajoute le panneauBienvenue
         frameContainer = this.getContentPane();
         frameContainer.setLayout(new BorderLayout());
+        frameContainer.setBackground(Color.red);
         panneauBienvenue = new PanneauBienvenue();
         frameContainer.add(panneauBienvenue, BorderLayout.CENTER);
 
@@ -94,7 +96,11 @@ public class FenetrePrincipale extends JFrame
         }
 
         //Test d'affichage du gif
-
+        panneauCaddy = new JPanel();
+        panneauCaddy.setBackground(Color.RED);
+        frameContainer.add(panneauCaddy, BorderLayout.SOUTH);
+        gifAnimationThread = new GifAnimationThread(panneauCaddy);
+        gifAnimationThread.start();
 
         //On ajoute les différents écouteurs
         this.addWindowListener(new ClosingListener());

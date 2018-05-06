@@ -5,20 +5,36 @@ import java.awt.*;
 
 public class GifAnimationThread extends Thread
 {
-    private Container container;
+    private JPanel panel;
+    private PanneauGIF panneauGIF;
+    private int x = 0, y = 0, v = 5;
 
-
-    public GifAnimationThread(Container container) {
+    public GifAnimationThread(JPanel panel) {
         super("Gif animation");
-        this.container = container;
+        this.panel = panel;
+        panneauGIF = new PanneauGIF();
+        this.panel.add(panneauGIF);
     }
 
-
-
+    //Test pour faire bouger le gif à l'intérieur de la fenêtre sans dépasser les bords
     public void run ()
     {
         while (true) {
-
+            try {
+                x += v;
+                y += v;
+                if (x >= panel.getWidth()) {
+                    x *= -1;
+                }
+                if (y >= panel.getHeight()) {
+                    y *= -1;
+                }
+                panneauGIF.validate();
+                panneauGIF.repaint();
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
@@ -30,13 +46,3 @@ If you have done anything to change the size of the component or any of it's chi
 I think that calling revalidate() is preferred to calling validate() in Swing, though...
 updateUI() - Call this method if you have changed the pluggable look & feel for a component after it has been made visible.
 */
-
-/*    public PanneauGIF() {
-        this.setLayout(new BorderLayout());
-
-    }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-
-    }*/

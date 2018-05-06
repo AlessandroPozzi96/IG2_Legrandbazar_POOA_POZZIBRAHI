@@ -20,6 +20,7 @@ public class FenetrePrincipale extends JFrame
     private JMenuBar menuBar;
     private JMenu application, ordre, recherches, tacheMetier;
     private JMenuItem quitter, insertionOrdre, modifierOrdre, supprimerOrdre, listerOrdres, recherche1, recherche2, recherche3, rechercheMoyenneJour;
+    private GifAnimationThread gifAnimationThread;
 
     public FenetrePrincipale()
     {
@@ -89,8 +90,11 @@ public class FenetrePrincipale extends JFrame
             setIconImage(ImageIO.read(new File("./gb.png")));
         }
         catch (Exception ex){
-            System.out.println("Incon non chargée");
+            System.out.println("Icon non chargée");
         }
+
+        //Test d'affichage du gif
+
 
         //On ajoute les différents écouteurs
         this.addWindowListener(new ClosingListener());

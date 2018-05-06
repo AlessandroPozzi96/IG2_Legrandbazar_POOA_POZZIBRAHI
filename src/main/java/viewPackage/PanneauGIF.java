@@ -1,21 +1,27 @@
 package viewPackage;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 
 public class PanneauGIF extends JPanel {
-    private URL gif;
+    private URL url;
     private Icon icon;
-    private JLabel gifLabel;
+    private JLabel gif;
 
     public PanneauGIF() {
-        //On définit le layout
-        this.setLayout(new BorderLayout());
-        gif = this.getClass().getResource("./.gif");
-        icon = new ImageIcon(gif);
-        //Afin de permettre l'affichage du gif et l'ajouter au panneau
-        gifLabel = new JLabel(icon);
-        this.add(gifLabel, BorderLayout.CENTER);
+        this.setLayout(new FlowLayout());
+        try {
+            url = this.getClass().getResource("./gb.png");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        icon = new ImageIcon(url);
+        gif = new JLabel(icon);
+        this.add(gif);
     }
 }

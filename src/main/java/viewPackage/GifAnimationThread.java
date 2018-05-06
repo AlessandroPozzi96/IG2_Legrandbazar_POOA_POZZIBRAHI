@@ -1,24 +1,24 @@
 package viewPackage;
 
+import javax.swing.*;
 import java.awt.*;
 
 public class GifAnimationThread extends Thread
 {
-    private PanneauGIF panneauGIF;
     private Container container;
+
 
     public GifAnimationThread(Container container) {
         super("Gif animation");
         this.container = container;
-        panneauGIF = new PanneauGIF();
-        this.container.add(panneauGIF);
-        this.container.validate();
     }
+
+
 
     public void run ()
     {
         while (true) {
-            this.container.revalidate();
+
         }
     }
 }
@@ -30,3 +30,13 @@ If you have done anything to change the size of the component or any of it's chi
 I think that calling revalidate() is preferred to calling validate() in Swing, though...
 updateUI() - Call this method if you have changed the pluggable look & feel for a component after it has been made visible.
 */
+
+/*    public PanneauGIF() {
+        this.setLayout(new BorderLayout());
+
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+
+    }*/

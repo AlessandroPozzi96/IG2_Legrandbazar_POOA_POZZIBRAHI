@@ -7,7 +7,7 @@ public class GifAnimationThread extends Thread
 {
     private JPanel panel;
     private PanneauGIF panneauGIF;
-    private int x = 0, y = 0, v = 5;
+    private int x = 0, y = 0, v = 10;
 
     public GifAnimationThread(JPanel panel) {
         super("Gif animation");
@@ -23,12 +23,13 @@ public class GifAnimationThread extends Thread
             try {
                 x += v;
                 y += v;
-                if (x >= panel.getWidth()) {
+                if (x >= panel.getWidth() || y >= panel.getHeight()) {
                     x *= -1;
                 }
-                if (y >= panel.getHeight()) {
+                if (y >= panel.getHeight() || x >= panel.getWidth()) {
                     y *= -1;
                 }
+                panneauGIF.setBounds(x, y, panel.getWidth(), panel.getHeight());
                 panneauGIF.validate();
                 panneauGIF.repaint();
                 Thread.sleep(100);

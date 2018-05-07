@@ -93,7 +93,9 @@ public class OrdreManager
     }
 
     public ArrayList<TacheMetier> getDatesPreparationDuJour(int jour)throws GeneralException{
-        Double huitADix, dixUneADouze, douzeAQuatorze, quatorzeASeize;
+        double [] nbOrdre = {0,0,0,0,0,0,0};
+
+        double huitADix, dixUneADouze, douzeAQuatorze, quatorzeASeize;
         huitADix = dixUneADouze = douzeAQuatorze = quatorzeASeize = 0.0;
         ArrayList<GregorianCalendar> datesPreparationDuJour;
         datesPreparationDuJour = dao.getDatesPreparationDuJour(jour);
@@ -101,7 +103,7 @@ public class OrdreManager
 
 
         for(GregorianCalendar cal : datesPreparationDuJour){
-            if(cal.getTime().getHours()< 10){
+            if(cal.getTime().getHours() > 7 && cal.getTime().getHours()< 10){
                 huitADix ++;
             }else{
                 if(cal.getTime().getHours()<12){

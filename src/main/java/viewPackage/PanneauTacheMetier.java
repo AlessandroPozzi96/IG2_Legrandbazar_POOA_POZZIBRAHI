@@ -14,14 +14,16 @@ import java.util.Iterator;
 import java.util.Map;
 
 public class PanneauTacheMetier extends JPanel {
-    private JPanel panneauTacheMetier, panneauBoutons;
-    private JLabel joursLabel;
+    private JPanel panneauTacheMetier, panneauBoutons, choixHoraire,choixJour,nbTranche;
+    private JLabel joursLabel,choix1HoraireLabel,choix2HoraireLabel,nbTrancheLabel,chaqueHeureLabel;
     private ApplicationController controller;
     private JButton recherche,retour;
     private JComboBox<String> joursCombo;
+    private JComboBox horaire1, horaire2;
+    private ButtonGroup bg;
+    private JRadioButton chaqueHeure, chaque2Heure, chaque3Heure;
 
     private Map<String, Integer> jours = Map.of("Lundi",2,"Mardi",3,"Mercredi",4,"Jeudi",5,"Vendredi",6,"Samedi",7,"Dimanche",1);
-
     private ArrayList<TacheMetier> tacheMetiers;
     public PanneauTacheMetier(){
 
@@ -29,16 +31,20 @@ public class PanneauTacheMetier extends JPanel {
 
         this.setLayout(new BorderLayout());
         panneauTacheMetier = new JPanel();
+        panneauTacheMetier.setLayout(new GridLayout(10,1,3,3));
         //panneauSuppression.setLayout();
+
         this.add(panneauTacheMetier, BorderLayout.CENTER);
         panneauBoutons = new JPanel();
         panneauBoutons.setLayout(new FlowLayout());
         this.add(panneauBoutons, BorderLayout.SOUTH);
 
+        choixJour = new JPanel();
+
         joursLabel = new JLabel("Choix de du Jour :");
         joursLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         joursLabel.setToolTipText("Choississez le jour de la recherche ");
-        panneauTacheMetier.add(joursLabel);
+        choixJour.add(joursLabel);
 
         joursCombo = new JComboBox<>();
 
@@ -56,7 +62,43 @@ public class PanneauTacheMetier extends JPanel {
             joursCombo.addItem(jour);
         }*/
 
-        panneauTacheMetier.add(joursCombo);
+        choixJour.add(joursCombo);
+        panneauTacheMetier.add(choixJour);
+
+        choix1HoraireLabel = new JLabel("Choix horaire :  de ");
+        choix1HoraireLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        choixHoraire = new JPanel(new FlowLayout());
+        choixHoraire.add(choix1HoraireLabel);
+        horaire1 = new JComboBox();
+        horaire2 = new JComboBox();
+        for(int i = 0; i <24 ; i++){
+            horaire1.addItem(i);
+            horaire2.addItem(i);
+        }
+        choixHoraire.add(horaire1);
+        choix2HoraireLabel = new JLabel(" a ");
+        choixHoraire.add(choix2HoraireLabel);
+        choixHoraire.add(horaire2);
+        panneauTacheMetier.add(choixHoraire);
+
+
+        nbTranche = new JPanel();
+        nbTrancheLabel = new JLabel("Nombre de tranche désirée : ");
+        nbTranche.add(nbTrancheLabel);
+        bg = new ButtonGroup();
+        chaqueHeure = new JRadioButton("Chaque heure");
+        chaque2Heure = new JRadioButton("Toute les 2 heures");
+        chaque3Heure = new JRadioButton("Toute les 3 heures");
+        bg.add(chaque2Heure);
+        bg.add(chaqueHeure);
+        bg.add(chaque3Heure);
+        nbTranche.add(chaqueHeure);
+        nbTranche.add(chaque2Heure);
+        nbTranche.add(chaque3Heure);
+
+        panneauTacheMetier.add(nbTranche);
+
+
         setController(new ApplicationController());
         //Ajout des boutons au panneauBoutons
         retour = new JButton("Retour");

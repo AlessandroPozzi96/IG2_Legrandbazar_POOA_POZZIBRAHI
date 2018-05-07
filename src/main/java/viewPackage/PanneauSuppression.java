@@ -1,6 +1,6 @@
 package viewPackage;
 
-import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
+
 import controllerPackage.ApplicationController;
 import exceptionPackage.AllOrdresException;
 import exceptionPackage.GeneralException;

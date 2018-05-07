@@ -20,8 +20,6 @@ public class FenetrePrincipale extends JFrame
     private JMenuBar menuBar;
     private JMenu application, ordre, recherches, tacheMetier;
     private JMenuItem quitter, insertionOrdre, modifierOrdre, supprimerOrdre, listerOrdres, recherche1, recherche2, recherche3, rechercheMoyenneJour;
-    private GifAnimationThread gifAnimationThread;
-    private JPanel panneauCaddy;
 
     public FenetrePrincipale()
     {
@@ -34,7 +32,7 @@ public class FenetrePrincipale extends JFrame
         frameContainer.setLayout(new BorderLayout());
         frameContainer.setBackground(Color.red);
         panneauBienvenue = new PanneauBienvenue();
-        frameContainer.add(panneauBienvenue, BorderLayout.CENTER);
+        frameContainer.add(panneauBienvenue);
 
         //On créé les différents menu
         menuBar = new JMenuBar();
@@ -94,13 +92,6 @@ public class FenetrePrincipale extends JFrame
         catch (Exception ex){
             System.out.println("Icon non chargée");
         }
-
-        //Test d'affichage du gif
-        panneauCaddy = new JPanel();
-        panneauCaddy.setBackground(Color.RED);
-        frameContainer.add(panneauCaddy, BorderLayout.SOUTH);
-        gifAnimationThread = new GifAnimationThread(panneauCaddy);
-        gifAnimationThread.start();
 
         //On ajoute les différents écouteurs
         this.addWindowListener(new ClosingListener());

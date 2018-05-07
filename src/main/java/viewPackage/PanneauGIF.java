@@ -1,13 +1,7 @@
 package viewPackage;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.plaf.BorderUIResource;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
 
 public class PanneauGIF extends JPanel {
     private Icon icon;
@@ -17,8 +11,9 @@ public class PanneauGIF extends JPanel {
         this.setLayout(new FlowLayout());
         icon = new ImageIcon("./caddy.gif");
         gif = new JLabel(icon);
-        setSize(new Dimension(10, 10));
-        setBackground(Color.RED);
+        setBackground(Color.BLUE);
+        setSize(icon.getIconWidth(), icon.getIconHeight());
+        setMaximumSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));
         this.add(gif);
     }
 }

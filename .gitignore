@@ -1,4 +1,8 @@
 .idea/
 target/
 IG2_Legrandbazar_POOA_POZZIBRAHI.iml
+.idea
+*.iws
+*.iml
+*.ipr
 

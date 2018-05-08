@@ -1,13 +1,12 @@
 package viewPackage;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class GifAnimationThread extends Thread
 {
     private JPanel panel;
     private PanneauGIF panneauGIF;
-    private int x = 5, y = 150, vX = 3, vY = 3;
+    private int x = 30, y = 150, vX = 1, vY = 1;
 
     public GifAnimationThread(JPanel panel) {
         super("Gif animation");
@@ -21,22 +20,23 @@ public class GifAnimationThread extends Thread
     {
         while (true) {
             try {
-                if (x >= panel.getWidth() || x <= 0 )
+                //Le gif va rebondir sur les paroi du panneau bienvenu
+                if (x >= (panel.getWidth() - panneauGIF.getWidthIcon()) || x <= 0 )
                 {
                     vX *= -1;
                 }
-                if (y >= panel.getHeight() || y <= 0)
+                if (y >= (panel.getHeight() - panneauGIF.getHeightIcon()) || y <= 0)
                 {
                     vY *= -1;
                 }
 
                 x += vX;
                 y += vY;
-                panneauGIF.setBounds(x, y, panel.getWidth(), panel.getHeight());
+                panneauGIF.setBounds(x, y, panneauGIF.getWidthIcon(), panneauGIF.getHeightIcon());
                 panneauGIF.validate();
-                panneauGIF.repaint();
                 Thread.sleep(10);
-            } catch (InterruptedException e) {
+            } catch (InterruptedException e)
+            {
                 e.printStackTrace();
             }
         }

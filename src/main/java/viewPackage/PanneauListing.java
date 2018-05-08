@@ -23,6 +23,8 @@ public class PanneauListing extends JPanel {
             ordrePreparations = controller.getAllOrdres();
         }catch (AllOrdresException e){
             System.out.println("Erreur AllOrdreException");
+            JOptionPane.showMessageDialog(null, "Erreur ! \n Impossible de se connecter à la base de donnée \n Veuillez réessayer plus tard", "Erreur", JOptionPane.ERROR_MESSAGE);
+            System.exit(0);
         }
         catch (ModelException e)
         {

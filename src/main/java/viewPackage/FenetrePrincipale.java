@@ -123,7 +123,6 @@ public class FenetrePrincipale extends JFrame
         {
             if (e.getSource() == quitter)
             {
-                //A changer dés qu'on aura accès à la DB !
                 System.exit(0);
             }
             else
@@ -192,7 +191,8 @@ public class FenetrePrincipale extends JFrame
                                         {
                                             if (e.getSource() == recherche3) {
                                                 frameContainer.removeAll();
-                                                frameContainer.add(new PanneauRecherche3());
+                                                panneauRecherche3 = new PanneauRecherche3();
+                                                frameContainer.add(panneauRecherche3);
                                                 frameContainer.repaint();
                                                 frameContainer.validate();
                                             }

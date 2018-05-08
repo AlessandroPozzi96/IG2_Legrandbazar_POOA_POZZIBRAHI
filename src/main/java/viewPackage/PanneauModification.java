@@ -53,6 +53,8 @@ public class PanneauModification extends JPanel {
             ordres = controller.getAllOrdres();
         } catch (AllOrdresException e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Erreur ! \n Impossible de se connecter à la base de donnée \n Veuillez réessayer plus tard", "Erreur", JOptionPane.ERROR_MESSAGE);
+            System.exit(0);
         } catch (ModelException e) {
             e.printStackTrace();
         }

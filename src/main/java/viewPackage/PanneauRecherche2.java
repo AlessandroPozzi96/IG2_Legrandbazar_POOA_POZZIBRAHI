@@ -112,6 +112,8 @@ public class PanneauRecherche2 extends JPanel
                         catch (GeneralException eG)
                         {
                             System.out.println(eG.getMessage());
+                            JOptionPane.showMessageDialog(null, "Erreur ! \n Impossible de se connecter à la base de donnée \n Veuillez réessayer plus tard", "Erreur", JOptionPane.ERROR_MESSAGE);
+                            System.exit(0);
                         }
 
                         if (!recherches2.isEmpty()) {

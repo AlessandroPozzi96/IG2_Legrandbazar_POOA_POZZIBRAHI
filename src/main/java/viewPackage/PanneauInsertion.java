@@ -31,6 +31,7 @@ public class PanneauInsertion extends JPanel
     private OrdrePreparation ordrePreparation;
     private JCheckBox bouttonDateVente, bouttonDatePreparation;
     private  String [] motSepare;
+
     public PanneauInsertion()
     {
         controller = new ApplicationController();
@@ -55,6 +56,8 @@ public class PanneauInsertion extends JPanel
             recettes = controller.getAllRecetteNom();
         } catch (GeneralException e) {
             System.out.println("Erreur Recupération des noms de recette");  // Changer en autre que println (Afficher une erreur dans la JCOMBOBOX par ex
+            JOptionPane.showMessageDialog(null, "Erreur ! \n Impossible de se connecter à la base de donnée \n Veuillez réessayer plus tard", "Erreur", JOptionPane.ERROR_MESSAGE);
+            System.exit(0);
         }
         recetteCombo = new JComboBox();
         for(String recetteNom : recettes){

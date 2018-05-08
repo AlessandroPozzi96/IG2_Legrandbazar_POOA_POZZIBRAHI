@@ -59,6 +59,8 @@ public class PanneauRecherche3 extends JPanel
         catch (GeneralException e)
         {
             System.out.println(e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erreur ! \n Impossible de se connecter à la base de donnée \n Veuillez réessayer plus tard", "Erreur", JOptionPane.ERROR_MESSAGE);
+            System.exit(0);
         }
 
         clientsCombox = new JComboBox<>();

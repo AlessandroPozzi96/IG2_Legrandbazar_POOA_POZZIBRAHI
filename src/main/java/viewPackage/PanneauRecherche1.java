@@ -57,6 +57,8 @@ public class PanneauRecherche1 extends JPanel
         }
         catch (GeneralException e) {
             System.out.println("Erreur Recupération des noms de recette");  // Changer en autre que println (Afficher une erreur dans la JCOMBOBOX par ex
+            JOptionPane.showMessageDialog(null, "Erreur ! \n Impossible de se connecter à la base de donnée \n Veuillez réessayer plus tard", "Erreur", JOptionPane.ERROR_MESSAGE);
+            System.exit(0);
         }
         recettesJCombox = new JComboBox();
         for(String recetteNom : recettes)

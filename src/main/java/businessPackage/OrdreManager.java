@@ -92,7 +92,7 @@ public class OrdreManager
         return dao.getClients();
     }
 
-    public ArrayList<TacheMetier> getDatesPreparationDuJour(int jour)throws GeneralException{
+    public ArrayList<TacheMetier> getDatesPreparationDuJour(int jour) throws GeneralException{
         double [] nbOrdre = {0,0,0,0,0,0,0};
 
         double huitADix, dixUneADouze, douzeAQuatorze, quatorzeASeize;

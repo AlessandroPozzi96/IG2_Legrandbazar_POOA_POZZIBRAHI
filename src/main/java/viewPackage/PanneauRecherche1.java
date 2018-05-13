@@ -43,7 +43,7 @@ public class PanneauRecherche1 extends JPanel
         this.add(panneauBoutons, BorderLayout.SOUTH);
 
         //Création des labels et des champs dans la grille
-        panneauFiller = new PanneauFiller("<html><h3>Permet d'afficher les ordres de préparations en fonction d'une recette et d'un cuisinier :</h3></html>");
+        panneauFiller = new PanneauFiller("Permet d'afficher les ordres de préparations en fonction d'une recette et d'un cuisinier :");
         this.add(panneauFiller, BorderLayout.NORTH);
 
         recettesLabel = new JLabel("Choisissez une recette : ");

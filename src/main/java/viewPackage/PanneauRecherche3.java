@@ -34,7 +34,7 @@ public class PanneauRecherche3 extends JPanel
         //On va définir les layouts et composants à ajouter au panneau
         this.setLayout(new BorderLayout());
 
-        panneauFiller = new PanneauFiller("<html><h3>Affichage des articles achetés par un client</h3></html>");
+        panneauFiller = new PanneauFiller("Affichage des articles achetés par un client :");
         this.add(panneauFiller, BorderLayout.NORTH);
 
         panneauRecherche3 = new JPanel();

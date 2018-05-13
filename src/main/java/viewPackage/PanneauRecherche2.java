@@ -37,7 +37,7 @@ public class PanneauRecherche2 extends JPanel
         panneauBoutons.setLayout(new FlowLayout());
         this.add(panneauBoutons, BorderLayout.SOUTH);
 
-        panneauFiller = new PanneauFiller("<html><h3>Permettre de lister les ordres de préparations vendu dans une intervalle de temps</h3></html>");
+        panneauFiller = new PanneauFiller("Permettre de lister les ordres de préparations vendu dans une intervalle de temps :");
         this.add(panneauFiller, BorderLayout.NORTH);
 
         dateDebut = new JLabel("Date du début : ");

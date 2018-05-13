@@ -616,7 +616,7 @@ public class DBAccess implements DataAccess
     public ArrayList<String> getClients () throws GeneralException
     {
         ArrayList<String> clients = new ArrayList<>();
-        String chaineClient = "";
+        String chaineClient;
         if ((connection = SingletonConnection.getInstance()) == null)
             throw  new GeneralException("Erreur connexion !","récupérer les clients");
 
@@ -627,6 +627,7 @@ public class DBAccess implements DataAccess
             ResultSet data = statement.executeQuery();
 
             while(data.next()) {
+                chaineClient = "";
                 chaineClient += data.getInt("NumClient");
                 chaineClient += " " + data.getString("Nom") + " " + data.getString("Prenom");
                 clients.add(chaineClient);

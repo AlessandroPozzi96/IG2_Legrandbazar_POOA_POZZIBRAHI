@@ -5,19 +5,16 @@ import java.awt.*;
 
 public class PanneauFiller extends JPanel
 {
-    private String texte;
-    private JLabel champ;
+    private JTextPane jTextPane;
 
     public PanneauFiller(String texte) {
-        setTexte(texte);
         this.setLayout(new BorderLayout());
-        champ = new JLabel(texte);
-        champ.setFont(new Font("Apple Casual", Font.PLAIN, 20));
-        champ.setHorizontalAlignment(0);
-        this.add(champ, BorderLayout.CENTER);
+        String htmlText = new String("<html><h3>" + texte + "</h3></html>");
+        jTextPane = new JTextPane();
+        jTextPane.setContentType("text/html");
+        jTextPane.setText(htmlText);
+        jTextPane.setFont(new Font("Apple Casual", Font.PLAIN, 20));
+        this.add(jTextPane, BorderLayout.CENTER);
     }
 
-    public void setTexte(String texte) {
-        this.texte = texte;
-    }
 }

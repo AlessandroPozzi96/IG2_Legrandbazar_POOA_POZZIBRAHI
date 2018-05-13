@@ -9,6 +9,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -24,6 +26,7 @@ public class PanneauTacheMetier extends JPanel {
     private ButtonGroup bg;
     private JRadioButton chaqueHeure, chaque2Heure, chaque3Heure;
     private PanneauFiller panneauFiller;
+    private int choixH = 1;
 
     private Map<String, Integer> jours = Map.of("Lundi",2,"Mardi",3,"Mercredi",4,"Jeudi",5,"Vendredi",6,"Samedi",7,"Dimanche",1);
     private ArrayList<TacheMetier> tacheMetiers;
@@ -90,15 +93,14 @@ public class PanneauTacheMetier extends JPanel {
         chaqueHeure = new JRadioButton("Chaque heure", true);
         chaque2Heure = new JRadioButton("Toute les 2 heures");
         chaque3Heure = new JRadioButton("Toute les 3 heures");
-        bg.add(chaque2Heure);
         bg.add(chaqueHeure);
+        bg.add(chaque2Heure);
         bg.add(chaque3Heure);
         nbTranche.add(chaqueHeure);
         nbTranche.add(chaque2Heure);
         nbTranche.add(chaque3Heure);
 
         panneauTacheMetier.add(nbTranche);
-
 
         setController(new ApplicationController());
         //Ajout des boutons au panneauBoutons
@@ -112,7 +114,10 @@ public class PanneauTacheMetier extends JPanel {
         retour.addActionListener(new ButtonsAndTextsListener());
         recherche.addActionListener(new ButtonsAndTextsListener());
         nouvRecherche.addActionListener(new ButtonsAndTextsListener());
-
+        ItemsListener itemsListener = new ItemsListener();
+        chaqueHeure.addItemListener(itemsListener);
+        chaque2Heure.addItemListener(itemsListener);
+        chaque3Heure.addItemListener(itemsListener);
     }
 
     public void setController(ApplicationController controller) {
@@ -141,10 +146,35 @@ public class PanneauTacheMetier extends JPanel {
             }
         }
     }
+
+    private class ItemsListener implements ItemListener {
+        @Override
+        public void itemStateChanged(ItemEvent e) {
+            if (e.getItem() == chaqueHeure && e.getStateChange() == ItemEvent.SELECTED) {
+                choixH = 1;
+            }
+            else
+            {
+                if (e.getItem() == chaque2Heure && e.getStateChange() == ItemEvent.SELECTED) {
+                        choixH = 2;
+                    }
+                    else
+                {
+                    if (e.getItem() == chaque3Heure && e.getStateChange() == ItemEvent.SELECTED) {
+                            choixH = 3;
+                        }
+                    }
+                }
+            }
+        }
+
     public void recherche(){
         tacheMetiers = new ArrayList<>();
+        int h1 = 0, h2 = 0;
         try {
-            tacheMetiers = controller.getDatesPreparationDuJour(jours.get(joursCombo.getSelectedItem()));
+            h1 = horaire1.getSelectedIndex();
+            h2 = horaire2.getSelectedIndex();
+            tacheMetiers = controller.getDatesPreparationDuJour(jours.get(joursCombo.getSelectedItem()), h1, h2, choixH);
 
             for(TacheMetier tacheMetier : tacheMetiers){
                 System.out.println(tacheMetier.getTrancheHoraire());

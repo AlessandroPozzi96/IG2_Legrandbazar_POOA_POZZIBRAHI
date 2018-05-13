@@ -86,9 +86,9 @@ public class ApplicationController
         return manager.getRecherche3(numClient);
     }
 
-    public ArrayList<TacheMetier> getDatesPreparationDuJour(int jour)throws GeneralException{
+    public ArrayList<TacheMetier> getDatesPreparationDuJour(int jour, int horaire1, int horaire2, int trancheHoraire)throws GeneralException{
 
-        return manager.getDatesPreparationDuJour(jour);
+        return manager.getDatesPreparationDuJour(jour, horaire1, horaire2, trancheHoraire);
     }
 
 

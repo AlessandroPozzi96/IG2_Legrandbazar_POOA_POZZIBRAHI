@@ -92,7 +92,17 @@ public class OrdreManager
         return dao.getClients();
     }
 
-    public ArrayList<TacheMetier> getDatesPreparationDuJour(int jour) throws GeneralException{
+    public ArrayList<TacheMetier> getDatesPreparationDuJour(int jour, int horaire1, int horaire2, int trancheHoraire) throws GeneralException{
+        if (horaire2 < horaire1 || horaire1 == horaire2) {
+            throw new GeneralException("Erreur ! Horaire invalide", "Horaire tâche métier");
+        }
+        int tranche = 0;
+        try {
+            tranche = (horaire2 - horaire1) / trancheHoraire;
+        } catch (Exception e) {
+            throw new GeneralException("Entier non null", "TrancheHoraire tâche métier");
+        }
+        int cptTranches [] = new int[tranche];
         double [] nbOrdre = {0,0,0,0,0,0,0};
 
         double huitADix, dixUneADouze, douzeAQuatorze, quatorzeASeize;
@@ -102,7 +112,7 @@ public class OrdreManager
         ArrayList<TacheMetier> tacheMetiers;
 
 
-        for(GregorianCalendar cal : datesPreparationDuJour){
+/*        for(GregorianCalendar cal : datesPreparationDuJour){
             if(cal.getTime().getHours() > 7 && cal.getTime().getHours()< 10){
                 huitADix ++;
             }else{
@@ -116,13 +126,35 @@ public class OrdreManager
                         quatorzeASeize++;
                     }
                 }
+            }*/
+        int heure;
+        int horaire1Addition;
+        int horaire2Addition;
+        for(GregorianCalendar cal : datesPreparationDuJour){
+            heure = cal.getTime().getHours();
+            horaire1Addition = horaire1;
+            horaire2Addition = horaire1;
+            for (int i = 0; i < tranche; i++) {
+                horaire1Addition += trancheHoraire;
+                if ( heure> (horaire2Addition-1) && heure < horaire1Addition) {
+                    cptTranches[i]++;
+                }
+                horaire2Addition = horaire1Addition;
             }
         }
         tacheMetiers = new ArrayList<>();
-        tacheMetiers.add(new TacheMetier("8h à 10h",huitADix/3.0));
+       /* tacheMetiers.add(new TacheMetier("8h à 10h",huitADix/3.0));
         tacheMetiers.add(new TacheMetier("10h à 12h",dixUneADouze/3.0));
         tacheMetiers.add(new TacheMetier("12h à 14h",douzeAQuatorze/3.0));
-        tacheMetiers.add(new TacheMetier("14h à 16h",quatorzeASeize/3.0));
+        tacheMetiers.add(new TacheMetier("14h à 16h",quatorzeASeize/3.0));*/
+
+       int cumulHoraire1 = horaire1;
+       int cumulHoraire2 = horaire1;
+        for (int i = 0; i < tranche; i++) {
+            cumulHoraire2 += trancheHoraire;
+            tacheMetiers.add(new TacheMetier(cumulHoraire1 + "H à " + cumulHoraire2 + "H", new Double (cptTranches[i] / (trancheHoraire + 1))));
+            cumulHoraire1 = cumulHoraire2;
+        }
 
         return tacheMetiers;
     }

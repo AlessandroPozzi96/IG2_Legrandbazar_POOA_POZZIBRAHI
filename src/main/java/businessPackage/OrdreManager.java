@@ -130,6 +130,7 @@ public class OrdreManager
         int heure;
         int horaire1Addition;
         int horaire2Addition;
+        int cpt = 0;
         for(GregorianCalendar cal : datesPreparationDuJour){
             heure = cal.getTime().getHours();
             horaire1Addition = horaire1;
@@ -141,6 +142,7 @@ public class OrdreManager
                 }
                 horaire2Addition = horaire1Addition;
             }
+            cpt++;
         }
         tacheMetiers = new ArrayList<>();
        /* tacheMetiers.add(new TacheMetier("8h à 10h",huitADix/3.0));
@@ -152,7 +154,7 @@ public class OrdreManager
        int cumulHoraire2 = horaire1;
         for (int i = 0; i < tranche; i++) {
             cumulHoraire2 += trancheHoraire;
-            tacheMetiers.add(new TacheMetier(cumulHoraire1 + "H à " + cumulHoraire2 + "H", new Double (cptTranches[i] / (trancheHoraire + 1))));
+            tacheMetiers.add(new TacheMetier(cumulHoraire1 + "H à " + cumulHoraire2 + "H", cptTranches[i] / new Double(cpt)));
             cumulHoraire1 = cumulHoraire2;
         }
 

@@ -92,74 +92,32 @@ public class OrdreManager
         return dao.getClients();
     }
 
-    public ArrayList<TacheMetier> getDatesPreparationDuJour(int jour, int horaire1, int horaire2, int trancheHoraire) throws GeneralException, ModelException{
-        if (horaire2 < horaire1 || horaire1 == horaire2) {
-            throw new GeneralException("Erreur ! Horaire invalide", "Horaire tâche métier");
+    public ArrayList<TacheMetier> getDatesPreparationDuJour(int jour,int trancheHoraire1,int trancheHoraire2,int interval)throws GeneralException{
+        int nombreDetranche = (trancheHoraire2-trancheHoraire1) / interval;
+        ArrayList<TacheMetier> tacheMetiers;
+        tacheMetiers = new ArrayList<>();
+        int i = 0;
+        while(i < nombreDetranche){
+            tacheMetiers.add(new TacheMetier(trancheHoraire1+i*interval+" a "+((int)trancheHoraire1+i*interval+interval),0.0));
+            i++;
         }
-        int tranche = 0;
-        try {
-            tranche = (horaire2 - horaire1) / trancheHoraire;
-        } catch (Exception e) {
-            throw new GeneralException("Entier non null", "TrancheHoraire tâche métier");
-        }
-        int cptTranches [] = new int[tranche];
-        double [] nbOrdre = {0,0,0,0,0,0,0};
-
-        double huitADix, dixUneADouze, douzeAQuatorze, quatorzeASeize;
-        huitADix = dixUneADouze = douzeAQuatorze = quatorzeASeize = 0.0;
         ArrayList<GregorianCalendar> datesPreparationDuJour;
         datesPreparationDuJour = dao.getDatesPreparationDuJour(jour);
-        ArrayList<TacheMetier> tacheMetiers;
-
-
-/*        for(GregorianCalendar cal : datesPreparationDuJour){
-            if(cal.getTime().getHours() > 7 && cal.getTime().getHours()< 10){
-                huitADix ++;
-            }else{
-                if(cal.getTime().getHours()<12){
-                    dixUneADouze++;
-                }else{
-                    if(cal.getTime().getHours()<14){
-                        douzeAQuatorze++;
-                    }
-                    else{
-                        quatorzeASeize++;
-                    }
-                }
-            }*/
-        int heure;
-        int horaire1Addition;
-        int horaire2Addition;
-        int cpt = 0;
         for(GregorianCalendar cal : datesPreparationDuJour){
-            heure = cal.getTime().getHours();
-            horaire1Addition = horaire1;
-            horaire2Addition = horaire1;
-            for (int i = 0; i < tranche; i++) {
-                horaire1Addition += trancheHoraire;
-                if ( heure> (horaire2Addition-1) && heure < horaire1Addition) {
-                    cptTranches[i]++;
+            i = 0;
+            while(i<nombreDetranche){
+                if(cal.getTime().getHours() >= (trancheHoraire1+i*interval) && cal.getTime().getHours() < trancheHoraire1+i*interval+interval){
+                    tacheMetiers.get(i).setMoyenne(tacheMetiers.get(i).getMoyenne()+1);
                 }
-                horaire2Addition = horaire1Addition;
+                i++;
             }
-            cpt++;
-        }
-        tacheMetiers = new ArrayList<>();
-       /* tacheMetiers.add(new TacheMetier("8h à 10h",huitADix/3.0));
-        tacheMetiers.add(new TacheMetier("10h à 12h",dixUneADouze/3.0));
-        tacheMetiers.add(new TacheMetier("12h à 14h",douzeAQuatorze/3.0));
-        tacheMetiers.add(new TacheMetier("14h à 16h",quatorzeASeize/3.0));*/
 
-       int cumulHoraire1 = horaire1;
-       int cumulHoraire2 = horaire1;
-        try {
-            for (int i = 0; i < tranche; i++) {
-                cumulHoraire2 += trancheHoraire;
-                tacheMetiers.add(new TacheMetier(cumulHoraire1 + "H à " + cumulHoraire2 + "H", cptTranches[i] / new Double(cpt)));
-                cumulHoraire1 = cumulHoraire2;
-            }
-        } catch (ModelException e) {
-            throw new ModelException("moyenne", "TacheMetier");
+        }
+        i = 0;
+        System.out.println(datesPreparationDuJour.size());
+        while(i<nombreDetranche){
+            tacheMetiers.get(i).setMoyenne(tacheMetiers.get(i).getMoyenne()/3.0); // 3 car on la recherche ce fais sur 3 mardi
+            i++;
         }
         return tacheMetiers;
     }

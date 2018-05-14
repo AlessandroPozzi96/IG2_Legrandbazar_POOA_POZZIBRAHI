@@ -17,7 +17,7 @@ public class TrancheHoraireJourModel extends AbstractTableModel {
     public TrancheHoraireJourModel(ArrayList<TacheMetier> tacheMetiers){
         columnNames = new ArrayList<>();
         columnNames.add("Tranche Horaire");
-        columnNames.add("Moyenne");
+        columnNames.add("Moyenne des ordres de préparation");
         setContents(tacheMetiers);
     }
 

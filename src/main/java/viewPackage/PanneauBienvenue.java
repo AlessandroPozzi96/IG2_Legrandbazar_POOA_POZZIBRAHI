@@ -39,4 +39,5 @@ public class PanneauBienvenue extends JPanel
     public void paintComponent(Graphics g){
         g.drawImage(imgFond,0,0,PanneauBienvenue.this);
     }
+
 }

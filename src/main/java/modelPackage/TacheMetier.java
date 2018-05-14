@@ -6,9 +6,9 @@ public class TacheMetier {
     private String trancheHoraire;
     private Double moyenne;
 
-    public TacheMetier(String trancheHoraire,Double moyenne){
+    public TacheMetier(String trancheHoraire,Double moyenne)throws ModelException{
         this.trancheHoraire = trancheHoraire;
-        this.moyenne = moyenne;
+        setMoyenne(moyenne);
     }
 
     public void setTrancheHoraire(String trancheHoraire) {

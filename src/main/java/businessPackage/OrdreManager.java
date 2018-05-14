@@ -92,7 +92,7 @@ public class OrdreManager
         return dao.getClients();
     }
 
-    public ArrayList<TacheMetier> getDatesPreparationDuJour(int jour, int horaire1, int horaire2, int trancheHoraire) throws GeneralException{
+    public ArrayList<TacheMetier> getDatesPreparationDuJour(int jour, int horaire1, int horaire2, int trancheHoraire) throws GeneralException, ModelException{
         if (horaire2 < horaire1 || horaire1 == horaire2) {
             throw new GeneralException("Erreur ! Horaire invalide", "Horaire tâche métier");
         }
@@ -152,12 +152,15 @@ public class OrdreManager
 
        int cumulHoraire1 = horaire1;
        int cumulHoraire2 = horaire1;
-        for (int i = 0; i < tranche; i++) {
-            cumulHoraire2 += trancheHoraire;
-            tacheMetiers.add(new TacheMetier(cumulHoraire1 + "H à " + cumulHoraire2 + "H", cptTranches[i] / new Double(cpt)));
-            cumulHoraire1 = cumulHoraire2;
+        try {
+            for (int i = 0; i < tranche; i++) {
+                cumulHoraire2 += trancheHoraire;
+                tacheMetiers.add(new TacheMetier(cumulHoraire1 + "H à " + cumulHoraire2 + "H", cptTranches[i] / new Double(cpt)));
+                cumulHoraire1 = cumulHoraire2;
+            }
+        } catch (ModelException e) {
+            throw new ModelException("moyenne", "TacheMetier");
         }
-
         return tacheMetiers;
     }
 

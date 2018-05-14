@@ -32,7 +32,7 @@ public class PanneauTacheMetier extends JPanel {
     private ArrayList<TacheMetier> tacheMetiers;
     public PanneauTacheMetier(){
         this.setLayout(new BorderLayout());
-        panneauFiller = new PanneauFiller("Calcule la moyenne des ordres de préparation </br> (Basé sur les 3 dernières semaines du jour sélectionné) :");
+        panneauFiller = new PanneauFiller("Calcule le nombre moyen des ordres de préparation </br> (Basé sur les 3 dernières semaines du jour sélectionné) :");
         panneauTacheMetier = new JPanel();
         panneauTacheMetier.setLayout(new GridLayout(11,1,3,3));
         panneauTacheMetier.add(panneauFiller);
@@ -176,7 +176,7 @@ public class PanneauTacheMetier extends JPanel {
             h2 = horaire2.getSelectedIndex();
             tacheMetiers = controller.getDatesPreparationDuJour(jours.get(joursCombo.getSelectedItem()), h1, h2, choixH);
 
-            for(TacheMetier tacheMetier : tacheMetiers){
+            for (TacheMetier tacheMetier : tacheMetiers) {
                 System.out.println(tacheMetier.getTrancheHoraire());
                 System.out.println(tacheMetier.getMoyenne());
             }
@@ -194,14 +194,16 @@ public class PanneauTacheMetier extends JPanel {
 
             PanneauTacheMetier.this.panneauTacheMetier.removeAll();
             PanneauTacheMetier.this.panneauTacheMetier.setLayout(new BorderLayout());
-            PanneauTacheMetier.this.panneauTacheMetier.add(joursLabel,BorderLayout.NORTH);
-            PanneauTacheMetier.this.panneauTacheMetier.add(scrollPane,BorderLayout.CENTER);
+            PanneauTacheMetier.this.panneauTacheMetier.add(joursLabel, BorderLayout.NORTH);
+            PanneauTacheMetier.this.panneauTacheMetier.add(scrollPane, BorderLayout.CENTER);
             PanneauTacheMetier.this.panneauTacheMetier.repaint();
             PanneauTacheMetier.this.panneauTacheMetier.validate();
         } catch (GeneralException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Erreur ! \n Impossible de se connecter à la base de donnée \n Veuillez réessayer plus tard", "Erreur", JOptionPane.ERROR_MESSAGE);
             System.exit(0);
+        } catch (ModelException eM) {
+            System.out.println(eM.getMessage());
         }
     }
 }

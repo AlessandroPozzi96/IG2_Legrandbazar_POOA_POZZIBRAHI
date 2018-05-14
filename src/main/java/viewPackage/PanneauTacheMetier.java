@@ -184,20 +184,13 @@ public class PanneauTacheMetier extends JPanel {
                 try {
                     tacheMetiers = controller.getDatesPreparationDuJour(jours.get(joursCombo.getSelectedItem()),(int)horaire1.getSelectedItem(),(int)horaire2.getSelectedItem(),intervalHeure);
                 } catch (ModelException e) {
-                    e.printStackTrace();
+                    JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                 }
 
                 TrancheHoraireJourModel trancheHoraireJourModel = new TrancheHoraireJourModel(tacheMetiers);
                 JTable table = new JTable(trancheHoraireJourModel);
                 table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
                 JScrollPane scrollPane = new JScrollPane(table);
-
-              /*  PanneauTacheMetier.this.removeAll();
-                joursLabel.setText(joursCombo.getSelectedItem() + " de "+horaire1.getSelectedItem()+" a "+horaire2.getSelectedItem()+" heure toute les "+intervalHeure+" heure");
-                joursLabel.setHorizontalAlignment(SwingConstants.CENTER);
-                PanneauTacheMetier.this.add(joursLabel, BorderLayout.NORTH);
-                PanneauTacheMetier.this.add(scrollPane, BorderLayout.CENTER);
-                PanneauTacheMetier.this.validate();*/
 
                 PanneauTacheMetier.this.panneauTacheMetier.removeAll();
                 PanneauTacheMetier.this.panneauTacheMetier.setLayout(new BorderLayout());

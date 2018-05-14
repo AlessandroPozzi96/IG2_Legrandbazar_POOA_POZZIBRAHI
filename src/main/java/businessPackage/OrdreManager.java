@@ -92,7 +92,7 @@ public class OrdreManager
         return dao.getClients();
     }
 
-    public ArrayList<TacheMetier> getDatesPreparationDuJour(int jour,int trancheHoraire1,int trancheHoraire2,int interval)throws GeneralException{
+    public ArrayList<TacheMetier> getDatesPreparationDuJour(int jour,int trancheHoraire1,int trancheHoraire2,int interval) throws GeneralException, ModelException {
         int nombreDetranche = (trancheHoraire2-trancheHoraire1) / interval;
         ArrayList<TacheMetier> tacheMetiers;
         tacheMetiers = new ArrayList<>();

@@ -2,6 +2,7 @@ package viewPackage;
 
 import controllerPackage.ApplicationController;
 import exceptionPackage.GeneralException;
+import exceptionPackage.ModelException;
 import modelPackage.TacheMetier;
 
 import javax.swing.*;
@@ -167,7 +168,11 @@ public class PanneauTacheMetier extends JPanel {
                     }
                 }
 
-                tacheMetiers = controller.getDatesPreparationDuJour(jours.get(joursCombo.getSelectedItem()),(int)horaire1.getSelectedItem(),(int)horaire2.getSelectedItem(),intervalHeure);
+                try {
+                    tacheMetiers = controller.getDatesPreparationDuJour(jours.get(joursCombo.getSelectedItem()),(int)horaire1.getSelectedItem(),(int)horaire2.getSelectedItem(),intervalHeure);
+                } catch (ModelException e) {
+                    e.printStackTrace();
+                }
 
                 TrancheHoraireJourModel trancheHoraireJourModel = new TrancheHoraireJourModel(tacheMetiers);
                 JTable table = new JTable(trancheHoraireJourModel);

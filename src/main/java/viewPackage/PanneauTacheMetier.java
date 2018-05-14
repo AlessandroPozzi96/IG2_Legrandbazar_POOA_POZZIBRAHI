@@ -171,8 +171,6 @@ public class PanneauTacheMetier extends JPanel {
         }else{
             tacheMetiers = new ArrayList<>();
             try {
-
-
                 if(chaqueHeure.isSelected()){
                     intervalHeure = 1;
                 }else{
@@ -221,7 +219,6 @@ public class PanneauTacheMetier extends JPanel {
 
         }else{
             int nombreHeure = (int) horaire1.getSelectedItem() - (int) horaire2.getSelectedItem();
-
             if (nombreHeure % 2 == 0) {
                 chaque2Heure.setEnabled(true);
             } else {

@@ -111,7 +111,6 @@ public class OrdreManager
                 }
                 i++;
             }
-
         }
         i = 0;
         System.out.println(datesPreparationDuJour.size());

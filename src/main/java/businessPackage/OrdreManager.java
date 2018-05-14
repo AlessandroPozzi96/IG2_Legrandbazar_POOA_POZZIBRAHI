@@ -103,8 +103,10 @@ public class OrdreManager
         }
         ArrayList<GregorianCalendar> datesPreparationDuJour;
         datesPreparationDuJour = dao.getDatesPreparationDuJour(jour);
+        System.out.println(datesPreparationDuJour.size());
         for(GregorianCalendar cal : datesPreparationDuJour){
             i = 0;
+
             while(i<nombreDetranche){
                 if(cal.getTime().getHours() >= (trancheHoraire1+i*interval) && cal.getTime().getHours() < trancheHoraire1+i*interval+interval){
                     tacheMetiers.get(i).setMoyenne(tacheMetiers.get(i).getMoyenne()+1);
@@ -113,7 +115,6 @@ public class OrdreManager
             }
         }
         i = 0;
-        System.out.println(datesPreparationDuJour.size());
         while(i<nombreDetranche){
             tacheMetiers.get(i).setMoyenne(tacheMetiers.get(i).getMoyenne()/3.0); // 3 car on la recherche ce fais sur 3 mardi
             i++;

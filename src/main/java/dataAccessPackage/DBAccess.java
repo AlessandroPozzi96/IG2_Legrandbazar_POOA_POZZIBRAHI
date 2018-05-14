@@ -694,7 +694,7 @@ public class DBAccess implements DataAccess
 
 
         try {
-            String sql = "SELECT DatePreparation FROM dbgrandbazar.ordrepreparation where dayofweek(DatePreparation) = ? and DatePreparation between date_sub(now(), interval 21 day) and now()";
+            String sql = "SELECT DatePreparation FROM dbgrandbazar.ordrepreparation where dayofweek(DatePreparation) = ? and DatePreparation between date_sub(curdate(), interval 21 day) and curdate()";
             // rajouter le choix a l'utilisateur le nombre de jours dans la moyenne
             statement = connection.prepareStatement(sql);
             statement.setInt(1, jour);
@@ -706,6 +706,7 @@ public class DBAccess implements DataAccess
             java.sql.Date sqlDate ;
             GregorianCalendar dataPrepa;
             while(data.next()){
+                System.out.println("SALUT");
                 dataPrepa = new GregorianCalendar();
                 datePreparation = data.getTimestamp("DatePreparation");
                 dataPrepa.setTime(datePreparation);

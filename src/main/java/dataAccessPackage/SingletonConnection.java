@@ -19,7 +19,7 @@ public class SingletonConnection
             {
                 //Seb → 159357
                 //Aless → Pa456lOt
-                uniqueConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbgrandbazar?useSSL=false", "root", "4");
+                uniqueConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbgrandbazar?useSSL=false", "root", "Pa456lOt");
             }
             catch (Exception e)
             {

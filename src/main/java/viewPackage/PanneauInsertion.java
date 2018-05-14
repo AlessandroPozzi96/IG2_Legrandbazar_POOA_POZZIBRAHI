@@ -104,7 +104,7 @@ public class PanneauInsertion extends JPanel
         quantiteProduiteText = new JTextField();
         panneauFormulaire.add(quantiteProduiteText);
 
-        bouttonDateVente = new JCheckBox("Encoder une date vente");
+        bouttonDateVente = new JCheckBox("Encoder une date de vente");
         bouttonDateVente.setHorizontalAlignment(SwingConstants.RIGHT);
         panneauFormulaire.add(bouttonDateVente);
 
@@ -125,7 +125,7 @@ public class PanneauInsertion extends JPanel
         panneauDateVente.add(spinnerDateVente);
         panneauFormulaire.add(panneauDateVente);
 
-        bouttonDatePreparation = new JCheckBox("Encoder une date préparation");
+        bouttonDatePreparation = new JCheckBox("Encoder une date de préparation");
         bouttonDatePreparation.setHorizontalAlignment(SwingConstants.RIGHT);
         panneauFormulaire.add(bouttonDatePreparation);
 
@@ -137,7 +137,7 @@ public class PanneauInsertion extends JPanel
         });
 
         panneauDatePreparation = new JPanel();
-        datePreparationLabel = new JLabel("Date de préparation :");
+        datePreparationLabel = new JLabel("Date préparation :");
         datePreparationLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         datePreparationLabel.setToolTipText("[FACULTATIF] Date lors de la préparation");
         panneauDatePreparation.add(datePreparationLabel);

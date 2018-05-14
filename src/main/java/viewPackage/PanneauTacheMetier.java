@@ -39,7 +39,7 @@ public class PanneauTacheMetier extends JPanel {
         //panneauSuppression.setLayout();
 
         //Description de la tache métier
-        panneauFiller = new PanneauFiller("Calcule la moyenne des ordres de préparation </br> (Basé sur les 3 dernières semaines du jour sélectionné) :");
+        panneauFiller = new PanneauFiller("Calcule la moyenne des ordres de préparations (Basé sur les 3 dernières semaines du jour sélectionné) :");
         panneauTacheMetier.add(panneauFiller);
 
         this.add(panneauTacheMetier, BorderLayout.CENTER);
@@ -64,11 +64,6 @@ public class PanneauTacheMetier extends JPanel {
         joursCombo.addItem("Vendredi");
         joursCombo.addItem("Samedi");
         joursCombo.addItem("Dimanche");
-
-        /*for(String jour : jours.keySet()){   --> ne parcourt pas la hashmap dans l'ordre ?
-            System.out.println(jour);
-            joursCombo.addItem(jour);
-        }*/
 
         choixJour.add(joursCombo);
         panneauTacheMetier.add(choixJour);

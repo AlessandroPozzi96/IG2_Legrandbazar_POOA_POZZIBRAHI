@@ -51,8 +51,8 @@ public class PanneauSuppression extends JPanel {
         }
         catch (AllOrdresException e)
         {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Erreur ! \n Impossible de se connecter à la base de donnée \n Veuillez réessayer plus tard", "Erreur", JOptionPane.ERROR_MESSAGE);
+            //e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE); // c'est une erreur connexion qui s'affiche
             System.exit(0);
         }
         catch (ModelException e)
@@ -85,7 +85,6 @@ public class PanneauSuppression extends JPanel {
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == retour) {
                 changementPanneau((new PanneauBienvenue()));
-
             }
             else{
                 if(e.getSource() == suppression){

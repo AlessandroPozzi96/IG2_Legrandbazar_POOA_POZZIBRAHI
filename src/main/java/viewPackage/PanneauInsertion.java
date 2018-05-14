@@ -55,8 +55,7 @@ public class PanneauInsertion extends JPanel
         try {
             recettes = controller.getAllRecetteNom();
         } catch (GeneralException e) {
-            System.out.println("Erreur Recupération des noms de recette");  // Changer en autre que println (Afficher une erreur dans la JCOMBOBOX par ex
-            JOptionPane.showMessageDialog(null, "Erreur ! \n Impossible de se connecter à la base de donnée \n Veuillez réessayer plus tard", "Erreur", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             System.exit(0);
         }
         recetteCombo = new JComboBox();
@@ -84,7 +83,7 @@ public class PanneauInsertion extends JPanel
         }
         catch (GeneralException e)
         {
-            System.out.println("Erreur le dernier numéro séquentiel ne peut pas être obtenu");
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
         numeroSequentielText = new JTextField();
         numeroSequentielText.setText(String.valueOf(dernierNumeroSequentiel));
@@ -176,7 +175,7 @@ public class PanneauInsertion extends JPanel
         try {
             codeBarres = controller.getCodeBarres();
         } catch (GeneralException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
         codeBarreCombo = new JComboBox();
         codeBarreCombo.addItem("Pas d'article");
@@ -194,7 +193,7 @@ public class PanneauInsertion extends JPanel
         try {
             matriculesCui = controller.getMatriculesCui();
         } catch (GeneralException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
         matriculeCuiCombo = new JComboBox();
         matriculeCuiCombo.addItem("Pas de cuisinier");
@@ -212,7 +211,7 @@ public class PanneauInsertion extends JPanel
         try {
             matriculesRes = controller.getMatriculesRes();
         } catch (GeneralException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
         matriculeResCombo = new JComboBox();
         for(String matriculeRes : matriculesRes){

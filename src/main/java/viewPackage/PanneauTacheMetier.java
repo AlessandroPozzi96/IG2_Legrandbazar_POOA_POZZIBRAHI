@@ -220,7 +220,6 @@ public class PanneauTacheMetier extends JPanel {
                     chaque2Heure.setSelected(true);
                 }
             }
-
             if (nombreHeure % 3 == 0) {
                 chaque3Heure.setEnabled(true);
             } else {

@@ -221,7 +221,7 @@ public class DBAccess implements DataAccess
             throw  new GeneralException("Erreur connexion !","récupérer les code barres");
 
         try {
-            String sql = "Select CodeBarre, libelle from typearticle;"; // Je sais pas si il faut faire le truc avec les ? mais ca me semble inutile
+            String sql = "Select CodeBarre, libelle from typearticle where EstUnePreparation=true;"; // Je sais pas si il faut faire le truc avec les ? mais ca me semble inutile
             statement = connection.prepareStatement(sql);
             ResultSet data = statement.executeQuery(); // contient les lignes de résultat de la requête
 

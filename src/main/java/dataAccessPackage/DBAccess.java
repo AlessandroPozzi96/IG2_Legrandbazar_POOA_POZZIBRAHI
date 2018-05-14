@@ -54,9 +54,6 @@ public class DBAccess implements DataAccess
 
             if (ordrePreparation.getDatePreparation() != null)
             {
-                //sqlDate.setTime(ordrePreparation.getDatePreparation().getTimeInMillis());
-                //statement.setDate(6, sqlDate);
-
                 sqlDate.setTime(ordrePreparation.getDatePreparation().getTimeInMillis());
                 Timestamp datePrepa = new Timestamp(sqlDate.getTime());
                 statement.setTimestamp(6,datePrepa);
@@ -119,7 +116,6 @@ public class DBAccess implements DataAccess
             String sql = "SELECT * FROM dbgrandbazar.ordrepreparation order by NumeroSequentiel";
             statement = connection.prepareStatement(sql);
             ResultSet data = statement.executeQuery(); // contient les lignes de résultat de la requête
-            ResultSetMetaData meta = data.getMetaData(); // Contient les meta données (nb colonnes, ...)
             int quantiteProduite, matricule_Cui, codeBarre;
             String remarque;
 
@@ -201,9 +197,9 @@ public class DBAccess implements DataAccess
             throw  new GeneralException("Erreur connexion !","récupérer les noms de recettes");
 
         try {
-            String sql = "SELECT Nom FROM dbgrandbazar.recette"; // Je sais pas si il faut faire le truc avec les ? mais ca me semble inutile
+            String sql = "SELECT Nom FROM dbgrandbazar.recette";
             statement = connection.prepareStatement(sql);
-            ResultSet data = statement.executeQuery(); // contient les lignes de résultat de la requête
+            ResultSet data = statement.executeQuery();
 
             while(data.next()) {
                 allRecetteNom.add(data.getString("Nom"));
@@ -221,7 +217,7 @@ public class DBAccess implements DataAccess
             throw  new GeneralException("Erreur connexion !","récupérer les code barres");
 
         try {
-            String sql = "Select CodeBarre, libelle from typearticle where EstUnePreparation=true;"; // Je sais pas si il faut faire le truc avec les ? mais ca me semble inutile
+            String sql = "Select CodeBarre, libelle from typearticle where EstUnePreparation=true;";
             statement = connection.prepareStatement(sql);
             ResultSet data = statement.executeQuery(); // contient les lignes de résultat de la requête
 
@@ -243,7 +239,7 @@ public class DBAccess implements DataAccess
             throw  new GeneralException("Erreur connexion !","récupérer les cuisiniers");
 
         try {
-            String sql = "Select * From cuisinier inner join membredupersonnel on Matricule_Cui = Matricule;"; // Je sais pas si il faut faire le truc avec les ? mais ca me semble inutile
+            String sql = "Select * From cuisinier inner join membredupersonnel on Matricule_Cui = Matricule;";
             statement = connection.prepareStatement(sql);
             ResultSet data = statement.executeQuery(); // contient les lignes de résultat de la requête
 
@@ -266,7 +262,7 @@ public class DBAccess implements DataAccess
             throw  new GeneralException("Erreur connexion !","récupérer les responsables des ventes");
 
         try {
-            String sql = "Select * From responsablevente inner join membredupersonnel on MatriculeRes = Matricule;"; // Je sais pas si il faut faire le truc avec les ? mais ca me semble inutile
+            String sql = "Select * From responsablevente inner join membredupersonnel on MatriculeRes = Matricule;";
             statement = connection.prepareStatement(sql);
             ResultSet data = statement.executeQuery(); // contient les lignes de résultat de la requête
 
@@ -422,7 +418,6 @@ public class DBAccess implements DataAccess
             statement = connection.prepareStatement(sql);
             statement.setInt(1,numeroSequentie);
             ResultSet data = statement.executeQuery(); // contient les lignes de résultat de la requête
-            ResultSetMetaData meta = data.getMetaData(); // Contient les meta données (nb colonnes, ...)
 
             while(data.next()){
 
@@ -481,7 +476,6 @@ public class DBAccess implements DataAccess
             statement.setInt(1, matri_Cui);
             statement.setString(2, recette);
             ResultSet data = statement.executeQuery(); // contient les lignes de résultat de la requête
-            ResultSetMetaData meta = data.getMetaData(); // Contient les meta données (nb colonnes, ...)
             int quantiteProduite, codeBarre;
             String remarque;
 
@@ -492,7 +486,6 @@ public class DBAccess implements DataAccess
                 java.sql.Date sqlDate;
 
                 GregorianCalendar calendar = new GregorianCalendar();
-                // Peut pas utiliser le même calendar pour les 3 dates, pq ? Ou refaire un calendar = new GregorianCalendar avant l'utilisation
                 GregorianCalendar calendarVente = new GregorianCalendar();
                 GregorianCalendar calendarPreparation = new GregorianCalendar();
 
@@ -575,7 +568,6 @@ public class DBAccess implements DataAccess
             statement.setDate(2, sqlDate);
 
             ResultSet data = statement.executeQuery(); // contient les lignes de résultat de la requête
-            ResultSetMetaData meta = data.getMetaData(); // Contient les meta données (nb colonnes, ...)
 
             //Création des variables qui iront garnir recherche2
             Integer numeroSequentiel;
@@ -586,7 +578,6 @@ public class DBAccess implements DataAccess
             while(data.next())
             {
                 GregorianCalendar dateOrdre = new GregorianCalendar();
-                // Peut pas utiliser le même calendar pour les 3 dates, pq ? Ou refaire un calendar = new GregorianCalendar avant l'utilisation
                 GregorianCalendar dateTicket = new GregorianCalendar();
                 //dateOrdre
                 sqlDate = data.getDate("DateOrdre");

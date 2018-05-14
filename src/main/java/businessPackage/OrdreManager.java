@@ -11,9 +11,6 @@ import modelPackage.TacheMetier;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.Map;
 @SuppressWarnings({"deprecation"})
 public class OrdreManager
 {
@@ -103,10 +100,8 @@ public class OrdreManager
         }
         ArrayList<GregorianCalendar> datesPreparationDuJour;
         datesPreparationDuJour = dao.getDatesPreparationDuJour(jour);
-        System.out.println(datesPreparationDuJour.size());
         for(GregorianCalendar cal : datesPreparationDuJour){
             i = 0;
-
             while(i<nombreDetranche){
                 if(cal.getTime().getHours() >= (trancheHoraire1+i*interval) && cal.getTime().getHours() < trancheHoraire1+i*interval+interval){
                     tacheMetiers.get(i).setMoyenne(tacheMetiers.get(i).getMoyenne()+1);
@@ -121,6 +116,8 @@ public class OrdreManager
         }
         return tacheMetiers;
     }
+
+
 
     public Integer conversionStringVersInteger(String chaine) {
         Integer entier;

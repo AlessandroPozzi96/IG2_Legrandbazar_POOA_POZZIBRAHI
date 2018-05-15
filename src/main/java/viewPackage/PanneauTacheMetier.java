@@ -189,7 +189,7 @@ public class PanneauTacheMetier extends JPanel {
 
                 PanneauTacheMetier.this.panneauTacheMetier.removeAll();
                 PanneauTacheMetier.this.panneauTacheMetier.setLayout(new BorderLayout());
-                joursLabel.setText(joursCombo.getSelectedItem() + " de "+horaire1.getSelectedItem()+" a "+horaire2.getSelectedItem()+" heure toute les "+intervalHeure+" heure");
+                joursLabel.setText(joursCombo.getSelectedItem() + " de "+horaire1.getSelectedItem()+" a "+horaire2.getSelectedItem()+" heure toute les "+intervalHeure+" heures");
                 joursLabel.setHorizontalAlignment(SwingConstants.CENTER);
                 PanneauTacheMetier.this.panneauTacheMetier.add(joursLabel,BorderLayout.NORTH);
                 PanneauTacheMetier.this.panneauTacheMetier.add(scrollPane,BorderLayout.CENTER);

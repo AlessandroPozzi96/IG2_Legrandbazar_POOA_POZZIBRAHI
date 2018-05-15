@@ -7,7 +7,6 @@ public class GifAnimationThread extends Thread
     private JPanel panel;
     private PanneauGIF panneauGIF;
     private int x = 30, y = 150, vX = 1, vY = 1;
-
     public GifAnimationThread(JPanel panel) {
         super("Gif animation");
         this.panel = panel;
@@ -18,6 +17,7 @@ public class GifAnimationThread extends Thread
     //Test pour faire bouger le gif à l'intérieur de la fenêtre sans dépasser les bords
     public void run ()
     {
+
         while (true) {
             try {
                 //Le gif va rebondir sur les paroi du panneau bienvenu
@@ -25,7 +25,7 @@ public class GifAnimationThread extends Thread
                 {
                     vX *= -1;
                 }
-                if (y >= (panel.getHeight() - panneauGIF.getHeightIcon()) || y <= 0)
+                if (y >= (panel.getHeight() - panneauGIF.getHeightIcon()) || y <= panel.getHeight()/4)
                 {
                     vY *= -1;
                 }

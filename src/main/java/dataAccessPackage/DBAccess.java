@@ -705,7 +705,6 @@ public class DBAccess implements DataAccess
         } catch (SQLException e) {
             throw new GeneralException(e.getMessage(), "les dates de préparation du jour");
         }
-
         return datesPreparationDuJour;
     }
 

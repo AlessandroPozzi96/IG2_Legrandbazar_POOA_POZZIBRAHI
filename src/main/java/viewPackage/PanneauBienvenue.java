@@ -27,7 +27,6 @@ public class PanneauBienvenue extends JPanel
         bienvenue.setFont(new Font("Helvetica", Font.ITALIC, 100));
         bienvenue.setHorizontalAlignment(0);
 
-
         this.add(bienvenue,BorderLayout.NORTH);
         this.add(panelImage,BorderLayout.CENTER);
 

@@ -53,10 +53,10 @@ public class PanneauModification extends JPanel {
             ordres = controller.getAllOrdres();
         } catch (AllOrdresException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Erreur ! \n Impossible de se connecter à la base de donnée \n Veuillez réessayer plus tard", "Erreur", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             System.exit(0);
         } catch (ModelException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
         ordresJCombo = new JComboBox();
         String dateString = "";
@@ -87,7 +87,7 @@ public class PanneauModification extends JPanel {
         try {
             recettes = controller.getAllRecetteNom();
         } catch (GeneralException e) {
-            System.out.println("Erreur Recupération des noms de recette");  // Changer en autre que println (Afficher une erreur dans la JCOMBOBOX par ex
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
         recetteCombo = new JComboBox();
         for (String recetteNom : recettes) {
@@ -180,7 +180,7 @@ public class PanneauModification extends JPanel {
         try {
             codeBarres = controller.getCodeBarres();
         } catch (GeneralException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
         codeBarreCombo = new JComboBox();
         codeBarreCombo.addItem("Pas d'article");
@@ -199,7 +199,7 @@ public class PanneauModification extends JPanel {
         try {
             matriculesCui = controller.getMatriculesCui();
         } catch (GeneralException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
         matriculeCuiCombo = new JComboBox();
         matriculeCuiCombo.addItem("Pas de cuisinier");
@@ -218,7 +218,7 @@ public class PanneauModification extends JPanel {
         try {
             matriculesRes = controller.getMatriculesRes();
         } catch (GeneralException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
         matriculeResCombo = new JComboBox();
         for (String matriculeRes : matriculesRes) {
@@ -372,9 +372,9 @@ public class PanneauModification extends JPanel {
                 JOptionPane.showMessageDialog(null, "Confirmation de la modification de l'ordre !", "Information", JOptionPane.INFORMATION_MESSAGE);
                 reinitialiser();
             } catch (ModelException eME) {
-                eME.getMessage();
+                JOptionPane.showMessageDialog(null, eME.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             } catch (UpdateOrdreException eUO) {
-                eUO.getMessage();
+                JOptionPane.showMessageDialog(null, eUO.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
@@ -439,7 +439,6 @@ public class PanneauModification extends JPanel {
         if (ordre.getCodeBarre() != null) {
 
             i = 1;
-            // crer une fonction dans les jCombo peu être pas mal, je trouve pas si une existe
             while (i < codeBarreCombo.getItemCount()) {
                 String [] motSepare = codeBarreCombo.getItemAt(i).toString().split(" ");
                 if (ordre.getCodeBarre().equals(Integer.parseInt(motSepare[0]))) {
@@ -468,10 +467,8 @@ public class PanneauModification extends JPanel {
             matriculeCuiCombo.setSelectedIndex(0);
         }
 
-        // crer une fonction dans les jCombo peu être pas mal, je trouve pas si une existe déja
         if (ordre.getMatricule_Res() != null) {
             i = 0;
-            // crer une fonction dans les jCombo peu être pas mal, je trouve pas si une existe
             while (i < matriculeResCombo.getItemCount()) {
                 String [] motSepare = matriculeResCombo.getItemAt(i).toString().split(" ");
                 if (ordre.getMatricule_Res().equals(Integer.parseInt(motSepare[0]))) {

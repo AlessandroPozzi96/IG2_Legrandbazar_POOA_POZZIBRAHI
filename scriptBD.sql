@@ -277,4 +277,52 @@ VALUES ('2018-04-25',null,45,45,'2018-05-10','2018-05-06 18:06:00',NULL,0,'Allum
 ('2018-05-03',null,23,24,NULL,'2018-05-01 20:33:21','Un délice !',0,'Pâté en croute',9,4,5),
 ('2018-05-03',null,74,NULL,NULL,'2018-05-11 11:50:21','Peut faire mieux',0,'Pâté en croute',9,null,1),
 (sysdate(),null,3,NULL,NULL,null,NULL,1,'Pot-au-feu',NULL,4,5), 
-('2018-05-13',null,9,18,'2018-05-14',null,NULL,1,'Boeuf bourguignon',5,null,7);
+('2018-05-13',null,9,18,'2018-05-14',null,NULL,1,'Boeuf bourguignon',5,null,7),
+
+('2018-05-07',null,56,56,'2018-05-01','2018-04-30 11:24:20','Peut faire mieux',0,'Allumettes au foie gras',null,2,1),
+('2018-05-07',null,32,32,'2018-05-01','2018-04-30 10:49:20',null,0,'Allumettes au foie gras',null,2,1),
+('2018-05-07',null,32,32,'2018-05-15','2018-05-14 10:28:20',null,2,'Allumettes au foie gras',null,2,1),
+
+
+('2018-05-07',null,3,null,null,'2018-05-07 13:24:20',null,2,'Pot-au-feu',null,null,1),
+('2018-05-07',null,3,null,null,'2018-05-07 13:24:20',null,2,'Pot-au-feu',null,null,1),
+('2018-05-07',null,3,null,null,'2018-05-07 13:24:20',null,2,'Pot-au-feu',null,null,1),
+('2018-05-07',null,3,null,null,'2018-05-07 13:24:20',null,2,'Pot-au-feu',null,null,1),
+('2018-05-07',null,3,null,null,'2018-05-07 14:24:20',null,2,'Pot-au-feu',null,null,1),
+('2018-05-07',null,3,null,null,'2018-05-07 14:24:20',null,2,'Pot-au-feu',null,null,1),
+('2018-05-07',null,3,null,null,'2018-05-07 14:24:20',null,2,'Pot-au-feu',null,null,1),
+('2018-05-07',null,3,null,null,'2018-05-07 14:24:20',null,2,'Pot-au-feu',null,null,1),
+('2018-05-07',null,3,null,null,'2018-05-07 14:24:20',null,2,'Pot-au-feu',null,null,1),
+('2018-05-07',null,3,null,null,'2018-05-07 14:24:20',null,2,'Pot-au-feu',null,null,1),
+('2018-05-07',null,3,null,null,'2018-05-07 15:24:20',null,2,'Pot-au-feu',null,null,1),
+('2018-05-07',null,3,null,null,'2018-05-07 15:24:20',null,2,'Pot-au-feu',null,null,1),
+('2018-05-07',null,3,null,null,'2018-05-07 15:24:20',null,2,'Pot-au-feu',null,null,1),
+('2018-05-07',null,8,null,null,'2018-05-07 15:24:20',null,2,'Pot-au-feu',null,null,1),
+('2018-05-07',null,7,null,null,'2018-05-07 15:24:20',null,2,'Pot-au-feu',null,null,1),
+('2018-05-07',null,6,null,null,'2018-05-07 16:24:20',null,2,'Pot-au-feu',null,null,1),
+('2018-05-07',null,5,null,null,'2018-05-07 16:24:20',null,2,'Pot-au-feu',null,null,1),
+('2018-05-07',null,4,null,null,'2018-05-07 16:24:20',null,2,'Pot-au-feu',null,null,1),
+('2018-05-07',null,3,null,null,'2018-05-07 16:24:20',null,2,'Pot-au-feu',null,null,1),
+('2018-05-07',null,2,null,null,'2018-05-07 16:24:20',null,2,'Pot-au-feu',null,null,1),
+('2018-05-07',null,1,null,null,'2018-05-07 16:24:20',null,2,'Pot-au-feu',null,null,1),
+('2018-05-07',null,2,null,null,'2018-05-07 16:24:20',null,2,'Pot-au-feu',null,null,1),
+('2018-05-07',null,3,null,null,'2018-05-07 12:24:20',null,2,'Pot-au-feu',null,null,1),
+('2018-05-07',null,5,null,null,'2018-05-07 13:24:20',null,2,'Pot-au-feu',null,null,1),
+('2018-05-07',null,35,null,null,'2018-05-07 12:24:20',null,2,'Pot-au-feu',null,null,1),
+('2018-05-07',null,4,null,null,'2018-05-07 13:24:20',null,2,'Pot-au-feu',null,null,1),
+('2018-05-07',null,3,null,null,'2018-05-07 14:24:20',null,2,'Pot-au-feu',null,null,1),
+('2018-05-07',null,9,null,null,'2018-05-07 15:24:20',null,2,'Pot-au-feu',null,null,1),
+('2018-05-07',null,8,null,null,'2018-05-07 12:24:20',null,2,'Pot-au-feu',null,null,1),
+('2018-05-07',null,7,null,null,'2018-05-07 13:24:20',null,2,'Pot-au-feu',null,null,1),
+('2018-05-07',null,6,null,null,'2018-05-07 14:24:20',null,2,'Pot-au-feu',null,null,1),
+('2018-05-07',null,5,null,null,'2018-05-07 15:24:20',null,2,'Pot-au-feu',null,null,1),
+('2018-05-07',null,4,null,null,'2018-05-07 16:24:20',null,2,'Pot-au-feu',null,null,1);
+
+
+INSERT INTO `reservation`
+VALUES(2,3,20),
+(3,1,10),
+(3,2,30),
+(1,3,12),
+(4,2,11);
+

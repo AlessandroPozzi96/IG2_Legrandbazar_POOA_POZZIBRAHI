@@ -58,8 +58,7 @@ public class PanneauRecherche3 extends JPanel
         }
         catch (GeneralException e)
         {
-            System.out.println(e.getMessage());
-            JOptionPane.showMessageDialog(null, "Erreur ! \n Impossible de se connecter à la base de donnée \n Veuillez réessayer plus tard", "Erreur", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             System.exit(0);
         }
 
@@ -121,9 +120,9 @@ public class PanneauRecherche3 extends JPanel
                             try {
                                 recherches3 = getController().getRecherche3(numClient);
                             } catch (GeneralException eG) {
-                                System.out.println(eG.getMessage());
+                                JOptionPane.showMessageDialog(null, eG.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                             } catch (ModelException eM) {
-                                System.out.println(eM.getMessage());
+                                JOptionPane.showMessageDialog(null, eM.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                             }
                             if (!recherches3.isEmpty())
                             {

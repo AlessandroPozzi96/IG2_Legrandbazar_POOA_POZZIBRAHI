@@ -697,7 +697,6 @@ public class DBAccess implements DataAccess
             java.sql.Date sqlDate ;
             GregorianCalendar dataPrepa;
             while(data.next()){
-                System.out.println("SALUT");
                 dataPrepa = new GregorianCalendar();
                 datePreparation = data.getTimestamp("DatePreparation");
                 dataPrepa.setTime(datePreparation);

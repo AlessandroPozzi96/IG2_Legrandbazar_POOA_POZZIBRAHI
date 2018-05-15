@@ -74,7 +74,7 @@ public class PanneauTacheMetier extends JPanel {
         choixHoraire.add(choix1HoraireLabel);
         horaire1 = new JComboBox();
         horaire2 = new JComboBox();
-        for (int i = 0; i < 24; i++) {
+        for (int i = 0; i <= 24; i++) {
             horaire1.addItem(i);
             horaire2.addItem(i);
         }

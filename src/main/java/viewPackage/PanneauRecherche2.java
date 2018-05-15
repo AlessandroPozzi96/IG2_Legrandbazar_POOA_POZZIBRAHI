@@ -107,12 +107,11 @@ public class PanneauRecherche2 extends JPanel
                         }
                         catch (ModelException eM)
                         {
-                            System.out.println(eM.getMessage());
+                            JOptionPane.showMessageDialog(null, eM.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                         }
                         catch (GeneralException eG)
                         {
-                            System.out.println(eG.getMessage());
-                            JOptionPane.showMessageDialog(null, "Erreur ! \n Impossible de se connecter à la base de donnée \n Veuillez réessayer plus tard", "Erreur", JOptionPane.ERROR_MESSAGE);
+                            JOptionPane.showMessageDialog(null, eG.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                             System.exit(0);
                         }
 

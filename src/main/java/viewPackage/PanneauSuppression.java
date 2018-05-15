@@ -51,13 +51,12 @@ public class PanneauSuppression extends JPanel {
         }
         catch (AllOrdresException e)
         {
-            //e.printStackTrace();
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE); // c'est une erreur connexion qui s'affiche
             System.exit(0);
         }
         catch (ModelException e)
         {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE); // c'est une erreur connexion qui s'affiche
         }
         ordresJCombo = new JComboBox();
         dateFormat = new SimpleDateFormat("dd/MM/yyyy");

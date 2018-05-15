@@ -196,8 +196,7 @@ public class PanneauTacheMetier extends JPanel {
                 PanneauTacheMetier.this.panneauTacheMetier.repaint();
                 PanneauTacheMetier.this.panneauTacheMetier.validate();
             } catch (GeneralException e) {
-                e.printStackTrace();
-                JOptionPane.showMessageDialog(null, "Erreur ! \n Impossible de se connecter à la base de donnée \n Veuillez réessayer plus tard", "Erreur", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                 System.exit(0);
             }
         }

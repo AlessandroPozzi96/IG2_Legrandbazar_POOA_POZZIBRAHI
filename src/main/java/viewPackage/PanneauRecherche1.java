@@ -56,8 +56,7 @@ public class PanneauRecherche1 extends JPanel
             recettes = controller.getAllRecetteNom();
         }
         catch (GeneralException e) {
-            System.out.println("Erreur Recupération des noms de recette");  // Changer en autre que println (Afficher une erreur dans la JCOMBOBOX par ex
-            JOptionPane.showMessageDialog(null, "Erreur ! \n Impossible de se connecter à la base de donnée \n Veuillez réessayer plus tard", "Erreur", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
             System.exit(0);
         }
         recettesJCombox = new JComboBox();
@@ -76,7 +75,7 @@ public class PanneauRecherche1 extends JPanel
         try {
             matriculesCui = controller.getMatriculesCui();
         } catch (GeneralException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
         matriculeCuiCombo = new JComboBox();
         for(String matriculeCui : matriculesCui){
@@ -150,11 +149,11 @@ public class PanneauRecherche1 extends JPanel
                             }
                             catch (GetOrdresRecettesCuisiniersException eG)
                             {
-                                System.out.println(eG.getMessage());
+                                JOptionPane.showMessageDialog(null, eG.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                             }
                             catch (ModelException eM)
                             {
-                                System.out.println(eM.getMessage());
+                                JOptionPane.showMessageDialog(null, eM.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                             }
 
                             if (!ordres.isEmpty()) {

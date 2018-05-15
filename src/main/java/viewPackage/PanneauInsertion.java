@@ -22,7 +22,6 @@ public class PanneauInsertion extends JPanel
     private JComboBox codeBarreCombo, matriculeCuiCombo, matriculeResCombo, recetteCombo;
     private ArrayList<String> recettes, codeBarres, matriculesCui, matriculesRes;
     private JButton validation, retour, reinitialiser;
-    private PanneauBienvenue panneauBienvenue;
     private JRadioButton urgent, pasUrgent;
     private ButtonGroup buttonGroup;
     private PanneauSpinnerDate spinnerDate, spinnerDateVente, spinnerDatePrep;
@@ -273,10 +272,10 @@ public class PanneauInsertion extends JPanel
             JOptionPane.showMessageDialog(null, "Quantité prévue incorrecte !\nVeuillez entrez un nombre positif.", "Erreur", JOptionPane.ERROR_MESSAGE);
             quantitePrevueText.setBackground(Color.RED);
         }
-        /*else
+        else
         {
             quantitePrevueText.setBackground(Color.WHITE);
-        }*/// --> inutile car on réinitialise le panneau d'office
+        }
 
         Integer quantiteProduite = null;
         if (! quantiteProduiteText.getText().isEmpty())
@@ -296,10 +295,10 @@ public class PanneauInsertion extends JPanel
                     JOptionPane.showMessageDialog(null, "Quantité produite incorrecte !\nVeuillez entrez un nombre positif, ou aucune valeur.", "Erreur", JOptionPane.ERROR_MESSAGE);
                     quantiteProduiteText.setBackground(Color.RED);
                 }
-                /*else
+                else
                 {
                     quantiteProduiteText.setBackground(Color.WHITE);
-                }*/  // --> inutile car on réinitialise le panneau d'office
+                }
             }
         }
         //Ajout de l'ordre dans la DB
@@ -364,11 +363,11 @@ public class PanneauInsertion extends JPanel
         }
         catch (ModelException eME)
         {
-            eME.getMessage();
+            JOptionPane.showMessageDialog(null, eME.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
         catch (AddOrdreException eAO)
         {
-            eAO.getMessage();
+            JOptionPane.showMessageDialog(null, eAO.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

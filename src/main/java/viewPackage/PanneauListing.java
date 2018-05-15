@@ -58,19 +58,20 @@ public class PanneauListing extends JPanel {
                             controller.supprimerOrdre((int) cellule);
                             changementPanneau(new PanneauListing());
 
-                        i++;
                     }
                     else{
-                            if(JOptionPane.showConfirmDialog(null,reservations.size()+" clés étrangéres sur l'ordre num "+cellule+", supprimer quand même ?","Suppression Ordre",JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE)==JOptionPane.OK_OPTION){
-                                controller.supprimerForeignKeyReservation((int)cellule);
-                                controller.supprimerOrdre((int)cellule);
-                                changementPanneau(new PanneauListing());
-                            }
+                                if((JOptionPane.showConfirmDialog(null,reservations.size()+" clés étrangéres sur l'ordre num "+cellule+", supprimer quand même ?","Suppression Ordre",JOptionPane.YES_NO_CANCEL_OPTION)==0)) {
+                                    controller.supprimerForeignKeyReservation((int) cellule);
+                                    controller.supprimerOrdre((int) cellule);
+                                    changementPanneau(new PanneauListing());
+                                }
                     }}
                     catch(GeneralException e1){
                         JOptionPane.showMessageDialog(null, e1.getMessage(), "Erreur", JOptionPane.ERROR_MESSAGE);
                     }
-            }
+                    i++;
+
+                }
         }});
         panelBouton.add(suppression);
         this.setLayout(new BorderLayout());
